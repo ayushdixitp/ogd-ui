@@ -5,9 +5,10 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { DropdownComponent } from './lib/dropdown/dropdown.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, DropdownComponent],
   imports: [BrowserModule, AppRoutingModule, CommonModule],
   providers: [],
   bootstrap: [],

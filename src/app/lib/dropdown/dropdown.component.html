@@ -1,0 +1,17 @@
+<div class="dropdown" >
+   <div class="dropdown-title" id="dropdown" (click)="showDropdownList()">
+        <div>
+            {{ title }}
+        </div>
+        <div>
+            V
+        </div>
+   </div>
+    <div *ngIf="isDropdownListVisible" class="dropdown-menu">
+        <ul *ngFor="let listItem of listOfLocales">
+            <li (click)="selectOption(listItem)">
+                {{ listItem.item }}
+            </li>
+        </ul>                
+    </div>
+</div>
