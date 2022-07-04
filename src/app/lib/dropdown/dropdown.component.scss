@@ -1,8 +1,14 @@
 .dropdown {    
     cursor: pointer;
     .dropdown-title {
+        border: 1px solid #ccd1dd;
         padding: 18px 16px;
-        gap: 10px;
+        // gap: 10px;
+        font-family: 'Proxima Nova';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 24px;
         background: #FFFFFF;
         box-shadow: inset 0px -1px 0px #EDF0F1;
         display: flex;
@@ -27,6 +33,7 @@
                 font-weight: 400;
                 font-size: 14px;
                 line-height: 20px;
+                color: #4B6479;
             }
         }
     }
