@@ -46,7 +46,6 @@ export class DropdownComponent implements OnInit {
   }
 
   selectOption(selectedItem: DropdownItem) {
-    debugger;
     this.isDropdownListVisible = !this.isDropdownListVisible;
     this.title = selectedItem.item;
     this.selectedItem.patchValue({ name: selectedItem.item });
