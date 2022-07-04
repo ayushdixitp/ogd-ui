@@ -1,5 +1,4 @@
 export interface DropdownItem {
-    id: number;
-    item: string;
-  }
-  
+  id: number;
+  item: string;
+}
