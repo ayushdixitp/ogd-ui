@@ -5,6 +5,10 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { BroadcastService } from 'src/app/shared/services/broadcast.service';
+import { AppEventType } from 'src/app/shared/enums/event.enum';
+import { DropdownItem } from 'src/app/shared/interfaces/dropdown.interface';
+
 
 @Component({
   selector: 'app-dropdown',
@@ -12,7 +16,7 @@ import {
   styleUrls: ['./dropdown.component.scss'],
 })
 export class DropdownComponent implements OnInit {
-  @Input() listOfLocales = [
+  @Input() listOfLocales: Array<DropdownItem> = [
     { id: 1, item: 'Cognizant EN/US' },
     { id: 1, item: 'Cognizant EN/FR' },
   ];
@@ -30,7 +34,7 @@ export class DropdownComponent implements OnInit {
   isDropdownListVisible: boolean = false;
   selectedItem!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder,private broadcastService: BroadcastService) {}
 
   ngOnInit(): void {
     this.title = this.listOfLocales[0].item;
@@ -39,10 +43,12 @@ export class DropdownComponent implements OnInit {
     });
   }
 
-  selectOption(selectedItem: any) {
+  selectOption(selectedItem: DropdownItem) {
+    debugger
     this.isDropdownListVisible = !this.isDropdownListVisible;
     this.title = selectedItem.item;
     this.selectedItem.patchValue({ name: selectedItem.item });
+    this.broadcastService.broadcast({name: AppEventType.CLICKED_ON_LOCALE_DROPDOWN, data: {selectedItem}})
   }
 
   onTitleClick() {
