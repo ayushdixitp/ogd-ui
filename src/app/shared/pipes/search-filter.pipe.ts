@@ -4,15 +4,20 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'searchFilter',
 })
 export class SearchFilterPipe implements PipeTransform {
-  transform(value: Array<any>, args: string): any {
-    debugger;
+  transform(
+    value: Array<any>,
+    keywords: string,
+    isCaseSensitive: boolean = false
+  ): any {
     if (!value) return null;
-    if (!args) return value;
+    if (!keywords) return value;
 
-    args = args.toLowerCase();
+    if (!isCaseSensitive) keywords = keywords.toLowerCase();
 
     return value.filter(function (data: string) {
-      return JSON.stringify(data).toLowerCase().includes(args);
+      return !isCaseSensitive
+        ? JSON.stringify(data).toLowerCase().includes(keywords)
+        : JSON.stringify(data).includes(keywords);
     });
   }
 }
