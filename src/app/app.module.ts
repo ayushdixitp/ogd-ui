@@ -1,14 +1,24 @@
 import { CommonModule } from '@angular/common';
 import { Injector, NgModule } from '@angular/core';
 import { createCustomElement } from '@angular/elements';
+import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { CheckboxComponent } from './lib/checkbox/checkbox.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { SearchFilterPipe } from './shared/pipes/search-filter.pipe';
 
 @NgModule({
-  declarations: [AppComponent],
-  imports: [BrowserModule, AppRoutingModule, CommonModule],
+  declarations: [AppComponent, CheckboxComponent, SearchFilterPipe],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
   providers: [],
   bootstrap: [],
 })
