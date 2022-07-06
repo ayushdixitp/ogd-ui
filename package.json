@@ -44,8 +44,8 @@
     "lint-staged": "^13.0.3",
     "prettier": "^2.7.1",
     "typescript": "~4.7.2",
-    "@commitlint/cli": "latest",
-    "@commitlint/config-conventional": "latest"
+    "@commitlint/cli": "15.0.0",
+    "@commitlint/config-conventional": "15.0.0"
   },
   "lint-staged": {
     "*.{js,css,md}": "prettier --write"
