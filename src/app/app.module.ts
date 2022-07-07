@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ApplicationRef, Injector, NgModule } from '@angular/core';
 import { createCustomElement } from '@angular/elements';
+import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -13,8 +14,7 @@ import { WebChatbotComponent } from './pages/web-chatbot/web-chatbot.component';
   declarations: [AppComponent, CleanComponent, BaseComponent],
   imports: [BrowserModule, AppRoutingModule, CommonModule],
   providers: [],
-  bootstrap: [AppComponent]
-
+  bootstrap: [AppComponent],
 })
 export class AppModule {
   constructor(private injector: Injector) {

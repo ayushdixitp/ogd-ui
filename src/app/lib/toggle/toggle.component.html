@@ -1,0 +1,6 @@
+<form [formGroup]="toggleBtn">
+    <label for="toggle" class="form">
+        <input type="checkbox" (change)="onChange($event)" id="toggle" formControlName="isChecked" [checked]="isActive">
+        <span class="slide"></span>
+    </label>
+</form>
