@@ -9,9 +9,10 @@ import { AppComponent } from './app.component';
 import { CheckboxComponent } from './lib/checkbox/checkbox.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SearchFilterPipe } from './shared/pipes/search-filter.pipe';
+import { SearchboxComponent } from './lib/searchbox/searchbox.component';
 
 @NgModule({
-  declarations: [AppComponent, CheckboxComponent, SearchFilterPipe],
+  declarations: [AppComponent, CheckboxComponent, SearchFilterPipe, SearchboxComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
