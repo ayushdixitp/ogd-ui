@@ -12,7 +12,12 @@ import { SearchFilterPipe } from './shared/pipes/search-filter.pipe';
 import { SearchboxComponent } from './lib/searchbox/searchbox.component';
 
 @NgModule({
-  declarations: [AppComponent, CheckboxComponent, SearchFilterPipe, SearchboxComponent],
+  declarations: [
+    AppComponent,
+    CheckboxComponent,
+    SearchFilterPipe,
+    SearchboxComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,

@@ -8,10 +8,8 @@ import { BroadcastService } from './shared/services/broadcast.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-
   constructor(private broadcastService: BroadcastService) {}
   title = 'chatbot-management-app';
-
 
   ngOnInit() {
     this.broadcastService.subscribe(
