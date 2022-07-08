@@ -5,11 +5,11 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AccordianComponent } from './lib/accordian/accordian.component';
+import { AccordionComponent } from './lib/accordion/accordion.component';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, AppRoutingModule, CommonModule, AccordianComponent],
+  imports: [BrowserModule, AppRoutingModule, CommonModule, AccordionComponent],
   providers: [],
   bootstrap: [],
 })

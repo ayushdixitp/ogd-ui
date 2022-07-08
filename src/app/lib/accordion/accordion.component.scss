@@ -36,7 +36,7 @@
 }
 
 .container{
-    position: absolute;
+    position: relative;
     flex-direction: column;
     align-items: flex-start;
     width: 280px;
@@ -46,13 +46,10 @@
 
 .botcard{
     position: relative;
-    display: flex;
     left: 48px;
-    flex-direction: row;
-    align-items: flex-start;
     width: 188px;
     height: 40px;
-    background: #F7F9FA;
+    background: #FFFFFF;
     border-radius: 4px;
 }
 
