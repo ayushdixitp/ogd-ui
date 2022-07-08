@@ -11,13 +11,14 @@
     
     input {
       color: $color-dark-grey64;
-      width: 90%;
       border: none;
+      width: 100%;
       }
     .text{
         font-family: Proxima Nova;
         font-size: 14px;
         line-height: 20px;
+        width: 90%;
     }
     input:focus, input:focus-within {
        outline: none;

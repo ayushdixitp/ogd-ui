@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'phenom-searchbox',
+  selector: 'app-searchbox',
   templateUrl: './searchbox.component.html',
   styleUrls: ['./searchbox.component.scss'],
 })
@@ -18,7 +18,6 @@ export class SearchboxComponent implements OnInit {
   }
   onSearchTextEntered(searchValue: any) {
     this.searchText = searchValue;
-    // console.log(this.searchText);
   }
 
   ngOnInit(): void {}

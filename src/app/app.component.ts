@@ -12,11 +12,5 @@ export class AppComponent {
   title = 'chatbot-management-app';
 
   ngOnInit() {
-    this.broadcastService.subscribe(
-      AppEventType.CHECKBOX_EVENT,
-      (data: any) => {
-        console.log(data);
-      }
-    );
   }
 }
