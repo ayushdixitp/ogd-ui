@@ -3,16 +3,21 @@ import { Injector, NgModule } from '@angular/core';
 import { createCustomElement } from '@angular/elements';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CheckboxComponent } from './lib/checkbox/checkbox.component';
-import { ReactiveFormsModule } from '@angular/forms';
 import { SearchFilterPipe } from './shared/pipes/search-filter.pipe';
-
+import { ToggleComponent } from './lib/toggle/toggle.component';
 
 @NgModule({
-  declarations: [AppComponent, CheckboxComponent, SearchFilterPipe],
+  declarations: [
+    AppComponent,
+    CheckboxComponent,
+    SearchFilterPipe,
+    ToggleComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
