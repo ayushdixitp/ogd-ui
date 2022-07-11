@@ -10,6 +10,7 @@ import { CheckboxComponent } from './lib/checkbox/checkbox.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SearchFilterPipe } from './shared/pipes/search-filter.pipe';
 
+
 @NgModule({
   declarations: [AppComponent, CheckboxComponent, SearchFilterPipe],
   imports: [
