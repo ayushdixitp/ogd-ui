@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { BroadcastService } from 'src/app/shared/services/broadcast.service';
@@ -15,18 +15,25 @@ import { AccordionItem } from 'src/app/shared/interfaces/accordion.interface';
 export class AccordionComponent implements OnInit {
   constructor(private broadcastService: BroadcastService) {}
 
-  showbots: boolean = false;
-  isClicked: boolean = false;
-  selectedPageId: string = '';
-
-  @Input() list: Array<AccordionItem> = [
+  @Input() pages: Array<AccordionItem> = [
     { pageId: 'career-site-bot', heading: 'Career Site Bot' },
     { pageId: 'sms-bot', heading: 'SMS Bot' },
     { pageId: 'facebook-bot', heading: 'Facebook Bot' },
     { pageId: 'whatsapp-bot', heading: 'Whatsapp Bot' },
   ];
+  @Input() experienceType!: string;
+  @Input() defaultPageId!: string;
+  @Input() iconSrc!: string;
+
+  isShowPages: boolean = false;
+  selectedPageId: string = '';
 
   ngOnInit(): void {
+    this.selectedPageId = this.pages.some(
+      page => page.pageId === this.defaultPageId
+    )
+      ? this.defaultPageId
+      : this.pages[0].pageId;
     this.broadcastService.broadcast({
       name: AppEventType.SELECTED_PAGE,
       data: { selectedPageId: this.selectedPageId },
@@ -34,11 +41,14 @@ export class AccordionComponent implements OnInit {
   }
 
   onClick() {
-    this.showbots = !this.showbots;
+    this.isShowPages = !this.isShowPages;
   }
 
   onBotCardClick(event: any) {
-    this.isClicked = true;
     this.selectedPageId = event.target.id;
+    this.broadcastService.broadcast({
+      name: AppEventType.SELECTED_PAGE,
+      data: { selectedPageId: this.selectedPageId },
+    });
   }
 }
