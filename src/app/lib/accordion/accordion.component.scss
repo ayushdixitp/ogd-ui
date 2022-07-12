@@ -1,0 +1,71 @@
+@import "../../../styles/styles.scss";
+
+.section{
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    width: 280px;
+    height: 42px;
+    background: #FFFFFF;
+    gap: 9.75px;
+    .svg1{
+        position: absolute;
+        top: 14.75px;
+        left: 25.75px;
+    }
+
+    .title{
+        position: absolute;
+        width: 136px;
+        height: 24px;
+        left: 48px;
+        top: 9px;
+        font-family: 'Proxima Nova';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 24px;
+        color: #1C2024;
+    }
+
+    .svg2{
+        position: absolute;
+        top: 18px;
+        left: 245.55px;
+    }
+}
+
+.container{
+    position: relative;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 280px;
+    height: 160px;
+    background: #FFFFFF;
+}
+
+.botcard{
+    position: relative;
+    left: 48px;
+    width: 188px;
+    height: 40px;
+    background: #FFFFFF;
+    border-radius: 4px;
+}
+
+.botcard-title{
+    position: relative;
+    width: 156px;
+    height: 22px;
+    left: 8px;
+    top: 9px;
+    font-family: 'Proxima Nova';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 22px;
+    color: #414C54;
+}
+
+
+

@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ApplicationRef, Injector, NgModule } from '@angular/core';
 import { createCustomElement } from '@angular/elements';
-import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -12,7 +11,7 @@ import { WebChatbotComponent } from './pages/web-chatbot/web-chatbot.component';
 import { SidebarComponent } from './shared/components/sidebar/sidebar.component';
 
 @NgModule({
-  declarations: [AppComponent, CleanComponent, BaseComponent, SidebarComponent],
+  declarations: [AppComponent, BaseComponent, CleanComponent, SidebarComponent],
   imports: [BrowserModule, AppRoutingModule, CommonModule],
   providers: [],
   bootstrap: [AppComponent],
