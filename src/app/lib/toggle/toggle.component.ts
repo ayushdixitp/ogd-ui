@@ -15,6 +15,7 @@ export class ToggleComponent implements OnInit {
 
   @Input('isActive') public isActive!: boolean;
   @Input('meta') public meta!: any;
+  @Input('ID') public ID!: string;
 
   ngOnInit() {
     this.toggleBtn = new FormGroup({

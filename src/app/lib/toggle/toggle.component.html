@@ -1,6 +1,7 @@
 <form [formGroup]="toggleBtn">
-    <label for="toggle" class="form">
-        <input type="checkbox" (change)="onChange($event)" id="toggle" formControlName="isChecked" [checked]="isActive">
+    <label for="toggle-{{ID}}" class="form">
+        <input type="checkbox" (change)="onChange($event)" id="toggle-{{ID}}" formControlName="isChecked"
+            [checked]="isActive">
         <span class="slide"></span>
     </label>
 </form>
