@@ -1,4 +1,4 @@
-export interface AccordionItem{
-    pageId: string;
-    heading: string;
+export interface AccordionItem {
+  pageId: string;
+  heading: string;
 }
