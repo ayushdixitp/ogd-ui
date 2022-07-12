@@ -9,9 +9,10 @@ import { AppComponent } from './app.component';
 import { BaseComponent } from './layouts/base/base.component';
 import { CleanComponent } from './layouts/clean/clean.component';
 import { WebChatbotComponent } from './pages/web-chatbot/web-chatbot.component';
+import { SidebarComponent } from './shared/components/sidebar/sidebar.component';
 
 @NgModule({
-  declarations: [AppComponent, CleanComponent, BaseComponent],
+  declarations: [AppComponent, CleanComponent, BaseComponent, SidebarComponent],
   imports: [BrowserModule, AppRoutingModule, CommonModule],
   providers: [],
   bootstrap: [AppComponent],
