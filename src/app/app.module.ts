@@ -1,25 +1,29 @@
 import { CommonModule } from '@angular/common';
 import { ApplicationRef, Injector, NgModule } from '@angular/core';
 import { createCustomElement } from '@angular/elements';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BaseComponent } from './layouts/base/base.component';
 import { CleanComponent } from './layouts/clean/clean.component';
 import { WebChatbotComponent } from './pages/web-chatbot/web-chatbot.component';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [AppComponent, CleanComponent, BaseComponent],
-  imports: [BrowserModule, AppRoutingModule, CommonModule],
+  imports: [BrowserModule, AppRoutingModule, CommonModule, SharedModule],
   providers: [],
-  bootstrap: [AppComponent],
+  bootstrap: [],
 })
 export class AppModule {
   constructor(private injector: Injector) {
-    const el = createCustomElement(WebChatbotComponent, { injector });
+    const el = createCustomElement(AppComponent, { injector });
     customElements.define('chatbot-management-app', el);
+  }
+  ngDoBootstrap(appRef: ApplicationRef) {
+    appRef.bootstrap(AppComponent); // Or some other component
   }
 }

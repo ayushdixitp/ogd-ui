@@ -1,1 +1,80 @@
-<p>web-chatbot works!</p>
+
+
+
+
+
+
+
+
+<div class="main-container">    
+<aside>
+    <h1>
+        Sidebar Component.
+    </h1>
+</aside>
+<main class="container">
+    <header class="container-heading">
+        <span>
+            {{ skeleton.heading}}
+        </span>
+    </header>
+    <section class="container-body">
+        <section *ngFor="let section of skeleton.configurations">
+            <header class="config-heading">
+                {{ section.heading}}
+            </header>
+            <div [ngClass]="section.configurationKey? 'card card-one-item': ''">
+                <ng-container *ngIf="section.configurationKey">
+                    <span>
+                        <app-toggle [ID]="section.configurationKey" [isActive]="section.isChannelEnabled"></app-toggle>
+                    </span>
+                </ng-container>
+                <span class="section-infotext">
+                    {{ section.infoText }}
+                </span>
+                <ng-container *ngIf="section.features">
+                    <div class="card" *ngFor="let feature of section.features">
+                        <header class="card-one-item">
+                            <span *ngIf="feature.attributeConfigurationKey">
+                                <app-toggle [ID]="feature.attributeConfigurationKey"></app-toggle>
+                            </span>
+                            <span class="section-infotext">
+                                {{ feature.literal }}
+                            </span>
+                            <br>
+                            <span>
+                                {{ feature.infoText }}
+                            </span>
+                        </header>
+                        <ng-container *ngIf="feature.attributes">
+                            <div class="attribute">
+                                <div class="attribute-heading">
+                                    {{ feature.attributeHeading }}
+                                    <br>
+                                    <span>
+                                        {{ feature.infoText }}
+                                    </span>
+                                </div>
+                                <ng-container *ngFor="let attribute of feature.attributes">
+                                    <div class="attribute-items">
+                                        <div class="attribute-icon">
+                                            <phenom-checkbox [id]="attribute.configurationKey" [isActive]="attribute[attribute.configurationKey]">
+                                            </phenom-checkbox>
+                                        </div>
+                                        <div class="attribute-items-heading">
+                                            {{ attribute.configurationKey }}
+                                            <span class="attribute-items-info-text">
+                                                {{ attribute.infoText }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </ng-container>
+                    </div>
+                </ng-container>
+            </div>
+        </section>
+    </section>
+</main>
+</div>

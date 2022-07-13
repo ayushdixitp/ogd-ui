@@ -9,6 +9,10 @@ export const PagesRoutes: Routes = [
         path: 'home',
         component: WebChatbotComponent,
       },
+      {
+        path: 'home',
+        component: WebChatbotComponent,
+      },
     ],
   },
 ];

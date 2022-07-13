@@ -7,6 +7,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { AppEvent } from 'src/app/shared/services/broadcast.event.class';
 import { AppEventType } from '../../shared/enums/event.enum';
 import { BroadcastService } from '../../shared/services/broadcast.service';
 
@@ -18,13 +19,13 @@ import { BroadcastService } from '../../shared/services/broadcast.service';
 export class CheckboxComponent implements OnInit {
   @ViewChild('svg') svg: ElementRef | undefined;
 
-  constructor(private broadcastService: BroadcastService) {}
-
-  checkbox!: FormGroup;
-
   @Input('isActive') public isActive!: boolean;
   @Input('isDisabled') public isDisabled!: boolean;
   @Input('id') public id!: string;
+
+  constructor(private broadcastService: BroadcastService) {}
+
+  checkbox!: FormGroup;
 
   ngOnInit(): void {
     this.checkbox = new FormGroup({
@@ -41,11 +42,11 @@ export class CheckboxComponent implements OnInit {
 
   onChange(event: any) {
     this.isActive = event.target.checked;
-    this.broadcastService.broadcast({
-      name: AppEventType.CHECKBOX_EVENT,
-      data: { id: this.id,
-              isActive:  this.isActive 
-            },
-    });
+    this.broadcastService.dispatch(
+      new AppEvent(AppEventType.CHECKBOX_EVENT, {
+        id: this.id,
+        isActive: this.isActive,
+      })
+    );
   }
 }
