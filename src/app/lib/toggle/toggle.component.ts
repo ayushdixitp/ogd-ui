@@ -16,7 +16,7 @@ export class ToggleComponent implements OnInit {
 
   @Input('isActive') public isActive!: boolean;
   @Input('meta') public meta!: any;
-  @Input('ID') public ID!: string;
+  @Input('id') public id!: string;
 
   ngOnInit() {
     this.toggleBtn = new FormGroup({
@@ -28,8 +28,8 @@ export class ToggleComponent implements OnInit {
     this.isActive = event.target.checked;
     this.broadcastService.dispatch(
       new AppEvent(AppEventType.TOGGLE_EVENT, {
-        id: this.ID,
         isActive: this.isActive,
+        id: this.id,
       })
     );
   }

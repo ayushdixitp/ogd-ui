@@ -24,7 +24,7 @@
             <div [ngClass]="section.configurationKey? 'card card-one-item': ''">
                 <ng-container *ngIf="section.configurationKey">
                     <span>
-                        <app-toggle [ID]="section.configurationKey" [isActive]="section.isChannelEnabled"></app-toggle>
+                        <app-toggle [id]="section.configurationKey" [isActive]="section.isChannelEnabled"></app-toggle>
                     </span>
                 </ng-container>
                 <span class="section-infotext">
@@ -34,7 +34,7 @@
                     <div class="card" *ngFor="let feature of section.features">
                         <header class="card-one-item">
                             <span *ngIf="feature.attributeConfigurationKey">
-                                <app-toggle [ID]="feature.attributeConfigurationKey"></app-toggle>
+                                <app-toggle [id]="feature.attributeConfigurationKey"></app-toggle>
                             </span>
                             <span class="section-infotext">
                                 {{ feature.literal }}

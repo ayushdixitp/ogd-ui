@@ -182,6 +182,25 @@ export class WebChatbotComponent implements OnInit {
                 },
               ],
             },
+            {
+              id: 'faq',
+              literal: 'CMP_FAQ',
+              infoText: 'CMP_FAQ_*',
+              attributeHeading: 'CMP_LIST_*',
+              configurationKey: 'isFaqEnabled',
+              attributes: [
+                {
+                  id: 'confidence-threshold',
+                  literal: 'CMP_CONFIDENCE_THRESHOLD',
+                  infoText: 'CMP_*',
+                  actions: {
+                    type: 'range',
+                  },
+                  configurationKey: 'faqSuggestionsThreshold',
+                  isInternal: true,
+                },
+              ],
+            },
           ],
         },
       ],
