@@ -1,0 +1,66 @@
+@import "../../../../styles/styles.scss";
+
+.header{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 16px 30px 20px 32px;
+    gap: 10px;
+    background: $color-white;
+    box-shadow: inset 0px -1px 0px #DFE3E6;
+
+    .experience-type{
+        font-family: 'Proxima Nova';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 20px;
+        color: #4B6479;
+    }
+
+    .sms-bound{
+        display:flex;
+        align-items: center;
+        gap: 20px;
+
+        .bot-type{
+            font-family: 'Proxima Nova';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 24px;
+            line-height: 32px;
+            color: #1C2024;
+        }
+
+        .sms-pad{
+            padding: 1px 8px;
+            background: #EFF8F8;
+            border-radius: 4px;
+
+            .sms{
+                font-family: 'Proxima Nova';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 12px;
+                line-height: 20px;
+                color: #006E78;
+            }
+        }
+    }
+
+    .updated-time{
+        display: flex;
+        gap: 5px;
+
+        .time{
+            font-family: 'Proxima Nova';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 14px;
+            color: #93A1AB;
+        }
+    }
+}
+
+
+

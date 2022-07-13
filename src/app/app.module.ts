@@ -8,9 +8,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DropdownComponent } from './lib/dropdown/dropdown.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HeaderComponent } from './shared/components/header/header.component';
 
 @NgModule({
-  declarations: [AppComponent, DropdownComponent],
+  declarations: [AppComponent, DropdownComponent, HeaderComponent],
   imports: [BrowserModule, AppRoutingModule, CommonModule, ReactiveFormsModule],
   providers: [],
   bootstrap: [],
