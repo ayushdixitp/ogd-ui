@@ -30,17 +30,17 @@
   
   .container input ~ .checkmark {
     background-color: $color-white;
-    border: 1px solid $color_spanish_gray;
+    border: 1px solid $color_spanish_gray-5;
   }
   
   .container input:checked ~ .checkmark {
-    background-color: $color-brand-blue;
-    border: 1px solid $color-brand-blue;
+    background-color: $color-brand-blue-6;
+    border: 1px solid $color-brand-blue-6;
   }
   
   .container input:disabled ~ .checkmark {
     background-color: $color-white;   
-    border: 1px solid $color_spanish_gray;         
+    border: 1px solid $color_spanish_gray-5;         
   }
   
   /* Show the checkmark when checked */
