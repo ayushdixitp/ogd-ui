@@ -1,6 +1,5 @@
 import {
   Component,
-  EventEmitter,
   Input,
   OnInit,
   AfterViewInit,
@@ -25,12 +24,10 @@ export class CheckboxComponent implements OnInit, AfterViewInit {
 
   @Input('isActive') public isActive!: boolean;
   @Input('isDisabled') public isDisabled!: boolean;
+  @Input('id') public id!: string;
 
-  // @Output('checkboxState') checkBoxState = new EventEmitter();
 
   ngOnInit(): void {
-    console.log(this.isActive);
-    console.log(this.svg);
     this.checkbox = new FormGroup({
       control: new FormControl(this.isActive),
     });
@@ -38,11 +35,6 @@ export class CheckboxComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     if (this.isDisabled) {
-      //  let ele = document.getElementById("fil-this");
-      //  ele?.setAttribute("fill","#8D949A");
-      //  ele?.setAttribute("stroke","#8D949A");
-
-      // console.log(this.svg)
       this.svg?.nativeElement.setAttribute('fill', '#8D949A');
       this.svg?.nativeElement.setAttribute('stroke', '#8D949A');
     }
@@ -50,10 +42,11 @@ export class CheckboxComponent implements OnInit, AfterViewInit {
 
   onChange(event: any) {
     this.isActive = event.target.checked;
-    // this.checkBoxState.emit({state: this.isActive});
     this.broadcastService.broadcast({
       name: AppEventType.CHECKBOX_EVENT,
-      data: { isActive: this.isActive },
+      data: { id: this.id,
+              isActive:  this.isActive 
+            },
     });
   }
 }
