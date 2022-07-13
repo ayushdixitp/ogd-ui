@@ -14,9 +14,7 @@
     .group-1 {
         display: flex;
         align-items: flex-start;
-        padding: 14.75px 0 0 25.75px;
-
-
+        padding: 14.75px 25.75px;
         .title {
             font-family: 'Proxima Nova';
             font-style: normal;
@@ -38,23 +36,19 @@
     position: relative;
     flex-direction: column;
     align-items: flex-start;
-    height: 160px;
     background: #FFFFFF;
 }
 
 .botcard {
     position: relative;
-    width: 90%;
-    margin: 0px auto;
-    height: 40px;
+    padding: 9px 24px 9px 8px;
+    margin: 0px 48px;
     background: #FFFFFF;
     border-radius: 4px;
-    padding: 12px 0 0 8px;
 }
 
 .botcard-title {
     position: relative;
-    height: 22px;
     font-family: 'Proxima Nova';
     font-style: normal;
     font-weight: 400;
