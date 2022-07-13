@@ -6,20 +6,12 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CheckboxComponent } from './lib/checkbox/checkbox.component';
+import { DropdownComponent } from './lib/dropdown/dropdown.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { SearchFilterPipe } from './shared/pipes/search-filter.pipe';
-
 
 @NgModule({
-  declarations: [AppComponent, CheckboxComponent, SearchFilterPipe],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-  ],
+  declarations: [AppComponent, DropdownComponent],
+  imports: [BrowserModule, AppRoutingModule, CommonModule, ReactiveFormsModule],
   providers: [],
   bootstrap: [],
 })
