@@ -1,10 +1,12 @@
 <div class="section" (click)="onClick()">
-    <svg class="svg1" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path
-            d="M12.75 0.75H1.25C0.973437 0.75 0.75 0.973437 0.75 1.25V12.75C0.75 13.0266 0.973437 13.25 1.25 13.25H12.75C13.0266 13.25 13.25 13.0266 13.25 12.75V1.25C13.25 0.973437 13.0266 0.75 12.75 0.75ZM1.875 1.875H4V12.125H1.875V1.875ZM12.125 12.125H5V5H12.125V12.125ZM5 4V1.875H12.125V4H5Z"
-            fill="#1C2024" />
-    </svg>
-    <span class="title">{{experienceType}}</span>
+    <div class="group-1">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+                d="M12.75 0.75H1.25C0.973437 0.75 0.75 0.973437 0.75 1.25V12.75C0.75 13.0266 0.973437 13.25 1.25 13.25H12.75C13.0266 13.25 13.25 13.0266 13.25 12.75V1.25C13.25 0.973437 13.0266 0.75 12.75 0.75ZM1.875 1.875H4V12.125H1.875V1.875ZM12.125 12.125H5V5H12.125V12.125ZM5 4V1.875H12.125V4H5Z"
+                fill="#1C2024" />
+        </svg>
+        <span class="title">{{experienceType}}</span>
+    </div>
     <svg class="svg2" [ngStyle]="{transform: !isShowPages?'rotate(90deg)':''}" width="10" height="6" viewBox="0 0 10 6"
         fill="none" xmlns="http://www.w3.org/2000/svg">
         <path
