@@ -1,0 +1,19 @@
+<main class="dropdown" >
+    <form [formGroup]="selectedItem" (ngSubmit)="selectOption">
+            <p class="dropdown-title" id="dropdown" (click)="onTitleClick()">
+                    {{ title }}
+                    <span [ngStyle]="{transform: isDropdownListVisible? 'rotate(180deg)': 'rotate(0deg)'}">
+                        <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9.3594 0H8.4805C8.42073 0 8.36448 0.0292969 8.32932 0.0773438L5.00003 4.66641L1.67073 0.0773438C1.63557 0.0292969 1.57932 0 1.51956 0H0.640651C0.564479 0 0.519948 0.0867189 0.564479 0.148828L4.69651 5.84531C4.84651 6.05156 5.15354 6.05156 5.30237 5.84531L9.4344 0.148828C9.48011 0.0867189 9.43557 0 9.3594 0V0Z" fill="#1C2024"/>
+                        </svg>
+                    </span>
+           </p>
+            <section *ngIf="isDropdownListVisible" class="dropdown-menu">
+                <ul>
+                    <li *ngFor="let listItem of listOfLocales" (click)="selectOption(listItem)">
+                        {{ listItem.item }}
+                    </li>
+                </ul>                
+            </section>
+    </form>
+</main>

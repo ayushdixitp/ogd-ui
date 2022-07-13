@@ -15,13 +15,14 @@
         display: flex;
         align-items: flex-start;
         padding: 14.75px 25.75px;
+
         .title {
             font-family: 'Proxima Nova';
             font-style: normal;
             font-weight: 400;
             font-size: 14px;
             padding: 0px 10px;
-            color: $color-slate-gray-12;
+            color: $color-dark-grey64;
         }
     }
 
@@ -36,14 +37,14 @@
     position: relative;
     flex-direction: column;
     align-items: flex-start;
-    background: #FFFFFF;
+    background: $color-white;
 }
 
 .botcard {
     position: relative;
     padding: 9px 24px 9px 8px;
     margin: 0px 48px;
-    background: #FFFFFF;
+    background: $color-white;
     border-radius: 4px;
 }
 
@@ -54,5 +55,5 @@
     font-weight: 400;
     font-size: 14px;
     line-height: 22px;
-    color: $color-slate-gray-10;
+    color: $color-dark-grey65;
 }
