@@ -1,0 +1,71 @@
+@import '../../../styles/styles.scss';
+
+.dropdown {    
+    cursor: pointer;
+    .dropdown-title {
+        border: 1px solid $color-white;
+        padding: 12px 16px;
+        font-family: 'Proxima Nova';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 24px;
+        background: $color-white;
+        box-shadow: inset 0px -1px 0px $color-pp-lighter-blue60;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .dropdown-menu {
+      width: 98%;
+        overflow-y: scroll;
+        max-height: 224px;
+        padding: 0px;
+        margin: -15px auto;
+        background: $color-white;
+        /* Depth 1 */        
+        box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.15);
+        border-radius: 2px;
+        /* width */
+        ul {
+          padding: 0px;
+          margin: 0px;
+            li {
+                list-style: none;
+                font-family: 'Proxima Nova';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 14px;
+                line-height: 20px;
+                color: $color-dark-grey26;
+                padding: 12px 16px;
+            }
+            li:hover {
+              background: $color-light-white-38;
+              color: $color-pp-darker-blue9;
+            }
+        }
+    }
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: $color-white; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: $color-light-white19; 
+    width: 5px;
+    border-radius: 10px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: $color-lighter-grey7; 
+  }

@@ -1,0 +1,24 @@
+@import "../../../../styles/styles.scss" ;
+
+.container{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 0px;
+    gap: 4px;
+    width: 280px;
+    height: 93.5vh;
+    left: 0px;
+    top: 48px;
+    background: $color-white;
+    box-shadow: inset -1px 0px 0px $color-light-grey58;
+}
+app-accordion, app-dropdown{
+    position: relative;
+    right: 1px;
+}
+
+.button{
+    height: 60px;
+    background-color: lightcyan;
+}

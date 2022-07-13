@@ -1,0 +1,59 @@
+@import "../../../styles/styles.scss";
+
+* {
+    cursor: pointer;
+}
+
+.section {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 42px;
+    background: $color-white;
+
+    .group-1 {
+        display: flex;
+        align-items: flex-start;
+        padding: 14.75px 25.75px;
+
+        .title {
+            font-family: 'Proxima Nova';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 14px;
+            padding: 0px 10px;
+            color: $color-dark-grey64;
+        }
+    }
+
+    .svg2 {
+        position: absolute;
+        right: 25.55px;
+        top: 21px;
+    }
+}
+
+.container {
+    position: relative;
+    flex-direction: column;
+    align-items: flex-start;
+    background: $color-white;
+}
+
+.botcard {
+    position: relative;
+    padding: 9px 24px 9px 8px;
+    margin: 0px 48px;
+    background: $color-white;
+    border-radius: 4px;
+}
+
+.botcard-title {
+    position: relative;
+    font-family: 'Proxima Nova';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 22px;
+    color: $color-dark-grey65;
+}
