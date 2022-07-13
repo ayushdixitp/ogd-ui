@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 import { AppEventType } from 'src/app/shared/enums/event.enum';
 import { AccordionItem } from 'src/app/shared/interfaces/accordion.interface';
+import { AppEvent } from 'src/app/shared/services/broadcast.event.class';
 
 @Component({
   selector: 'app-accordion',
@@ -46,9 +47,11 @@ export class AccordionComponent implements OnInit {
 
   onBotCardClick(event: any) {
     this.selectedPageId = event.target.id;
-    this.broadcastService.broadcast({
-      name: AppEventType.SELECTED_PAGE,
-      data: { selectedPageId: this.selectedPageId },
-    });
+    this.broadcastService.dispatch(
+      new AppEvent(AppEventType.SELECTED_PAGE, {
+        name: AppEventType.SELECTED_PAGE,
+        data: { selectedPageId: this.selectedPageId },
+      })
+    );
   }
 }

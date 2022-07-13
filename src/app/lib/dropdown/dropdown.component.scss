@@ -17,7 +17,9 @@
         align-items: center;
     }
     .dropdown-menu {
-      width: 98%;
+        position: absolute;
+        z-index: 1;
+        width: 98%;
         overflow-y: scroll;
         max-height: 224px;
         padding: 0px;

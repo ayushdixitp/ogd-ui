@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 # this will fix all lint errors and will check for commit message issues...
-npx lint-staged
 npm run prettier
+npx lint-staged

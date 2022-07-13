@@ -23,6 +23,11 @@ export class WebChatbotComponent implements OnInit {
       .subscribe((event: any) => {
         console.log('toggle', event.payload);
       });
+    this.broadcastService
+      .on(AppEventType.SELECTED_PAGE)
+      .subscribe((event: any) => {
+        console.log(event.payload.data.selectedPageId);
+      });
 
     this.configuration = {
       refNum: 'PHENA0059',
