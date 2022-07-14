@@ -11,14 +11,10 @@ export class HeaderComponent implements OnInit {
   @Input('experienceType') public experienceType!: string;
   @Input('botType') public botType!: string;
   @Input('phnNumber') public phnNumber!: string;
-  @Input('time') public time!: string;
-  @Input('isConfigured') public isConfigured!: boolean;
+  @Input('isLocaleListPage') public isLocaleListPage!: boolean;
+  @Input('meta') public meta: any ={};
 
   ngOnInit(): void {
-    // this.botType = "SMS Bot"
-    // this.experienceType = "Candidate Experience"
-    // this.phnNumber = "+9876543210"
-    // this.time = "2 days ago"
-    // this.isConfigured = true
+
   }
 }

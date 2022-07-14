@@ -7,7 +7,18 @@
     padding: 16px 30px 20px 32px;
     gap: 10px;
     background: $color-white;
-    box-shadow: inset 0px -1px 0px #DFE3E6;
+    box-shadow: inset 0px -1px 0px $color-light-grey58;
+
+    .only-title{
+        font-family: 'Proxima Nova';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 24px;
+        line-height: 32px;
+        color: $color-dark-grey64;
+        margin-top: 24px;
+        margin-bottom: 10px;
+    }
 
     .experience-type{
         font-family: 'Proxima Nova';
@@ -15,7 +26,7 @@
         font-weight: 400;
         font-size: 14px;
         line-height: 20px;
-        color: #4B6479;
+        color: $pp-ds-color-neutral-main;
     }
 
     .sms-bound{
@@ -29,12 +40,12 @@
             font-weight: 500;
             font-size: 24px;
             line-height: 32px;
-            color: #1C2024;
+            color: $color-dark-grey64;
         }
 
         .sms-pad{
             padding: 1px 8px;
-            background: #EFF8F8;
+            background: $color-pp-lighter-blue61;
             border-radius: 4px;
 
             .sms{
@@ -43,22 +54,25 @@
                 font-weight: 400;
                 font-size: 12px;
                 line-height: 20px;
-                color: #006E78;
+                color: $color-pp-darker-blue10;
             }
         }
     }
 
-    .updated-time{
-        display: flex;
-        gap: 5px;
-
-        .time{
-            font-family: 'Proxima Nova';
-            font-style: normal;
-            font-weight: 400;
-            font-size: 14px;
-            color: #93A1AB;
-        }
+    .reset-button{
+        position: absolute;
+        top: 36px;
+        left: 84%;
+        padding: 4px 14px;
+        border-color: $color-pp-darker-blue9;
+        background-color: $color-white;
+        border-radius: 4px;
+        font-family: 'Proxima Nova';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 22px;
+        color: $color-pp-darker-blue9;
     }
 }
 
