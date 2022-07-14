@@ -12,9 +12,7 @@ export class HeaderComponent implements OnInit {
   @Input('botType') public botType!: string;
   @Input('phnNumber') public phnNumber!: string;
   @Input('isLocaleListPage') public isLocaleListPage!: boolean;
-  @Input('meta') public meta: any ={};
+  @Input('meta') public meta: any = {};
 
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void {}
 }
