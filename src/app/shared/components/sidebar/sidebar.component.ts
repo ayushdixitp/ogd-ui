@@ -12,8 +12,7 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onAccordionClick(event: any){
-    console.log(event.target)
-    
+  onAccordionClick(event: any) {
+    console.log(event.target);
   }
 }
