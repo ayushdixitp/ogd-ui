@@ -6,7 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "concat:bundles": "cat dist/chatbot-management-app/{runtime,polyfills,main}.js > elements.js",
-    "build:js": "rm -rf dist && ng build --output-hashing none",
+    "build:js": "rm -rf dist && prettier --write \"src/**/*.ts\" && ng build --output-hashing none",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "prettier": "prettier --write \"src/**/*.ts\"",

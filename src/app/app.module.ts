@@ -8,18 +8,20 @@ import { AppComponent } from './app.component';
 import { BaseComponent } from './layouts/base/base.component';
 import { CleanComponent } from './layouts/clean/clean.component';
 import { WebChatbotComponent } from './pages/web-chatbot/web-chatbot.component';
-import { SidebarComponent } from './shared/components/sidebar/sidebar.component';
 import { SharedModule } from './shared/shared.module';
 
 @NgModule({
-  declarations: [AppComponent, BaseComponent, CleanComponent, SidebarComponent],
+  declarations: [AppComponent, CleanComponent, BaseComponent],
   imports: [BrowserModule, AppRoutingModule, CommonModule, SharedModule],
   providers: [],
-  bootstrap: [AppComponent],
+  bootstrap: [],
 })
 export class AppModule {
   constructor(private injector: Injector) {
-    const el = createCustomElement(WebChatbotComponent, { injector });
+    const el = createCustomElement(AppComponent, { injector });
     customElements.define('chatbot-management-app', el);
+  }
+  ngDoBootstrap(appRef: ApplicationRef) {
+    appRef.bootstrap(AppComponent); // Or some other component
   }
 }

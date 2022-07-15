@@ -1,5 +1,13 @@
-import { Component, Input, OnInit, ElementRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  AfterViewInit,
+  ElementRef,
+  ViewChild,
+} from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { AppEvent } from 'src/app/shared/services/broadcast.event.class';
 import { AppEventType } from '../../shared/enums/event.enum';
 import { BroadcastService } from '../../shared/services/broadcast.service';
 
@@ -11,16 +19,15 @@ import { BroadcastService } from '../../shared/services/broadcast.service';
 export class CheckboxComponent implements OnInit {
   @ViewChild('svg') svg: ElementRef | undefined;
 
+  @Input('isActive') public isActive!: boolean;
+  @Input('isDisabled') public isDisabled!: boolean;
+  @Input('id') public id!: string;
+
   constructor(private broadcastService: BroadcastService) {}
 
   checkbox!: FormGroup;
 
-  @Input('isActive') public isActive!: boolean;
-  @Input('isDisabled') public isDisabled!: boolean;
-
   ngOnInit(): void {
-    console.log(this.isActive);
-    console.log(this.svg);
     this.checkbox = new FormGroup({
       control: new FormControl(this.isActive),
     });
@@ -35,9 +42,11 @@ export class CheckboxComponent implements OnInit {
 
   onChange(event: any) {
     this.isActive = event.target.checked;
-    this.broadcastService.broadcast({
-      name: AppEventType.CHECKBOX_EVENT,
-      data: { isActive: this.isActive },
-    });
+    this.broadcastService.dispatch(
+      new AppEvent(AppEventType.CHECKBOX_EVENT, {
+        id: this.id,
+        isActive: this.isActive,
+      })
+    );
   }
 }

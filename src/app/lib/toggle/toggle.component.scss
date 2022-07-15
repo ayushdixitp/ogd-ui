@@ -18,7 +18,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: $color-spanish-gray-6;
+    background-color: $color-light-grey58;
     border-radius: 16px;
     transition: 0.4s;
     cursor: pointer;
@@ -35,7 +35,7 @@
     transition: 0.4s;
   }
   input:checked + .slide{
-    background-color: $color-brand-blue-6;
+    background-color: $color-pp-dark-light-blue3;
   }
   input:checked + .slide:before{
     transform: translatex(22px);

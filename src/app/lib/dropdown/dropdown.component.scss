@@ -1,8 +1,9 @@
 @import '../../../styles/styles.scss';
 
-.dropdown {    
+.dropdown {
     cursor: pointer;
     .dropdown-title {
+        margin: 0px;
         border: 1px solid $color-white;
         padding: 12px 16px;
         font-family: 'Proxima Nova';
@@ -17,7 +18,9 @@
         align-items: center;
     }
     .dropdown-menu {
-      width: 98%;
+        position: absolute;
+        z-index: 1;
+        width: 98%;
         overflow-y: scroll;
         max-height: 224px;
         padding: 0px;

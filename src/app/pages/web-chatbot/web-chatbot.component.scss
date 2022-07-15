@@ -1,0 +1,93 @@
+.main-container {
+    // padding: 0px 10px;
+    display: flex;
+    height: 100vh;
+    aside {
+        width: 15%;
+        @media screen and (max-width: 1500px) {
+            width: 25%;
+          }
+    }
+    .container {
+        width: 85%;
+        @media screen and (max-width: 1500px) {
+            width: 75%;
+          }
+        .container-heading {
+            padding: 32px;
+            border-bottom: 1px solid #DFE3E6;
+            background: #FFFFFF;
+            box-shadow: inset 0px -1px 0px #DFE3E6;
+            font-family: 'Proxima Nova';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 24px;
+            line-height: 32px;
+            color: #1C2024;
+            flex: none;
+            order: 2;
+            flex-grow: 0;
+        }
+        .container-body {
+            padding: 32px;
+        }
+        .config-heading{
+            font-family: 'Proxima Nova';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 18px;
+            line-height: 28px;
+            color: #1C2024;
+            margin: 20px 0px;
+        }
+        .card-one-item {
+            display: flex;        
+        }
+        .section-infotext {
+            padding: 0px 10px;
+        }
+    }
+    
+    .card {
+        margin-top: 30px;
+        padding: 16px 15px;
+        box-sizing: border-box;
+        width: 100%;
+        background: #FFFFFF;
+        border: 1px solid #DFE3E6;
+        border-radius: 6px;
+    
+        .attribute {
+            width: 100%;
+            margin: 0 auto;
+            margin-top: 24px;
+    
+            .attribute-heading {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                padding: 14px 16px;
+                background: #F7FAFB;
+                /* Inside auto layout */
+                flex: none;
+                order: 1;
+                flex-grow: 0;
+            }
+    
+            .attribute-items {
+                display: flex;
+                padding: 20px;
+                align-items: center;
+    
+                .attribute-icon {
+                    padding: 10px 30px;
+                }
+    
+                .attribute-items-heading {
+                    display: flex;
+                    flex-direction: column;
+                }
+            }
+        }
+    }
+}

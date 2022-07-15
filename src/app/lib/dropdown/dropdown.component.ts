@@ -20,7 +20,7 @@ export class DropdownComponent implements OnInit {
     { id: 1, item: 'Cognizant EN/FR' },
   ];
 
-  @HostListener('click', ['$event.target']) onClick(e: any) {
+  @HostListener('window:click', ['$event.target']) onWindowClick(e: any) {
     // if condition to if check if click is happened outside or not
     if (e.id != 'dropdown') {
       if (this.isDropdownListVisible) {
