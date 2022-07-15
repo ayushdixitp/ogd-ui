@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, HostListener } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { BroadcastService } from 'src/app/shared/services/broadcast.service';
@@ -25,9 +25,11 @@ export class AccordionComponent implements OnInit {
   @Input() experienceType!: string;
   @Input() defaultPageId!: string;
   @Input() iconSrc!: string;
+  @Input('isShowPages') public isShowPages: boolean = false;
+  @Input('id') public id: string = '';
 
-  isShowPages: boolean = false;
   selectedPageId: string = '';
+  accordionData: any;
 
   ngOnInit(): void {
     this.selectedPageId = this.pages.some(
@@ -35,22 +37,36 @@ export class AccordionComponent implements OnInit {
     )
       ? this.defaultPageId
       : this.pages[0].pageId;
-    this.broadcastService.broadcast({
-      name: AppEventType.SELECTED_PAGE,
-      data: { selectedPageId: this.selectedPageId },
+
+    this.broadcastService.on(AppEventType.ACCORDION_EVENT).subscribe(data => {
+      this.accordionData = data.payload;
+      console.log(this.accordionData.accordionId);
+      if (this.accordionData.accordionId === this.id) {
+        this.isShowPages = !this.isShowPages;
+      } else {
+        this.isShowPages = false;
+      }
     });
   }
 
   onClick() {
-    this.isShowPages = !this.isShowPages;
+    this.broadcastService.dispatch(
+      new AppEvent(AppEventType.ACCORDION_EVENT, {
+        selectedPageId: this.selectedPageId,
+        accordionId: this.id,
+        isAccordionOpen: this.isShowPages,
+      })
+    );
   }
 
   onBotCardClick(event: any) {
+    this.isShowPages = !this.isShowPages;
     this.selectedPageId = event.target.id;
     this.broadcastService.dispatch(
-      new AppEvent(AppEventType.SELECTED_PAGE, {
-        name: AppEventType.SELECTED_PAGE,
-        data: { selectedPageId: this.selectedPageId },
+      new AppEvent(AppEventType.ACCORDION_EVENT, {
+        selectedPageId: this.selectedPageId,
+        accordionId: this.id,
+        isAccordionOpen: this.isShowPages,
       })
     );
   }

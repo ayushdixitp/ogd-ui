@@ -1,12 +1,12 @@
-<section class="container" (click)="onAccordionClick($event)">
+<section class="container">
     <ng-container *ngIf="isLocaleListPage; else others">
         <div class="button"></div>
     </ng-container>
     <ng-template #others>
         <app-dropdown></app-dropdown>
         <app-dropdown></app-dropdown>
-        <app-accordion experienceType="Candidate Experience"></app-accordion>
-        <app-accordion experienceType="Employee Experience"></app-accordion>
-        <app-accordion experienceType="Recruiter Experience"></app-accordion>
+        <app-accordion experienceType="Candidate Experience" id="cx"></app-accordion>
+        <app-accordion experienceType="Employee Experience" id="ex"></app-accordion>
+        <app-accordion experienceType="Recruiter Experience" id="rx"></app-accordion>
     </ng-template>
 </section>

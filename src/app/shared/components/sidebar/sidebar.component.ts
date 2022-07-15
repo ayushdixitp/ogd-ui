@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { AppEventType } from '../../enums/event.enum';
+import { BroadcastService } from '../../services/broadcast.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -6,13 +8,9 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent implements OnInit {
-  constructor() {}
+  constructor(private broadcastService: BroadcastService) {}
 
   @Input('isLocaleListPage') public isLocaleListPage!: boolean;
 
   ngOnInit(): void {}
-
-  onAccordionClick(event: any) {
-    console.log(event.target);
-  }
 }

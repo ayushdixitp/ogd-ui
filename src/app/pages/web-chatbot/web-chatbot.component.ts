@@ -24,7 +24,7 @@ export class WebChatbotComponent implements OnInit {
         console.log('toggle', event.payload);
       });
     this.broadcastService
-      .on(AppEventType.SELECTED_PAGE)
+      .on(AppEventType.ACCORDION_EVENT)
       .subscribe((event: any) => {
         console.log(event.payload.data.selectedPageId);
       });
