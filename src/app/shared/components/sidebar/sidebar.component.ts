@@ -11,4 +11,9 @@ export class SidebarComponent implements OnInit {
   @Input('isLocaleListPage') public isLocaleListPage!: boolean;
 
   ngOnInit(): void {}
+
+  onAccordionClick(event: any){
+    console.log(event.target)
+    
+  }
 }

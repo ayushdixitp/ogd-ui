@@ -1,4 +1,4 @@
-<section class="container">
+<section class="container" (click)="onAccordionClick($event)">
     <ng-container *ngIf="isLocaleListPage; else others">
         <div class="button"></div>
     </ng-container>
