@@ -1,0 +1,293 @@
+   
+// @media screen and (-webkit-min-device-pixel-ratio:0) {
+//   input[type='range'] {
+//     overflow: hidden;
+//     width: 260px;
+//     border-radius: 7px;
+//     -webkit-appearance: none;
+//     background-color: #BDC1CC;
+//   }
+  
+//   input[type='range']::-webkit-slider-runnable-track {
+//     height: 4px;
+//     -webkit-appearance: none;
+//     color: #01B2C0;
+//     margin-top: -1px;
+//   }
+  
+//   input[type='range']::-webkit-slider-thumb {
+//     -webkit-appearance: none;
+//     appearance: none;
+//     width: 12px;
+//     border-radius: 50%;
+//     height: 12px;
+//     cursor: pointer;
+//     // background: #01B2C0;
+//     background: blue;
+//     box-shadow: -407px 0 0 400px #01B2C0;
+// 	z-index: 1;
+//   }
+
+// }
+
+// .slider {
+//   -webkit-appearance: none;
+//   width: 320px;
+//   height: 4px;
+//   background: #BDC1CC;
+//   border-radius: 7px;
+// }
+
+// .slider::-webkit-slider-runnable-track {
+//   -webkit-appearance: none;
+// }
+
+// .slider::-webkit-slider-thumb {
+//   -webkit-appearance: none;
+//   appearance: none;
+//   width: 12px;
+//   height: 12px;
+//   background: #01B2C0;
+//   cursor: pointer;
+//   border-radius:50%;
+// }
+
+// html {
+// 	height: 100%;
+// 	display: flex;
+// 	align-items: center;
+// 	justify-content: center;
+// 	font-family: 'Work Sans', sans-serif;
+// 	text-align: center;
+// 	h1, h2, h3, h4, h5, h6 {
+// 		margin: 0;
+// 	}
+// 	h1 {
+// 		color: #333;
+// 		font-weight: 500;
+// 	}
+// 	h3 {
+// 		color: #aaa;
+// 		font-weight: 500;
+// 	}
+// 	h4 {
+// 		color: #999;
+// 		font-weight: 500;
+// 		&:after {
+// 			content: "%";
+// 			padding-left: 1px;
+// 		}
+// 	}
+// 	// now for the good stuff 🎉
+// 	input[type="range"] {
+// 		outline: 0;
+// 		border: 0;
+// 		border-radius: 500px;
+// 		width: 400px;
+// 		max-width: 100%;
+// 		margin: 24px 0 16px;
+// 		transition: box-shadow 0.2s ease-in-out;
+// 		// Chrome
+// 		@media screen and (-webkit-min-device-pixel-ratio:0) {
+// 			& {
+// 				overflow: hidden;
+// 				height: 40px;
+// 				-webkit-appearance: none;
+// 				background-color: #ddd;
+// 			}
+// 			&::-webkit-slider-runnable-track {
+// 				height: 40px;
+// 				-webkit-appearance: none;
+// 				color: #444;
+// 				// margin-top: -1px;
+// 				transition: box-shadow 0.2s ease-in-out;
+// 			}
+// 			&::-webkit-slider-thumb {
+// 				width: 40px;
+// 				-webkit-appearance: none;
+// 				height: 40px;
+// 				cursor: ew-resize;
+// 				background: #fff;
+// 				box-shadow: -340px 0 0 320px #1597ff, inset 0 0 0 40px #1597ff;
+// 				border-radius: 50%;
+// 				transition: box-shadow 0.2s ease-in-out;
+// 				position: relative;
+// 				// top: 1px;
+// 			}
+// 			&:active::-webkit-slider-thumb {
+// 				background: #fff;
+// 				box-shadow: -340px 0 0 320px #1597ff, inset 0 0 0 3px #1597ff;
+// 			}
+// 		}
+// 		// Firefox
+// 		&::-moz-range-progress {
+// 			background-color: #43e5f7; 
+// 		}
+// 		&::-moz-range-track {  
+// 			background-color: #9a905d;
+// 		}
+// 		// IE
+// 		&::-ms-fill-lower {
+// 			background-color: #43e5f7; 
+// 		}
+// 		&::-ms-fill-upper {  
+// 			background-color: #9a905d;
+// 		}
+// 	}
+// }
+// #h4-container {
+// 	width: 400px;
+// 	max-width: 100%;
+// 	padding: 0 20px;
+// 	box-sizing: border-box;
+// 	position: relative;
+// 	#h4-subcontainer {
+// 		width: 100%;
+// 		position: relative;
+// 		h4 {
+// 			display: flex;
+// 			align-items: center;
+// 			justify-content: center;
+// 			position: absolute;
+// 			top: 0;
+// 			width: 40px;
+// 			height: 40px;
+// 			color: #fff !important;
+// 			font-size: 12px;
+// 			transform-origin: center -10px;
+// 			transform: translateX(-50%);
+// 			transition: margin-top 0.15s ease-in-out,
+// 				opacity 0.15s ease-in-out;
+// 			span {
+// 				position: absolute;
+// 				width: 100%;
+// 				height: 100%;
+// 				top: 0;
+// 				left: 0;
+// 				background-color: #1597ff;
+// 				border-radius: 0 50% 50% 50%;
+// 				transform: rotate(45deg);
+// 				z-index: -1;
+// 			}
+// 		}
+// 	}
+// }
+// input:not(:active) + #h4-container h4 {
+// 	opacity: 0;
+// 	margin-top: -50px;
+// 	pointer-events: none;
+// }
+
+
+
+// Webkit cannot style progress so we fake it with a long shadow
+// on the thumb element
+@function webkit-slider-thumb-shadow($i: 1) {
+  $val: #{$i}px 0 0 -#{(13px - 3px) / 2} #{#BDC1CC};
+  @if $i == 1 {
+    @for $k from 2 through 1000 {
+      $val: #{$val}, webkit-slider-thumb-shadow($k);
+    }
+  }
+  @return $val;
+}
+
+.container {
+	position: relative;
+	.range {
+	  // position: relative;
+	  appearance: none;
+	  width: 30%;
+	  overflow: hidden;
+	  cursor: pointer;
+	  border-radius: 50%;
+	}
+
+  .max-value,.min-value{
+    position: absolute;
+    color:#4B6479;
+    top:20px;
+    font-family: Proxima Nova;
+    font-style: Regular;   
+    font-size: 20px;
+    line-height: 16px;
+  }
+	
+	.max-value {
+		left: 29.5%;
+	}
+	.min-value {
+		left: 0%;
+	}
+}
+
+// Webkit
+.range::-webkit-slider-runnable-track {
+  height: 30px;
+  border-radius: 10px;
+  background: linear-gradient(to bottom, #01B2C0, #01B2C0) 100% 50% / 100% 3px no-repeat transparent;
+}
+
+.range::-webkit-slider-thumb {
+  position: relative;
+  appearance: none;
+  height: 13px;
+  width: 13px;
+  background:#01B2C0;
+  border-radius: 50%;
+  top: 50%;
+  margin-top: (-13px/2);
+  box-shadow: webkit-slider-thumb-shadow();
+}
+
+
+// // Base Colors
+// $shade-10: #2c3e50 !default;
+// $shade-1: #d7dcdf !default;
+// $shade-0: #fff !default;
+// $teal: #1abc9c !default;
+
+
+// // Range Slider
+// $range-width: 100% !default;
+
+// $range-handle-color: $shade-10 !default;
+// $range-handle-color-hover: $teal !default;
+// $range-handle-size: 20px !default;
+
+// $range-track-color: $shade-1 !default;
+// $range-track-height: 10px !default;
+
+// $range-label-color: $shade-10 !default;
+// $range-label-width: 60px !default;
+
+
+// .range-slider{
+// 	fill: #1abc9c;
+// }
+
+// .range-slider__range {
+//   -webkit-appearance: none;
+//   width: calc(100% - (#{$range-label-width + 13px}));
+//   height: $range-track-height;
+//   border-radius: 5px;
+//   background: $range-track-color;
+//   outline: none;
+//   padding: 0;
+//   margin: 0;
+
+//   // Range Handle
+//   &::-webkit-slider-thumb {
+//     appearance: none;
+//     width: $range-handle-size;
+//     height: $range-handle-size;
+//     border-radius: 50%;
+//     background: $range-handle-color-hover;
+//     cursor: pointer;
+//     transition: background .15s ease-in-out;
+//   }
+// }
+// .range_value{
+// 	display:flex;
+// 	justify-content: space-between;
+// }

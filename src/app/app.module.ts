@@ -6,12 +6,14 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CheckboxComponent } from './lib/checkbox/checkbox.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { SearchFilterPipe } from './shared/pipes/search-filter.pipe';
+import { ProgressbarComponent } from './lib/progressbar/progressbar.component';
 
 @NgModule({
-  declarations: [AppComponent, CheckboxComponent, SearchFilterPipe],
+  declarations: [
+    AppComponent,
+    ProgressbarComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
