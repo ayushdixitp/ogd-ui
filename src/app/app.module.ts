@@ -10,10 +10,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ProgressbarComponent } from './lib/progressbar/progressbar.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    ProgressbarComponent,
-  ],
+  declarations: [AppComponent, ProgressbarComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
