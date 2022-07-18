@@ -2,11 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { ToggleComponent } from 'src/app/lib/toggle/toggle.component';
-import { CheckboxComponent } from 'src/app/lib/checkbox/checkbox.component';
+import { ToggleComponent } from '../lib/toggle/toggle.component';
+import { CheckboxComponent } from '../lib/checkbox/checkbox.component';
 import { DropdownComponent } from '../lib/dropdown/dropdown.component';
 import { AccordionComponent } from '../lib/accordion/accordion.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { CardComponent } from '../lib/card/card.component';
 
 @NgModule({
   imports: [CommonModule, ReactiveFormsModule, FormsModule, AccordionComponent],
@@ -15,6 +16,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
     CheckboxComponent,
     DropdownComponent,
     SidebarComponent,
+    CardComponent,
   ],
   exports: [
     ToggleComponent,
@@ -22,6 +24,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
     DropdownComponent,
     AccordionComponent,
     SidebarComponent,
+    CardComponent,
   ],
 })
 export class SharedModule {}

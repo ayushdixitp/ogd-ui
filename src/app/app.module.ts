@@ -7,7 +7,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BaseComponent } from './layouts/base/base.component';
 import { CleanComponent } from './layouts/clean/clean.component';
-import { WebChatbotComponent } from './pages/web-chatbot/web-chatbot.component';
 import { SharedModule } from './shared/shared.module';
 
 @NgModule({
