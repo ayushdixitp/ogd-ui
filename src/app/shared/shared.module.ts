@@ -8,6 +8,7 @@ import { DropdownComponent } from '../lib/dropdown/dropdown.component';
 import { AccordionComponent } from '../lib/accordion/accordion.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { CardComponent } from '../lib/card/card.component';
+import { LocalesComponent } from '../pages/locales/locales.component';
 
 @NgModule({
   imports: [CommonModule, ReactiveFormsModule, FormsModule, AccordionComponent],

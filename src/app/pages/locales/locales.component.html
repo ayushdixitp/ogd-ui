@@ -1,3 +1,6 @@
-<ng-container *ngFor="let item of data">
-  <phenom-simple-card [text]="item" (click)="getSelectedLocale(item)"></phenom-simple-card>
+<div>
+   <app-searchbox (searchTextChanged)="onSearchTextEntered($event)"></app-searchbox>
+</div>
+<ng-container *ngFor="let locale of locales | searchFilter:searchText ">
+  <phenom-simple-card [text]="locale.displayText" (click)="getSelectedLocale(locale)"></phenom-simple-card>
 </ng-container>
