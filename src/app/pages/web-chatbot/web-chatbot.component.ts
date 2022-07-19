@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AppEventType } from 'src/app/shared/enums/event.enum';
 import { BroadcastService } from 'src/app/shared/services/broadcast.service';
+import { SharedService } from 'src/app/shared/shared.service';
+SharedService;
 
 @Component({
   selector: 'app-web-chatbot',
@@ -8,7 +10,10 @@ import { BroadcastService } from 'src/app/shared/services/broadcast.service';
   styleUrls: ['./web-chatbot.component.scss'],
 })
 export class WebChatbotComponent implements OnInit {
-  constructor(private broadcastService: BroadcastService) {}
+  constructor(
+    private broadcastService: BroadcastService,
+    private sharedService: SharedService
+  ) {}
   finalstructure: any = {};
   skeleton: any;
   configuration: any;
@@ -28,6 +33,14 @@ export class WebChatbotComponent implements OnInit {
       .subscribe((event: any) => {
         console.log(event.payload.data.selectedPageId);
       });
+    console.log(new Date().getSeconds());
+    this.sharedService.getskeleton().subscribe((data: any) => {
+      console.log(new Date().getSeconds());
+      this.skeleton = data;
+      console.log(data);
+
+      this.createFinalStructure(this.skeleton);
+    });
 
     this.configuration = {
       refNum: 'PHENA0059',
@@ -114,99 +127,48 @@ export class WebChatbotComponent implements OnInit {
       isBotPopUpCloseStateEnabled: true,
       showChatbot: false,
     };
-    this.skeleton = {
-      pageId: 'career-site-bot',
-      heading: 'Career Site Bot',
-      configurations: [
-        {
-          id: 'feature-activation',
-          svg: '',
-          heading: 'CMP_FEATURE_ACTIVATION',
-          infoText: 'CMP_ENABLING...',
-          actions: {
-            type: 'toggle',
-          },
-          configurationKey: 'isChannelEnabled',
-          isChannelEnabled: true, // add during merge
-        },
-        {
-          id: 'feature-details',
-          heading: 'CMP_FEATURE_DETAILS',
-          features: [
-            {
-              id: 'find-a-job',
-              literal: 'FIND_A_JOB',
-              infoText: 'CMP_ENABLING_FEATURES*',
-              attributeHeading: 'LIST OF ATTRIBUTES',
-              configurationKey: 'isPersonalizationOnDemandEnabled',
-              attributeConfigurationKey: 'personalizationOnDemandSlots',
-              attributes: [
-                {
-                  id: 'upload-resume',
-                  literal: 'UPLOAD_A_RESUME',
-                  infoText: 'CMP_*',
-                  actions: {
-                    type: 'checkbox',
-                    state: 'disabled',
-                  },
-                  configurationKey: 'user_preferred_locations',
-                },
-                {
-                  id: 'upload-resume',
-                  literal: 'UPLOAD_A_RESUME',
-                  infoText: 'CMP_*',
-                  actions: {
-                    type: 'checkbox',
-                    state: 'disabled',
-                  },
-                  configurationKey: 'user_skills',
-                },
-              ],
-            },
-            {
-              id: 'faq',
-              literal: 'CMP_FAQ',
-              infoText: 'CMP_FAQ_*',
-              attributeHeading: 'CMP_LIST_*',
-              configurationKey: 'isFaqEnabled',
-              attributes: [
-                {
-                  id: 'confidence-threshold',
-                  literal: 'CMP_CONFIDENCE_THRESHOLD',
-                  infoText: 'CMP_*',
-                  actions: {
-                    type: 'range',
-                  },
-                  configurationKey: 'faqSuggestionsThreshold',
-                  isInternal: true,
-                },
-              ],
-            },
-            {
-              id: 'faq',
-              literal: 'CMP_FAQ',
-              infoText: 'CMP_FAQ_*',
-              attributeHeading: 'CMP_LIST_*',
-              configurationKey: 'isFaqEnabled',
-              attributes: [
-                {
-                  id: 'confidence-threshold',
-                  literal: 'CMP_CONFIDENCE_THRESHOLD',
-                  infoText: 'CMP_*',
-                  actions: {
-                    type: 'range',
-                  },
-                  configurationKey: 'faqSuggestionsThreshold',
-                  isInternal: true,
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    };
 
-    this.createFinalStructure(this.skeleton);
+    let a = {
+      CMP_FEATURE_ACTIVATION: '',
+      CMP_ENABLING_THIS_FEATURE_HELPS_CANDIDATES_TO_ENGAGE_WITH_CHATBOT_IN_EVERY_PAGE:
+        '',
+      CMP_FEATURE_DETAILS: '',
+      CMP_ENABLING_THIS_FEATURE_LET_CANDIDATES_FIND_RIGHT_JOB: '',
+      CMP_ENABLING_LIST_OF_ATTRIBUTES: '',
+      CMP_USER_WILL_BE_ABLE_UPLOAD_LATEST_RESUME: '',
+      CMP_LOCATION: '',
+      CMP_USER_WILL_BE_ABLE_TO_ENTER_PREFERRED_LOCATION: '',
+      CMP_JOB_TITLE: '',
+      CMP_USER_WILL_BE_ABLE_TO_ENTER_LATEST_JOB_TITLE: '',
+      CMP_JOB_CARDS: '',
+      CMP_CONFIGURE_WHAT_TO_SHOW_IN_JOB_CARDS: '',
+      CMP_LIST_DETAILS_INSIDE_JOB_CARDS: '',
+      CMP_JOB_SEARCH: '',
+      CMP_CONFIGURE_ENABLING_THIS_FEATURE_LET_CANDIDATE_SEARCH_FOR_JOBS: '',
+      CMP_LIST_OF_ATTRIBUTES: '',
+      CMP_CATEGORY: '',
+      CMP_USER_WILL_BE_ABLE_TO_ENT_ENTER_PREFFERED_CATEGORY: '',
+      CMP_USER_WILL_BE_ABLE_TO_ENT_ENTER_PREFFERED_LOCATION: '',
+      CMP_FAQ: '',
+      CMP_FAQ_ENABLING: '',
+      CMP_CONFIDENCE_THRESHOLD: '',
+      CMP_CONFIGURE_CONFIDENCE_THRESHOLD_FOR_MATCHING_FAQS: '',
+      CMP_JOB_ALERTS: '',
+      CMP_ENABLING_THIS_FEATURE_LET_CANDIDATES_SET_JOB_ALERTS: '',
+      CMP_USER_WILL_BE_ABLE_ENTER_PREFFERED_CATEGORY: '',
+      CMP_USER_WILL_BE_ABLE_ENTER_PREFFERED_LOCATION: '',
+      CMP_EMAIL_ADDRESS: '',
+      CMP_USER_WILL_BE_ABLE_ENTER_JOB_ALERT_FREQUENCY: '',
+      CMP_QUICK_APPLY: '',
+      CMP_ENABLING_THIS_FEATURE_LET_CANDIDATES_QUICK_APPLY: '',
+      CMP_USER_WILL_BE_ABLE_ENTER_EMAIL: '',
+      CMP_COVID_MENU: '',
+      CMP_ENABLING_THIS_FEATURE_LET_CANDIDATES_KNOW_ABOUT_LATEST_COVID_DETAILS:
+        '',
+      CMP_SCREENING: '',
+      CMP_ENABLING_THIS_FEATURE_LET_BOT_ASK_SCREENING_QUESTIONS_TO_CANDIDATES:
+        '',
+    };
   }
 
   createFinalStructure(skeleton: any) {
@@ -234,8 +196,6 @@ export class WebChatbotComponent implements OnInit {
       }
       return configuration;
     });
-
     skeleton.configurations = finalstructure;
-    console.log(skeleton);
   }
 }

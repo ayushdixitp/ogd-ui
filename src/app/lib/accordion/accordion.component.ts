@@ -35,14 +35,16 @@ export class AccordionComponent implements OnInit {
     )
       ? this.defaultPageId
       : this.pages[0].pageId;
-    this.broadcastService.broadcast({
-      name: AppEventType.SELECTED_PAGE,
-      data: { selectedPageId: this.selectedPageId },
-    });
   }
 
   onClick() {
     this.isShowPages = !this.isShowPages;
+    this.broadcastService.dispatch(
+      new AppEvent(AppEventType.CHECKBOX_EVENT, {
+        name: AppEventType.SELECTED_PAGE,
+        data: { selectedPageId: this.selectedPageId },
+      })
+    );
   }
 
   onBotCardClick(event: any) {

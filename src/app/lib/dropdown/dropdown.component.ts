@@ -8,6 +8,7 @@ import {
 import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 import { AppEventType } from 'src/app/shared/enums/event.enum';
 import { DropdownItem } from 'src/app/shared/interfaces/dropdown.interface';
+import { AppEvent } from 'src/app/shared/services/broadcast.event.class';
 
 @Component({
   selector: 'app-dropdown',
@@ -49,10 +50,13 @@ export class DropdownComponent implements OnInit {
     this.isDropdownListVisible = !this.isDropdownListVisible;
     this.title = selectedItem.item;
     this.selectedItem.patchValue({ name: selectedItem.item });
-    this.broadcastService.broadcast({
-      name: AppEventType.CLICKED_ON_LOCALE_DROPDOWN,
-      data: { selectedItem },
-    });
+
+    this.broadcastService.dispatch(
+      new AppEvent(AppEventType.CHECKBOX_EVENT, {
+        name: AppEventType.CLICKED_ON_LOCALE_DROPDOWN,
+        data: { selectedItem },
+      })
+    );
   }
 
   onTitleClick() {
