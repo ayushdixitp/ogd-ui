@@ -1,0 +1,25 @@
+<!-- <main>
+   <aside>
+
+   </aside>   
+   <div class="container">
+      <div class="searchbox">
+         <app-searchbox (searchTextChanged)="onSearchTextEntered($event)" ></app-searchbox>
+      </div>
+      <div class="locale-container">
+         <div class="locale" *ngFor="let locale of localeList | searchFilter:searchText ">
+             <app-card locale={{locale}}></app-card>
+         </div>
+      </div>   
+   </div>
+</main> -->
+
+
+<div class="searchbox">
+   <app-searchbox (searchTextChanged)="onSearchTextEntered($event)" ></app-searchbox>
+</div>
+<section class="locale-container">
+   <div class="locale" *ngFor="let locale of localeList | searchFilter:searchText ">
+      <app-card locale={{locale}}></app-card>
+   </div>
+</section>   
