@@ -13,18 +13,16 @@
 .container {
 	position: relative;
 	.range {
-	  // position: relative;
 	  appearance: none;
 	  width: 30%;
 	  overflow: hidden;
 	  cursor: pointer;
-	  border-radius: 50%;
 	}
 
   .max-value,.min-value{
     position: absolute;
     color:#4B6479;
-    top:20px;
+    top:30px;
     font-family: Proxima Nova;
     font-style: Regular;   
     font-size: 20px;
@@ -42,7 +40,6 @@
 // Webkit
 .range::-webkit-slider-runnable-track {
   height: 30px;
-  border-radius: 10px;
   background: linear-gradient(to bottom, #01B2C0, #01B2C0) 100% 50% / 100% 3px no-repeat transparent;
 }
 
