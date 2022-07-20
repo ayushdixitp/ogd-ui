@@ -40,7 +40,6 @@ export class AccordionComponent implements OnInit {
 
     this.broadcastService.on(AppEventType.ACCORDION_EVENT).subscribe(data => {
       this.accordionData = data.payload;
-      console.log(this.accordionData.accordionId);
       if (this.accordionData.accordionId === this.id) {
         this.isShowPages = !this.isShowPages;
       } else {
