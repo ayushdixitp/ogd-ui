@@ -1,46 +1,14 @@
 @import "../../../styles/styles.scss";
 
-  .body:hover,
-  .body:focus {
-    background-color: $color-pp-blue9;
-  }
-  
-  // .logo {
-  //   display:flex;
-  //   align-items: center;
-  //   background: $color-white;
-  //   border: 1px solid $color-light-grey58;
-  //   border-radius: 4px;
-  // }
-  
-  // .logo img {
-  //   width: 35.56px;
-  //   height: 20px;
-  //   left: -4px;
-  //   top: 4px;
-  // }
-
-  .locale {
-    width: 81%;
-    font-family: 'Proxima Nova';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 20px;
-    color: $color-pp-dark-blue55;
-    padding: 28px 20px;
-  }
-  
-  .body {
-    display: flex;
-    align-items: center;
-    width:100%;
-    max-width: 292px;
-    padding: 28px 68px;
-    box-shadow: 0px 0px 8px $color-lighter-black15;
-    background: $color-white;
+.phenom-simple-card {
+    background-color: $color-white;
+    border-radius: 8px;
+    box-shadow: $pp-ds-box-shadow-field-1;
+    margin: 24px;
+    margin-left:32px;
+    font-size: 16px;
+    padding: 20px;
     cursor: pointer;
-  }
-
-
-  
+    color: $color-pp-dark-blue7;
+    display: inline-block;
+}

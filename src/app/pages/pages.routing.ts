@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { SidebarComponent } from '../shared/components/sidebar/sidebar.component';
+import { LocalesComponent } from './locales/locales.component';
 import { WebChatbotComponent } from './web-chatbot/web-chatbot.component';
 
 export const PagesRoutes: Routes = [
@@ -9,6 +9,10 @@ export const PagesRoutes: Routes = [
       {
         path: 'home',
         component: WebChatbotComponent,
+      },
+      {
+        path: 'locales',
+        component: LocalesComponent,
       },
     ],
   },
