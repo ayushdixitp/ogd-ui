@@ -1,3 +1,15 @@
-section.sidebar {
-    margin-left: 280px;
+.main-container {
+    // padding: 0px 10px;
+    display: flex;
+    height: 100vh;
+    justify-content: space-between;
+    aside {
+        width: 15%;
+        @media screen and (max-width: 1500px) {
+            width: 25%;
+        }
+    }
+    .container {
+        width: 85%;
+    }
 }
