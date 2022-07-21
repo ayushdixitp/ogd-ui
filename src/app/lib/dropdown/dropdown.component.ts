@@ -60,6 +60,8 @@ export class DropdownComponent implements OnInit {
       .subscribe((event: any) => {
         if (event.payload.data.id == this.id) {
           this.isDropdownListVisible = !this.isDropdownListVisible;
+        } else {
+          this.isDropdownListVisible = false;
         }
       });
   }
