@@ -1,4 +1,4 @@
-<main class="dropdown" >
+<main [id]="id" class="dropdown" >
     <form [formGroup]="selectedItem" (ngSubmit)="selectOption">
             <p class="dropdown-title" id="dropdown" (click)="onTitleClick()">
                     {{ title }}

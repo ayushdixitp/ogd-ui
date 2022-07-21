@@ -1,7 +1,7 @@
-// Webkit cannot style progress so we fake it with a long shadow
-// on the thumb element
+// // Webkit cannot style progress so we fake it with a long shadow
+// // on the thumb element
 @function webkit-slider-thumb-shadow($i: 1) {
-  $val: #{$i}px 0 0 -#{(13px - 3px) / 2} #{#BDC1CC};
+  $val: #{$i}px 0 0 -#{calc((13px - 3px) / 2)} #{#BDC1CC};
   @if $i == 1 {
     @for $k from 2 through 1000 {
       $val: #{$val}, webkit-slider-thumb-shadow($k);
@@ -11,30 +11,32 @@
 }
 
 .container {
-	position: relative;
-	.range {
-	  appearance: none;
-	  width: 30%;
-	  overflow: hidden;
-	  cursor: pointer;
-	}
+  position: relative;
 
-  .max-value,.min-value{
+  .range {
+    width: -webkit-fill-available;
+    appearance: none;
+    // width: 30%;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .max-value,
+  .min-value {
     position: absolute;
-    color:#4B6479;
-    top:30px;
-    font-family: Proxima Nova;
-    font-style: Regular;   
+    color: #4B6479;
+    top: 30px;
     font-size: 20px;
     line-height: 16px;
   }
-	
-	.max-value {
-		left: 29.5%;
-	}
-	.min-value {
-		left: 0%;
-	}
+
+  .max-value {
+    left: 98%;
+  }
+
+  .min-value {
+    left: 0%;
+  }
 }
 
 // Webkit
@@ -48,9 +50,9 @@
   appearance: none;
   height: 13px;
   width: 13px;
-  background:#01B2C0;
+  background: #01B2C0;
   border-radius: 50%;
   top: 50%;
-  margin-top: (-13px/2);
+  margin-top: calc(-13px/2);
   box-shadow: webkit-slider-thumb-shadow();
 }

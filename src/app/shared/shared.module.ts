@@ -8,6 +8,7 @@ import { CheckboxComponent } from 'src/app/lib/checkbox/checkbox.component';
 import { DropdownComponent } from '../lib/dropdown/dropdown.component';
 import { AccordionComponent } from '../lib/accordion/accordion.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { ProgressbarComponent } from '../lib/progressbar/progressbar.component';
 
 @NgModule({
   imports: [
@@ -18,12 +19,14 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
     AccordionComponent,
   ],
   declarations: [
+    ProgressbarComponent,
     ToggleComponent,
     CheckboxComponent,
     DropdownComponent,
     SidebarComponent,
   ],
   exports: [
+    ProgressbarComponent,
     ToggleComponent,
     CheckboxComponent,
     DropdownComponent,

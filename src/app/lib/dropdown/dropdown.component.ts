@@ -16,7 +16,18 @@ import { AppEvent } from 'src/app/shared/services/broadcast.event.class';
   styleUrls: ['./dropdown.component.scss'],
 })
 export class DropdownComponent implements OnInit {
+  @Input() id!: string;
   @Input() listOfLocales: Array<DropdownItem> = [
+    { id: 1, item: 'Cognizant EN/US' },
+    { id: 1, item: 'Cognizant EN/FR' },
+    { id: 1, item: 'Cognizant EN/US' },
+    { id: 1, item: 'Cognizant EN/FR' },
+    { id: 1, item: 'Cognizant EN/US' },
+    { id: 1, item: 'Cognizant EN/FR' },
+    { id: 1, item: 'Cognizant EN/US' },
+    { id: 1, item: 'Cognizant EN/FR' },
+    { id: 1, item: 'Cognizant EN/US' },
+    { id: 1, item: 'Cognizant EN/FR' },
     { id: 1, item: 'Cognizant EN/US' },
     { id: 1, item: 'Cognizant EN/FR' },
   ];
@@ -44,6 +55,13 @@ export class DropdownComponent implements OnInit {
     this.selectedItem = new FormGroup({
       name: new FormControl(this.title, [Validators.required]),
     });
+    this.broadcastService
+      .on(AppEventType.DROPDOWN_EVENT)
+      .subscribe((event: any) => {
+        if (event.payload.data.id == this.id) {
+          this.isDropdownListVisible = !this.isDropdownListVisible;
+        }
+      });
   }
 
   selectOption(selectedItem: DropdownItem) {
@@ -60,6 +78,12 @@ export class DropdownComponent implements OnInit {
   }
 
   onTitleClick() {
-    this.isDropdownListVisible = !this.isDropdownListVisible;
+    // this.isDropdownListVisible = !this.isDropdownListVisible;
+    this.broadcastService.dispatch(
+      new AppEvent(AppEventType.DROPDOWN_EVENT, {
+        name: AppEventType.DROPDOWN_EVENT,
+        data: { id: this.id },
+      })
+    );
   }
 }
