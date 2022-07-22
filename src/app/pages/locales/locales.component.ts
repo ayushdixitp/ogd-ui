@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { UtilsService } from '../../shared/services/utils.service';
+import { SharedService } from '../../shared/shared.service';
 
 @Component({
   selector: 'locales',
@@ -7,52 +8,46 @@ import { UtilsService } from '../../shared/services/utils.service';
   styleUrls: ['./locales.component.scss'],
 })
 export class LocalesComponent implements OnInit {
-  response: any = {
-    customerName: 'Phenom',
-    locales: [
-      {
-        locale: 'en_US',
-      },
-      {
-        locale: 'en_FR',
-      },
-      {
-        locale: 'en_UK',
-      },
-      {
-        locale: 'en_IR',
-      },
-      {
-        locale: 'en_FR',
-      },
-      {
-        locale: 'en_UK',
-      },
-      {
-        locale: 'en_IR',
-      },
-    ],
-  };
+  @Input('refNum') public refNum!: string;
   data!: any;
   searchText: string = '';
   locales!: any;
+  response: any;
 
-  constructor(private utilsService: UtilsService) {}
+  constructor(
+    private utilsService: UtilsService,
+    private sharedService: SharedService
+  ) {}
+
   onSearchTextEntered(searchValue: string) {
     this.searchText = searchValue;
   }
 
   ngOnInit(): void {
-    this.data = this.response.locales.map((locale: any) => {
-      locale['displayText'] = this.getDisplayText(
-        this.response.customerName,
-        locale.locale
-      );
-      return this.getDisplayText(this.response.customerName, locale.locale);
-    });
-    console.log(this.data);
-    this.locales = this.response.locales;
-    console.log(this.locales);
+    this.response = this.getDistinctLocale();
+  }
+
+  getDistinctLocale() {
+    let experienceType = 'cx';
+    let serviceName =
+      'v1/customers/' +
+      this.refNum +
+      '/' +
+      experienceType +
+      '/distinct-locales';
+    // const url = `v1/configurations/PHENA0059/en_us/cx/web`
+    this.sharedService
+      .publicFirePOSTAPI(serviceName, 'chatbot_configurations_api')
+      .subscribe((result: any) => {
+        this.locales = result.locales;
+        this.data = result.locales.map((locale: any) => {
+          locale['displayText'] = this.getDisplayText(
+            result.customerName,
+            locale.locale
+          );
+        });
+        return result;
+      });
   }
 
   getSelectedLocale(event: any) {
