@@ -1,6 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
+
+import { AppEventType } from 'src/app/shared/enums/event.enum';
+import { AnalyticaDataService } from 'src/app/shared/services/analytics-data-service';
+import { AppEvent } from 'src/app/shared/services/broadcast.event.class';
+import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 import { UtilsService } from '../../shared/services/utils.service';
-import { SharedService } from '../../shared/shared.service';
 
 @Component({
   selector: 'locales',
@@ -16,7 +20,8 @@ export class LocalesComponent implements OnInit {
 
   constructor(
     private utilsService: UtilsService,
-    private sharedService: SharedService
+    private analyticsDataService: AnalyticaDataService,
+    private broadcastService: BroadcastService
   ) {}
 
   onSearchTextEntered(searchValue: string) {
@@ -24,20 +29,18 @@ export class LocalesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.response = this.getDistinctLocale();
+    // this.refNum = 'PHENA0059';
+    this.response = this.getDistinctLocale(this.refNum, 'cx');
   }
 
-  getDistinctLocale() {
-    let experienceType = 'cx';
-    let serviceName =
-      'v1/customers/' +
-      this.refNum +
-      '/' +
-      experienceType +
-      '/distinct-locales';
+  getDistinctLocale(refNum: string, experienceType: string) {
     // const url = `v1/configurations/PHENA0059/en_us/cx/web`
-    this.sharedService
-      .publicFirePOSTAPI(serviceName, 'chatbot_configurations_api')
+    let methodName = this.utilsService.getDistinctLocalesPath(
+      refNum,
+      experienceType
+    );
+    this.analyticsDataService
+      .publicFirePOSTAPI(methodName, 'chatbot_configurations_api')
       .subscribe((result: any) => {
         this.locales = result.locales;
         this.data = result.locales.map((locale: any) => {
@@ -50,8 +53,11 @@ export class LocalesComponent implements OnInit {
       });
   }
 
-  getSelectedLocale(event: any) {
-    console.log(event);
+  getSelectedLocale(localeObj: any) {
+    console.log(localeObj);
+    this.broadcastService.dispatch(
+      new AppEvent(AppEventType.SELECTED_LOCALE, localeObj)
+    );
   }
 
   getDisplayText(customerName: string, locale: string) {
