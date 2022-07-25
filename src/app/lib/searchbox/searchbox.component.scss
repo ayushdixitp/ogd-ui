@@ -1,0 +1,26 @@
+@import "../../../styles/styles.scss";
+
+.searchbar {
+    padding : 0px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: $color-light-white-39 solid 1px;
+    width: 25%;
+    border-radius: 4px;
+    
+    input {
+      color: $color-dark-grey66;
+      border: none;
+      width: 100%;
+      }
+    .text{
+        font-family: Proxima Nova;
+        font-size: 14px;
+        line-height: 20px;
+        width: 90%;
+    }
+    input:focus, input:focus-within {
+       outline: none;
+    } 
+  }

@@ -1,46 +1,40 @@
-
-
-
-
-
-
-
-
 <div class="main-container">    
 <aside>
     <app-sidebar></app-sidebar>
 </aside>
 <main class="container">
     <header class="container-heading">
-        <span>
-            {{ skeleton.heading}}
-        </span>
+        <p class="candidate-experience"> {{ skeleton?.experience }} </p>
+        <h1>
+             {{ skeleton?.heading}}   
+        </h1>
     </header>
     <section class="container-body">
-        <section *ngFor="let section of skeleton.configurations">
+        <section *ngFor="let section of skeleton?.configurations">
             <header class="config-heading">
                 {{ section.heading}}
-            </header>
-            <div [ngClass]="section.configurationKey? 'card card-one-item': ''">
-                <ng-container *ngIf="section.configurationKey">
-                    <span>
-                        <app-toggle [id]="section.configurationKey" [isActive]="section.isChannelEnabled"></app-toggle>
+        </header>
+            <div [ngClass]="[section.configurationKey? 'card card-one-item': '']">
+                <ng-container *ngIf="section?.actions?.type == 'toggle'">
+                    <span class="section-toggle">
+                        <app-toggle [id]="section.configurationKey" [isActive]="section.configurationKey"></app-toggle>
                     </span>
                 </ng-container>
-                <span class="section-infotext">
+                <span *ngIf="section.infoText" class="section-infotext" [ngClass]="[section.configurationKey ? 'd-i': '']">
                     {{ section.infoText }}
                 </span>
                 <ng-container *ngIf="section.features">
-                    <div class="card" *ngFor="let feature of section.features">
+                    <div class="card" *ngFor="let feature of section.features" [ngClass]="[!feature[feature.configurationKey] ?'disabled-state': '']">
                         <header class="card-one-item">
-                            <span *ngIf="feature.attributeConfigurationKey">
-                                <app-toggle [id]="feature.attributeConfigurationKey"></app-toggle>
-                            </span>
+                            <div class="card-one-item-heading">
+                                <span class="section-toggle" *ngIf="feature?.actions?.type == 'toggle'">
+                                    <app-toggle [id]="feature.attributeConfigurationKey" [isActive]="feature[feature.configurationKey]"></app-toggle>
+                                </span>
+                                <p [ngClass]="{ 'd-i': feature.literal }">
+                                    {{ feature.literal }}
+                                </p>
+                            </div>
                             <span class="section-infotext">
-                                {{ feature.literal }}
-                            </span>
-                            <br>
-                            <span>
                                 {{ feature.infoText }}
                             </span>
                         </header>
@@ -50,17 +44,24 @@
                                     {{ feature.attributeHeading }}
                                     <br>
                                     <span>
-                                        {{ feature.infoText }}
+                                        <!-- {{ feature.infoText }} -->
                                     </span>
                                 </div>
                                 <ng-container *ngFor="let attribute of feature.attributes">
-                                    <div class="attribute-items">
+                                    <div [ngClass]="attribute?.actions?.type=='progress-bar'? 'attribute-items-progress-bar': 'attribute-items'">
                                         <div class="attribute-icon">
-                                            <phenom-checkbox [id]="attribute.configurationKey" [isActive]="attribute[attribute.configurationKey]">
-                                            </phenom-checkbox>
+                                            <ng-container *ngIf="attribute.actions.type=='checkbox'">
+                                                <phenom-checkbox [id]="attribute.configurationKey" [isDisabled]=" !feature[feature.configurationKey] ||attribute.actions.state" [isActive]="attribute[attribute.configurationKey]">
+                                                </phenom-checkbox>
+                                            </ng-container>
+                                            <ng-container *ngIf="attribute.actions.type=='progress-bar'">
+                                                <app-progressbar [value]="attribute[attribute.configurationKey]"></app-progressbar>
+                                            </ng-container>
                                         </div>
                                         <div class="attribute-items-heading">
-                                            {{ attribute.configurationKey }}
+                                            <span class="attribute-items-title">
+                                                {{ attribute.literal }}                                                
+                                            </span>
                                             <span class="attribute-items-info-text">
                                                 {{ attribute.infoText }}
                                             </span>

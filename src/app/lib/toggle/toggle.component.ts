@@ -14,7 +14,7 @@ export class ToggleComponent implements OnInit {
 
   toggleBtn!: FormGroup;
 
-  @Input('isActive') public isActive!: boolean;
+  @Input('isActive') public isActive!: string;
   @Input('meta') public meta!: any;
   @Input('id') public id!: string;
 

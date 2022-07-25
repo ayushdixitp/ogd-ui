@@ -1,0 +1,27 @@
+// main {
+//   display: flex;
+//   aside {
+//     width: 20%;
+//   }
+//   .container{
+//     width:100%;
+//    .locale-container {
+//       width: 100%;
+//       display: flex;
+//       flex-wrap: wrap;
+//       margin-top: 1%;
+//       .locale {
+//         flex: 1 1 40%; 
+//         margin: 12px 0px;
+//         height: 100px;
+//         }
+//     }
+//   }
+// }
+
+ .locale-container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 1%;
+  }

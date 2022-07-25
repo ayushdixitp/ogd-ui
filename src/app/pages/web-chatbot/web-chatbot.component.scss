@@ -2,66 +2,112 @@
     // padding: 0px 10px;
     display: flex;
     height: 100vh;
+
     aside {
         width: 15%;
         @media screen and (max-width: 1500px) {
             width: 25%;
-          }
+        }
     }
+
     .container {
         width: 85%;
+        .disabled-state {
+            opacity: 0.6;
+        }
+
         @media screen and (max-width: 1500px) {
             width: 75%;
-          }
+        }
+
         .container-heading {
             padding: 32px;
             border-bottom: 1px solid #DFE3E6;
             background: #FFFFFF;
             box-shadow: inset 0px -1px 0px #DFE3E6;
-            font-family: 'Proxima Nova';
-            font-style: normal;
-            font-weight: 500;
-            font-size: 24px;
-            line-height: 32px;
-            color: #1C2024;
-            flex: none;
-            order: 2;
-            flex-grow: 0;
+
+            .candidate-experience {
+                
+                font-style: normal;
+                font-weight: 400;
+                font-size: 14px;
+                line-height: 20px;
+                display: flex;
+                align-items: center;
+                color: #4B6479;
+            }
+
+            h1 {
+                margin: 0px;
+                
+                font-style: normal;
+                font-weight: 500;
+                font-size: 24px;
+                line-height: 32px;
+                color: #1C2024;
+            }
         }
+
         .container-body {
             padding: 32px;
         }
-        .config-heading{
-            font-family: 'Proxima Nova';
+
+        .config-heading {
+            
             font-style: normal;
             font-weight: 400;
             font-size: 18px;
             line-height: 28px;
             color: #1C2024;
-            margin: 20px 0px;
         }
+
         .card-one-item {
-            display: flex;        
+
+            // display: flex;
+            // flex-direction: column;
+            .card-one-item-heading {
+                // display: flex;
+            }
         }
+
+        .section-toggle {
+            margin-right: 16px;
+        }
+
+        .d-f-c {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .d-i {
+            display: inline;
+        }
+
         .section-infotext {
-            padding: 0px 10px;
+            margin-top: 6px;
+            display: inline-block;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 20px;
+            color: #414C54;
         }
     }
-    
+
     .card {
-        margin-top: 30px;
-        padding: 16px 15px;
+        margin-top: 20px;
+        margin-bottom: 32px;
+        padding: 24px;
         box-sizing: border-box;
         width: 100%;
         background: #FFFFFF;
         border: 1px solid #DFE3E6;
         border-radius: 6px;
-    
+
         .attribute {
             width: 100%;
             margin: 0 auto;
             margin-top: 24px;
-    
+
             .attribute-heading {
                 display: flex;
                 flex-direction: row;
@@ -73,19 +119,78 @@
                 order: 1;
                 flex-grow: 0;
             }
-    
+
             .attribute-items {
                 display: flex;
                 padding: 20px;
                 align-items: center;
-    
+                box-shadow: inset 0px 1px 0px #dfe3e6;
+
                 .attribute-icon {
                     padding: 10px 30px;
                 }
-    
+
                 .attribute-items-heading {
                     display: flex;
                     flex-direction: column;
+
+                    .attribute-items-title {
+                        
+                        font-style: normal;
+                        font-weight: 400;
+                        font-size: 14px;
+                        line-height: 20px;
+                        display: flex;
+                        align-items: center;
+                        color: #1C2024;
+
+                    }
+
+                    .attribute-items-info-text {
+                        
+                        font-style: normal;
+                        font-weight: 400;
+                        font-size: 12px;
+                        line-height: 20px;
+                        color: #414C54;
+                    }
+                }
+            }
+
+            .attribute-items-progress-bar {
+                display: flex;
+                padding: 20px;
+                flex-direction: column-reverse;
+
+                .attribute-icon {
+                    padding: 10px 10px;
+                    width: 50%;
+                }
+
+                .attribute-items-heading {
+                    display: flex;
+                    flex-direction: column;
+
+                    .attribute-items-title {
+                        
+                        font-style: normal;
+                        font-weight: 400;
+                        font-size: 14px;
+                        line-height: 20px;
+                        display: flex;
+                        align-items: center;
+                        color: #1C2024;
+
+                    }
+
+                    .attribute-items-info-text {
+                        
+                        font-style: normal;
+                        font-weight: 400;
+                        font-size: 12px;
+                        line-height: 20px;
+                        color: #414C54;
+                    }
                 }
             }
         }

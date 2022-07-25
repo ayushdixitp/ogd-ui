@@ -19,7 +19,7 @@ import { BroadcastService } from '../../shared/services/broadcast.service';
 export class CheckboxComponent implements OnInit {
   @ViewChild('svg') svg: ElementRef | undefined;
 
-  @Input('isActive') public isActive!: boolean;
+  @Input('isActive') public isActive!: string;
   @Input('isDisabled') public isDisabled!: boolean;
   @Input('id') public id!: string;
 
