@@ -40,7 +40,7 @@ export class AccordionComponent implements OnInit {
   onClick() {
     this.isShowPages = !this.isShowPages;
     this.broadcastService.dispatch(
-      new AppEvent(AppEventType.CHECKBOX_EVENT, {
+      new AppEvent(AppEventType.SELECTED_PAGE, {
         name: AppEventType.SELECTED_PAGE,
         data: { selectedPageId: this.selectedPageId },
       })

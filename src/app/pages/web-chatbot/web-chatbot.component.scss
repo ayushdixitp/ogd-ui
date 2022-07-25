@@ -14,8 +14,8 @@
         width: 85%;
         .disabled-state {
             opacity: 0.6;
+            cursor: not-allowed;
         }
-
         @media screen and (max-width: 1500px) {
             width: 75%;
         }
@@ -38,8 +38,7 @@
             }
 
             h1 {
-                margin: 0px;
-                
+                margin: 0px;                
                 font-style: normal;
                 font-weight: 500;
                 font-size: 24px;
@@ -62,11 +61,7 @@
         }
 
         .card-one-item {
-
-            // display: flex;
-            // flex-direction: column;
             .card-one-item-heading {
-                // display: flex;
             }
         }
 

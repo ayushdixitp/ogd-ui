@@ -22,6 +22,7 @@ export class SharedService {
   public publicFirePOSTAPI(
     methodName: any,
     serviceName: string,
+    requestType?: string,
     paramString?: any,
     serveFromCache?: any
   ): Observable<any> {
@@ -37,7 +38,7 @@ export class SharedService {
       request_object: paramString,
     };
     if (serviceName == 'chatbot_configurations_api')
-      request['request_type'] = 'GET';
+      request['request_type'] = requestType;
     return this.fireAnalyticsPOSTAPI(
       environment.authenticationProxy,
       request,
@@ -56,10 +57,8 @@ export class SharedService {
     if (serveFromCache === undefined) {
       serveFromCache = true;
     }
-    //let authHeaders = this.loginService.getAuthorizationHeaders();
     return this.httpClient.post(url, paramsObj, {}).pipe(
       map((res: any) => {
-        //setting the data in cache store to use it further cases
         let data: any = res.data;
         data['requestObject'] = paramsObj.request_object;
         data['productRequestObject'] = paramsObj.request_object;

@@ -35,7 +35,8 @@
   
   .container input:disabled ~ .checkmark {
     background-color: $color-white;   
-    border: 1px solid $color_spanish_gray-5;         
+    border: 1px solid $color_spanish_gray-5;
+    cursor: not-allowed;
   }
   
   /* Show the checkmark when checked */
