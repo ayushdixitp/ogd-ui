@@ -11,9 +11,10 @@ export class SharedService {
   getskeleton(pageId: string | undefined): Observable<any> {
     if (pageId === 'career-site-bot') {
       return this.httpClient.get('https://api.npoint.io/d2511a5a4b7bcd4c16d1');
-    }
-    else {
-      return this.httpClient.get('https://api.jsonbin.io/v3/b/62de838c248d43754f037d3e');
+    } else {
+      return this.httpClient.get(
+        'https://api.jsonbin.io/v3/b/62de838c248d43754f037d3e'
+      );
     }
   }
 
