@@ -17,7 +17,8 @@ export class WebChatbotComponent implements OnInit {
   ) {}
   finalstructure: any = {};
   skeleton!: any;
-  configuration: any;
+  configurations: any;
+  // TODO: name is not proper. s is missing
   isDataLoaded: boolean = false;
   disableAllChannels: boolean = false;
 
@@ -26,14 +27,15 @@ export class WebChatbotComponent implements OnInit {
     this.broadcastService
       .on(AppEventType.CHECKBOX_EVENT)
       .subscribe((event: any) => {
-        this.updateSkeleton(event.payload);
-        this.updateChatbotConfigurations(event.payload);
+        this.updateSkeleton(event?.payload);
+        this.updateChatbotConfigurations(event?.payload?.data);
       });
 
     this.broadcastService
       .on(AppEventType.TOGGLE_EVENT)
       .subscribe((event: any) => {
-        this.updateSkeleton(event.payload);
+        this.updateSkeleton(event?.payload);
+        this.updateChatbotConfigurations(event?.payload?.data);
       });
 
     this.broadcastService
@@ -48,8 +50,8 @@ export class WebChatbotComponent implements OnInit {
     this.sharedService
       .publicFirePOSTAPI(url, 'chatbot_configurations_api', 'GET')
       .subscribe(result => {
-        this.configuration = result;
-        console.log(this.configuration);
+        this.configurations = result;
+        console.log(this.configurations);
         this.sharedService.getskeleton().subscribe((data: any) => {
           this.skeleton = data;
           this.createFinalStructure(this.skeleton);
@@ -58,83 +60,97 @@ export class WebChatbotComponent implements OnInit {
   }
 
   updateSkeleton({ id, data }: any) {
-    let configurations = this.skeleton.configurations.map(
-      (configuration: any) => {
+    let configurations = this.skeleton.configurations.forEach(
+      (configuration: any, index: number) => {
         if (configuration.features?.length) {
-          configuration.features = configuration?.features.map(
-            (feature: any) => {
-              // if() {}
-              if (data?.type == 'checkbox' && feature.attributes) {
-                feature?.attributes?.map((attribute: any) => {
-                  if (attribute && feature.attributeConfigurationKey) {
-                    attribute[data.ConfigurationKey] = data.isActive;
-                    return attribute;
+          configuration?.features.forEach((feature: any, featureIndex: any) => {
+            if (data?.type == 'checkbox' && feature.attributes) {
+              feature?.attributes?.forEach(
+                (attribute: any, attributeIndex: number) => {
+                  if (
+                    attribute &&
+                    feature.attributeConfigurationKey &&
+                    feature.attributeConfigurationKey ==
+                      data.attributeConfigurationKey
+                  ) {
+                    this.skeleton.configurations[index].features[
+                      featureIndex
+                    ].attributes[attributeIndex][data.configurationKey] =
+                      data.isActive;
                   } else {
-                    attribute[data.ConfigurationKey] = data.isActive;
-                    return attribute;
+                    this.skeleton.configurations[index].features[
+                      featureIndex
+                    ].attributes[attributeIndex][data.configurationKey] =
+                      data.isActive;
                   }
-                });
-                this.isDataLoaded = true;
-              }
-              // debugger
-              // if(f)
-              if (Object.keys(feature).includes(data.ConfigurationKey)) {
-                console.log(
-                  feature[data.ConfigurationKey],
-                  data.ConfigurationKey
-                );
-                console.log('got it');
-                feature[data.ConfigurationKey] = data.isActive;
-              }
-              return { ...feature };
+                }
+              );
             }
-          );
+            if (Object.keys(feature).includes(data.configurationKey)) {
+              this.skeleton.configurations[index].features[featureIndex][
+                data.configurationKey
+              ] = data.isActive;
+            }
+          });
         }
-        if (Object.keys(configuration).includes(data.ConfigurationKey)) {
+        if (Object.keys(configuration).includes(data.configurationKey)) {
           this.disableAllChannels = data.isActive;
-          configuration[data.ConfigurationKey] = data.isActive;
+          this.skeleton.configurations[index][data.configurationKey] =
+            data.isActive;
         }
-        // debugger
         return configuration;
       }
     );
-    console.log(configurations);
   }
 
-  updateChatbotConfigurations(fieldName: string) {
-    console.log(fieldName);
+  updateChatbotConfigurations({
+    attributeConfigurationKey,
+    configurationKey,
+    isActive,
+  }: any) {
     const url = `v1/configurations/TEST_12345567/en_us/cx/web`;
-    // "update": {
-    //     "preferredLanguageLocale": "fr_ca"
-    //   }
-    // };
-    const req = {
-      update: {
-        jobAlertsSlots: [
-          'user_categories',
-          'user_preferred_locations',
-          'alert_frequency',
-          'user_email',
-        ],
-      },
-    };
 
-    // this.sharedService
-    //   .publicFirePOSTAPI(url, 'chatbot_configurations_api','PATCH',req)
-    //   .subscribe(result => {
-    //     this.configuration = result;
-    //     console.log(this.configuration);
-    //     this.getChatbotConfigurations();
-    //   });
+    let reqObj;
+    let slots: string[] = this.configurations[attributeConfigurationKey];
+    if (attributeConfigurationKey) {
+      if (!isActive) {
+        slots = slots.filter((item: string) => item != configurationKey);
+        reqObj = {
+          update: {
+            [attributeConfigurationKey]: slots,
+          },
+        };
+      } else {
+        if (!slots.includes(configurationKey)) slots.push(configurationKey);
+        reqObj = {
+          update: {
+            [attributeConfigurationKey]: slots,
+          },
+        };
+      }
+    } else {
+      reqObj = {
+        update: {
+          [configurationKey]: isActive,
+        },
+      };
+    }
+    console.log(reqObj);
+
+    this.sharedService
+      .publicFirePOSTAPI(url, 'chatbot_configurations_api', 'PATCH', reqObj)
+      .subscribe(result => {
+        this.configurations = result;
+      });
   }
 
   getDistinctLocale() {
     let experienceType = 'cx';
-    let serviceName =
+    let methodName =
       'v1/customers/' + 'HONEUS' + '/' + experienceType + '/distinct-locales';
     // const url = `v1/configurations/PHENA0059/en_us/cx/web`
     this.sharedService
-      .publicFirePOSTAPI(serviceName, 'chatbot_configurations_api', 'GET')
+      .publicFirePOSTAPI(methodName, 'chatbot_configurations_api', 'GET')
       .subscribe(result => {
         console.log(result);
       });
@@ -150,9 +166,10 @@ export class WebChatbotComponent implements OnInit {
               if (feature.attributes) {
                 feature.attributes.map((attribute: any) => {
                   if (attribute && feature.attributeConfigurationKey) {
-                    attribute[attribute?.configurationKey] = this.configuration[
-                      feature.attributeConfigurationKey
-                    ]?.includes(attribute?.configurationKey);
+                    attribute[attribute?.configurationKey] =
+                      this.configurations[
+                        feature.attributeConfigurationKey
+                      ]?.includes(attribute?.configurationKey);
                     attribute.literal = data[attribute.literal]
                       ? data[attribute.literal]
                       : attribute.literal;
@@ -163,7 +180,7 @@ export class WebChatbotComponent implements OnInit {
                     return attribute;
                   } else {
                     attribute[attribute?.configurationKey] =
-                      this.configuration[attribute.configurationKey];
+                      this.configurations[attribute.configurationKey];
                     attribute.literal = data[attribute.literal];
                     attribute.infoText = data[attribute.infoText];
                     return attribute;
@@ -172,12 +189,12 @@ export class WebChatbotComponent implements OnInit {
                 this.isDataLoaded = true;
               }
               feature[feature.configurationKey] =
-                this.configuration[feature.configurationKey];
+                this.configurations[feature.configurationKey];
               feature.infoText = data[feature.infoText]
                 ? data[feature.infoText]
                 : feature.infoText;
               feature.attributeHeading = data[feature.attributeHeading]
-                ? feature[data[feature.attributeHeading]]
+                ? data[feature.attributeHeading]
                 : feature.attributeHeading;
               feature.literal = data[feature.literal]
                 ? data[feature.literal]
@@ -194,7 +211,7 @@ export class WebChatbotComponent implements OnInit {
           : configuration.infoText;
         if (configuration.configurationKey) {
           configuration[configuration.configurationKey] =
-            this.configuration[configuration.configurationKey];
+            this.configurations[configuration.configurationKey];
         }
         return configuration;
       });

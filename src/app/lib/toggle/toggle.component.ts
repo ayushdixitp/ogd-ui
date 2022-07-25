@@ -29,7 +29,7 @@ export class ToggleComponent implements OnInit {
     this.broadcastService.dispatch(
       new AppEvent(AppEventType.TOGGLE_EVENT, {
         data: {
-          ConfigurationKey: this.id,
+          configurationKey: this.id,
           type: 'toggle',
           isActive: this.isActive,
         },

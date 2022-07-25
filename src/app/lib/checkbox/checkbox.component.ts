@@ -47,7 +47,7 @@ export class CheckboxComponent implements OnInit {
         id: this.id,
         data: {
           type: 'checkbox',
-          ConfigurationKey: this.id,
+          configurationKey: this.id,
           isActive: this.isActive,
           attributeConfigurationKey: this.attributeConfigurationKey,
         },

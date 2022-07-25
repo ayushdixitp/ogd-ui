@@ -28,7 +28,8 @@
                     </span>
                     <ng-container *ngIf="section.features">
                         <div class="card" *ngFor="let feature of section.features"
-                            [ngClass]="(!feature[feature.configurationKey] || !disableAllChannels) ?'disabled-state': ''">
+                            [ngClass]="{'disabled-state': (!feature[feature.configurationKey])}"
+                            >
                             <header class="card-one-item">
                                 <div class="card-one-item-heading">
                                     <span class="section-toggle" *ngIf="feature?.actions?.type == 'toggle'">
@@ -62,12 +63,11 @@
                                                         [id]="attribute.configurationKey"
                                                         [isDisabled]="!feature[feature.configurationKey] ||attribute.actions.state"
                                                         [isActive]="attribute[attribute.configurationKey]"
-                                                        [isDisabled]="!disableAllChannels"
                                                         >
                                                     </phenom-checkbox>
                                                 </ng-container>
                                                 <ng-container *ngIf="attribute.actions.type=='progress-bar'">
-                                                    <app-progressbar [isDisabled]="!disableAllChannels" [value]="attribute[attribute.configurationKey]">
+                                                    <app-progressbar [isDisabled]="attribute.actions.state" [value]="attribute[attribute.configurationKey]">
                                                     </app-progressbar>
                                                 </ng-container>
                                             </div>
