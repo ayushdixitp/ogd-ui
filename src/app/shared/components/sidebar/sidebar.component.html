@@ -3,10 +3,11 @@
         <div class="button"></div>
     </ng-container>
     <ng-template #others>
-        <app-dropdown [id]="'drop1'"></app-dropdown>
-        <app-dropdown [id]="'drop2'"></app-dropdown>
-        <app-accordion experienceType="Candidate Experience"></app-accordion>
-        <app-accordion experienceType="Employee Experience"></app-accordion>
-        <app-accordion experienceType="Recruiter Experience"></app-accordion>
+        <app-dropdown></app-dropdown>
+        <app-dropdown></app-dropdown>
+        <span></span>
+        <app-accordion experienceType="Candidate Experience" id="cx"></app-accordion>
+        <app-accordion experienceType="Employee Experience" id="ex"></app-accordion>
+        <app-accordion experienceType="Recruiter Experience" id="rx"></app-accordion>
     </ng-template>
 </section>

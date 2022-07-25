@@ -31,7 +31,7 @@ export class WebChatbotComponent implements OnInit {
         // this.createFinalStructure(this.skeleton);
       });
     this.broadcastService
-      .on(AppEventType.SELECTED_PAGE)
+      .on(AppEventType.ACCORDION_EVENT)
       .subscribe((event: any) => {
         console.log(event.payload.data.selectedPageId);
       });
