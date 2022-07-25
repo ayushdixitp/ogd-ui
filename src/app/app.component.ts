@@ -7,6 +7,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
 })
 export class AppComponent {
   constructor() {}
+  @Input() refnum!: string;
   title = 'chatbot-management-app';
 
   ngOnInit() {}

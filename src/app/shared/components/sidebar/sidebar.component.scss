@@ -4,7 +4,6 @@
     position: fixed;
     display: flex;
     flex-direction: column;
-    padding: 0px;
     gap: 4px;
     width: 15%;
     @media screen and (max-width: 1500px) {
@@ -13,7 +12,7 @@
     height: 100vh;
     left: 0px;
     background: $color-white;
-    box-shadow: inset -1px 0px 0px $color-light-grey58;
+    box-shadow: inset -1px 0px 0px $color-light-grey60;
 }
 app-accordion, app-dropdown{
     position: relative;
@@ -21,6 +20,12 @@ app-accordion, app-dropdown{
 }
 
 .button{
+    position: relative;
+    right: 1px;
     height: 60px;
     background-color: lightcyan;
+}
+
+span{
+    height: 8px;
 }

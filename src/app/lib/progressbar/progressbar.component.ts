@@ -8,5 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class ProgressbarComponent implements OnInit {
   constructor() {}
   @Input('value') public value: number = 1;
+  @Input('isDisabled') public isDisabled: boolean = false;
+
   ngOnInit(): void {}
 }

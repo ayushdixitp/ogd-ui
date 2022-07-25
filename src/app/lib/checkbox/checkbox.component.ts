@@ -18,10 +18,10 @@ import { BroadcastService } from '../../shared/services/broadcast.service';
 })
 export class CheckboxComponent implements OnInit {
   @ViewChild('svg') svg: ElementRef | undefined;
-
   @Input('isActive') public isActive!: string;
   @Input('isDisabled') public isDisabled!: boolean;
   @Input('id') public id!: string;
+  @Input('attributeConfigurationKey') public attributeConfigurationKey!: string;
 
   constructor(private broadcastService: BroadcastService) {}
 
@@ -45,7 +45,12 @@ export class CheckboxComponent implements OnInit {
     this.broadcastService.dispatch(
       new AppEvent(AppEventType.CHECKBOX_EVENT, {
         id: this.id,
-        isActive: this.isActive,
+        data: {
+          type: 'checkbox',
+          ConfigurationKey: this.id,
+          isActive: this.isActive,
+          attributeConfigurationKey: this.attributeConfigurationKey,
+        },
       })
     );
   }

@@ -28,7 +28,11 @@ export class ToggleComponent implements OnInit {
     this.isActive = event.target.checked;
     this.broadcastService.dispatch(
       new AppEvent(AppEventType.TOGGLE_EVENT, {
-        isActive: this.isActive,
+        data: {
+          ConfigurationKey: this.id,
+          type: 'toggle',
+          isActive: this.isActive,
+        },
         id: this.id,
       })
     );
