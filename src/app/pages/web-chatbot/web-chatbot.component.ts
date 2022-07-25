@@ -2,9 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AppEventType } from 'src/app/shared/enums/event.enum';
 import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 import { SharedService } from 'src/app/shared/shared.service';
-import { Skeleton } from 'src/app/shared/interfaces/web-chatbot.interface';
 import { ActivatedRoute } from '@angular/router';
-import { environment } from 'src/environments/environment';
 import { AnalyticaDataService } from 'src/app/shared/services/analytics-data-service';
 
 @Component({
@@ -27,6 +25,8 @@ export class WebChatbotComponent implements OnInit {
   disableAllChannels: boolean = false;
 
   ngOnInit(): void {
+    this.currentRoute = this.route.snapshot.routeConfig?.path;
+    console.log(this.currentRoute);
     this.getChatbotConfigurations();
     this.broadcastService
       .on(AppEventType.CHECKBOX_EVENT)
@@ -56,9 +56,9 @@ export class WebChatbotComponent implements OnInit {
         this.configuration = result;
         console.log(this.configuration);
         this.sharedService
-          .getskeleton('career-site-bot')
+          .getskeleton(this.currentRoute)
           .subscribe((data: any) => {
-            this.skeleton = data;
+            this.skeleton = data.record;
             this.createFinalStructure(this.skeleton);
           });
       });
@@ -125,13 +125,6 @@ export class WebChatbotComponent implements OnInit {
         ],
       },
     };
-
-    this.currentRoute = this.route.snapshot.routeConfig?.path;
-    console.log(this.currentRoute);
-
-    this.sharedService.getskeleton(this.currentRoute).subscribe((data: any) => {
-      console.log(data);
-    });
   }
 
   createFinalStructure(skeleton: any) {

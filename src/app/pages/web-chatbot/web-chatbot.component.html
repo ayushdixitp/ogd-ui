@@ -1,10 +1,8 @@
+<app-header [experienceType]="skeleton?.experience" [botType]="skeleton?.heading">
+</app-header>
 <main *ngIf="isDataLoaded" class="container">
-    <header class="container-heading">
-        <p class="candidate-experience"> {{ skeleton?.experience }} </p>
-        <h1>
-            {{ skeleton?.heading}}
-        </h1>
-    </header>
+    <!-- <app-header [experienceType]="'Candidate Experience'" [botType]="skeleton.heading">
+    </app-header> -->
     <section class="container-body">
         <section *ngFor="let section of skeleton?.configurations">
             <header class="config-heading">
