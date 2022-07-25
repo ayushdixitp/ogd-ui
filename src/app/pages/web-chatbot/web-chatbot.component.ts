@@ -55,10 +55,12 @@ export class WebChatbotComponent implements OnInit {
       .subscribe(result => {
         this.configuration = result;
         console.log(this.configuration);
-        this.sharedService.getskeleton('career-site-bot').subscribe((data: any) => {
-          this.skeleton = data;
-          this.createFinalStructure(this.skeleton);
-        });
+        this.sharedService
+          .getskeleton('career-site-bot')
+          .subscribe((data: any) => {
+            this.skeleton = data;
+            this.createFinalStructure(this.skeleton);
+          });
       });
   }
 
