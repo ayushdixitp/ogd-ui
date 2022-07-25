@@ -1,17 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BaseComponent } from './layouts/base/base.component';
-import { SidebarComponent } from './shared/components/sidebar/sidebar.component';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/home',
+    redirectTo: '/locales',
     pathMatch: 'full',
-  },
-  {
-    path: 'sidebar',
-    component: SidebarComponent,
   },
   {
     path: '',

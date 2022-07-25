@@ -7,12 +7,16 @@ export const PagesRoutes: Routes = [
     path: '',
     children: [
       {
-        path: 'home',
+        path: 'career-site-bot',
         component: WebChatbotComponent,
       },
       {
         path: 'locales',
         component: LocalesComponent,
+      },
+      {
+        path: 'employee-site-bot',
+        component: WebChatbotComponent,
       },
     ],
   },

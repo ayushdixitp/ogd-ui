@@ -3,6 +3,7 @@ import { AppEventType } from 'src/app/shared/enums/event.enum';
 import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 import { SharedService } from 'src/app/shared/shared.service';
 import { Skeleton } from 'src/app/shared/interfaces/web-chatbot.interface';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-web-chatbot',
@@ -12,11 +13,14 @@ import { Skeleton } from 'src/app/shared/interfaces/web-chatbot.interface';
 export class WebChatbotComponent implements OnInit {
   constructor(
     private broadcastService: BroadcastService,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private route: ActivatedRoute
   ) {}
   finalstructure: any = {};
   skeleton!: any;
   configuration: any;
+  currentRoute!: string | undefined;
+
   ngOnInit(): void {
     this.broadcastService
       .on(AppEventType.CHECKBOX_EVENT)
@@ -36,372 +40,367 @@ export class WebChatbotComponent implements OnInit {
         console.log(event.payload.data.selectedPageId);
       });
     console.log(new Date().getSeconds());
-    this.sharedService.getskeleton().subscribe((data: any) => {
-      console.log(new Date().getSeconds());
-      this.skeleton = {
-        pageId: 'employee-site-bot',
-        heading: 'Employee Site Bot',
-        configurations: [
-          {
-            id: 'feature-activation',
-            svg: '',
-            heading: 'CMP_FEATURE_ACTIVATION',
-            infoText: 'CMP_ENABLING...',
-            actions: {
-              type: 'toggle',
+    this.skeleton = {
+      pageId: 'employee-site-bot',
+      heading: 'Employee Site Bot',
+      configurations: [
+        {
+          id: 'feature-activation',
+          svg: '',
+          heading: 'CMP_FEATURE_ACTIVATION',
+          infoText: 'CMP_ENABLING...',
+          actions: {
+            type: 'toggle',
+          },
+          configurationKey: 'isChannelEnabled',
+          isChannelEnabled: true, // add during merge
+        },
+        {
+          id: 'feature-details',
+          heading: 'CMP_FEATURE_DETAILS',
+          features: [
+            {
+              id: 'find-a-job',
+              actions: {
+                type: 'toggle',
+              },
+              literal: 'FIND_A_JOB',
+              infoText: 'CMP_ENABLING_FEATURES*',
+              attributeHeading: 'LIST OF ATTRIBUTES',
+              configurationKey: 'isPersonalizationOnDemandEnabled',
+              attributeConfigurationKey: 'personalizationOnDemandSlots',
+              attributes: [
+                {
+                  id: 'user-email',
+                  literal: 'USER-EMAIL',
+                  infoText: 'CMP_USER_EMAIL',
+                  actions: {
+                    type: 'checkbox',
+                    state: 'enabled',
+                  },
+                  configurationKey: 'user_email',
+                },
+                {
+                  id: 'user-name',
+                  literal: 'USER-NAME',
+                  infoText: 'CMP_USER_NAME',
+                  actions: {
+                    type: 'checkbox',
+                    state: 'enabled',
+                  },
+                  configurationKey: 'user_name',
+                },
+                {
+                  id: 'user-interests',
+                  literal: 'USER-INTERESTS',
+                  infoText: 'CMP_USER_INTERESTS',
+                  actions: {
+                    type: 'checkbox',
+                    state: 'enabled',
+                  },
+                  configurationKey: 'user_interests',
+                },
+                {
+                  id: 'user-skills',
+                  literal: 'USER-SKILLS',
+                  infoText: 'CMP_USER_SKILLS',
+                  actions: {
+                    type: 'checkbox',
+                    state: 'enabled',
+                  },
+                  configurationKey: 'user_skills',
+                },
+                {
+                  id: 'user-preferred-locations',
+                  literal: 'USER-PREFERRED-LOCATIONS',
+                  infoText: 'CMP_USER_PREFERRED_LOCATIONS',
+                  actions: {
+                    type: 'checkbox',
+                    state: 'enabled',
+                  },
+                  configurationKey: 'user_preferred_locations',
+                },
+                {
+                  id: 'user-job-title',
+                  literal: 'USER-JOB-TITLE',
+                  infoText: 'CMP_USER_JOB_TITLE',
+                  actions: {
+                    type: 'checkbox',
+                    state: 'enabled',
+                  },
+                  configurationKey: 'user_job_title',
+                },
+              ],
             },
-            configurationKey: 'isChannelEnabled',
-            isChannelEnabled: true, // add during merge
-          },
-          {
-            id: 'feature-details',
-            heading: 'CMP_FEATURE_DETAILS',
-            features: [
-              {
-                id: 'find-a-job',
-                actions: {
-                  type: 'toggle',
+            {
+              id: 'job-cards',
+              literal: 'CMP_JOB_CARDS',
+              infoText: 'CMP_CONFIGURE_WHAT_TO_SHOW_IN_JOB_CARDS',
+              attributeHeading: 'CMP_DETAILS_INSIDE_JOB_CARDS',
+              configurationKey: '',
+              attributeConfigurationKey: '',
+              attributes: [
+                {
+                  id: 'job-location',
+                  literal: 'CMP_JOB_CARD_JOB_LOCATION',
+                  infoText: 'CMP_USER_WILL_BE_SEEING_JOB_LOCATION',
+                  actions: {
+                    type: 'checkbox',
+                    state: 'enabled',
+                  },
+                  configurationKey: '',
                 },
-                literal: 'FIND_A_JOB',
-                infoText: 'CMP_ENABLING_FEATURES*',
-                attributeHeading: 'LIST OF ATTRIBUTES',
-                configurationKey: 'isPersonalizationOnDemandEnabled',
-                attributeConfigurationKey: 'personalizationOnDemandSlots',
-                attributes: [
-                  {
-                    id: 'user-email',
-                    literal: 'USER-EMAIL',
-                    infoText: 'CMP_USER_EMAIL',
-                    actions: {
-                      type: 'checkbox',
-                      state: 'enabled',
-                    },
-                    configurationKey: 'user_email',
+                {
+                  id: 'date-of-posting',
+                  literal: 'CMP_DATE_OF_POSTING',
+                  infoText: 'CMP_USER_WILL_BE_SEEING_JOB_POSTED_DATE',
+                  actions: {
+                    type: 'checkbox',
+                    state: 'enabled',
                   },
-                  {
-                    id: 'user-name',
-                    literal: 'USER-NAME',
-                    infoText: 'CMP_USER_NAME',
-                    actions: {
-                      type: 'checkbox',
-                      state: 'enabled',
-                    },
-                    configurationKey: 'user_name',
-                  },
-                  {
-                    id: 'user-interests',
-                    literal: 'USER-INTERESTS',
-                    infoText: 'CMP_USER_INTERESTS',
-                    actions: {
-                      type: 'checkbox',
-                      state: 'enabled',
-                    },
-                    configurationKey: 'user_interests',
-                  },
-                  {
-                    id: 'user-skills',
-                    literal: 'USER-SKILLS',
-                    infoText: 'CMP_USER_SKILLS',
-                    actions: {
-                      type: 'checkbox',
-                      state: 'enabled',
-                    },
-                    configurationKey: 'user_skills',
-                  },
-                  {
-                    id: 'user-preferred-locations',
-                    literal: 'USER-PREFERRED-LOCATIONS',
-                    infoText: 'CMP_USER_PREFERRED_LOCATIONS',
-                    actions: {
-                      type: 'checkbox',
-                      state: 'enabled',
-                    },
-                    configurationKey: 'user_preferred_locations',
-                  },
-                  {
-                    id: 'user-job-title',
-                    literal: 'USER-JOB-TITLE',
-                    infoText: 'CMP_USER_JOB_TITLE',
-                    actions: {
-                      type: 'checkbox',
-                      state: 'enabled',
-                    },
-                    configurationKey: 'user_job_title',
-                  },
-                ],
-              },
-              {
-                id: 'job-cards',
-                literal: 'CMP_JOB_CARDS',
-                infoText: 'CMP_CONFIGURE_WHAT_TO_SHOW_IN_JOB_CARDS',
-                attributeHeading: 'CMP_DETAILS_INSIDE_JOB_CARDS',
-                configurationKey: '',
-                attributeConfigurationKey: '',
-                attributes: [
-                  {
-                    id: 'job-location',
-                    literal: 'CMP_JOB_CARD_JOB_LOCATION',
-                    infoText: 'CMP_USER_WILL_BE_SEEING_JOB_LOCATION',
-                    actions: {
-                      type: 'checkbox',
-                      state: 'enabled',
-                    },
-                    configurationKey: '',
-                  },
-                  {
-                    id: 'date-of-posting',
-                    literal: 'CMP_DATE_OF_POSTING',
-                    infoText: 'CMP_USER_WILL_BE_SEEING_JOB_POSTED_DATE',
-                    actions: {
-                      type: 'checkbox',
-                      state: 'enabled',
-                    },
-                    configurationKey: '',
-                  },
-                  {
-                    id: 'form-of-employment',
-                    literal: 'CMP_FORM_OF_EMPLOYMENT',
-                    infoText: 'CMP_USER_WILL_BE_SEEING_FORM_OF_EMPLOYMENT',
-                    actions: {
-                      type: 'checkbox',
-                      state: 'enabled',
-                    },
-                    configurationKey: '',
-                  },
-                ],
-              },
-              {
-                id: 'faq',
-                literal: 'CMP_FAQ',
-                infoText: 'CMP_FAQ_*',
-                actions: {
-                  type: 'toggle',
+                  configurationKey: '',
                 },
-                attributeHeading: 'CMP_LIST_*',
-                configurationKey: 'isFaqEnabled',
-                attributes: [
-                  {
-                    id: 'confidence-threshold',
-                    literal: 'CMP_CONFIDENCE_THRESHOLD',
-                    infoText: 'CMP_*',
-                    actions: {
-                      type: 'range',
-                    },
-                    configurationKey: 'faqSuggestionsThreshold',
-                    isInternal: true,
+                {
+                  id: 'form-of-employment',
+                  literal: 'CMP_FORM_OF_EMPLOYMENT',
+                  infoText: 'CMP_USER_WILL_BE_SEEING_FORM_OF_EMPLOYMENT',
+                  actions: {
+                    type: 'checkbox',
+                    state: 'enabled',
                   },
-                ],
-              },
-              {
-                id: 'gig-flow',
-                literal: 'CMP_GIG_FLOW',
-                infoText: 'CMP_LET_EMPLOYEES_LOOK_FOR_GIG_WORKS',
-                actions: {
-                  type: 'toggle',
+                  configurationKey: '',
                 },
-                attributeHeading: 'CMP_LIST_*',
-                configurationKey: 'isGigSearchEnabled',
-                attributeConfigurationKey: 'gigSearchSlots',
-                attributes: [
-                  {
-                    id: 'category',
-                    literal: 'CMP_GIG_CATEGORY',
-                    infoText: 'CMP_USER_WILL_BE_ABLE_TO_ENTER_THEIR_CATEGORY',
-                    actions: {
-                      type: 'checkbox',
-                      state: 'enabled',
-                    },
-                    configurationKey: 'category',
-                  },
-                  {
-                    id: 'location',
-                    literal: 'CMP_GIG_LOCATION',
-                    infoText: 'CMP_USER_WILL_BE_ABLE_TO_ENTER_THEIR_LOCATION',
-                    actions: {
-                      type: 'checkbox',
-                      state: 'enabled',
-                    },
-                    configurationKey: 'city_state_country',
-                  },
-                ],
+              ],
+            },
+            {
+              id: 'faq',
+              literal: 'CMP_FAQ',
+              infoText: 'CMP_FAQ_*',
+              actions: {
+                type: 'toggle',
               },
-              {
-                id: 'quick-apply',
-                literal: 'CMP_QUICK_APPLY',
-                infoText: 'CMP_LET_EMPLOYEES_QUICK_APPLY',
-                actions: {
-                  type: 'toggle',
+              attributeHeading: 'CMP_LIST_*',
+              configurationKey: 'isFaqEnabled',
+              attributes: [
+                {
+                  id: 'confidence-threshold',
+                  literal: 'CMP_CONFIDENCE_THRESHOLD',
+                  infoText: 'CMP_*',
+                  actions: {
+                    type: 'range',
+                  },
+                  configurationKey: 'faqSuggestionsThreshold',
+                  isInternal: true,
                 },
-                attributeHeading: 'CMP_LIST_*',
-                configurationKey: 'isQuickApplyEnabled',
-                attributeConfigurationKey: 'quickApplySlots',
-                attributes: [
-                  {
-                    id: 'name',
-                    literal: 'CMP_USER_NAME',
-                    infoText: 'CMP_USER_WILL_BE_ABLE_TO_ENTER_NAME',
-                    actions: {
-                      type: 'checkbox',
-                      state: 'enabled',
-                    },
-                    configurationKey: 'user_name',
-                  },
-                  {
-                    id: 'email',
-                    literal: 'CMP_USER_EMAIL',
-                    infoText: 'CMP_USER_WILL_BE_ABLE_TO_ENTER_EMAIL',
-                    actions: {
-                      type: 'checkbox',
-                      state: 'enabled',
-                    },
-                    configurationKey: 'user_email',
-                  },
-                  {
-                    id: 'phone',
-                    literal: 'CMP_USER_PHONE',
-                    infoText: 'CMP_USER_WILL_BE_ABLE_TO_ENTER_PHONE',
-                    actions: {
-                      type: 'checkbox',
-                      state: 'enabled',
-                    },
-                    configurationKey: 'user_phone',
-                  },
-                ],
+              ],
+            },
+            {
+              id: 'gig-flow',
+              literal: 'CMP_GIG_FLOW',
+              infoText: 'CMP_LET_EMPLOYEES_LOOK_FOR_GIG_WORKS',
+              actions: {
+                type: 'toggle',
               },
-              {
-                id: 'refer-a-friend',
-                literal: 'CMP_REFER_A_FRIEND',
-                infoText: 'CMP_LET_EMPLOYEES_REFER_A_FRIEND',
-                actions: {
-                  type: 'toggle',
+              attributeHeading: 'CMP_LIST_*',
+              configurationKey: 'isGigSearchEnabled',
+              attributeConfigurationKey: 'gigSearchSlots',
+              attributes: [
+                {
+                  id: 'category',
+                  literal: 'CMP_GIG_CATEGORY',
+                  infoText: 'CMP_USER_WILL_BE_ABLE_TO_ENTER_THEIR_CATEGORY',
+                  actions: {
+                    type: 'checkbox',
+                    state: 'enabled',
+                  },
+                  configurationKey: 'category',
                 },
-                attributeHeading: 'CMP_LIST_*',
-                configurationKey: 'isReferralEnabled',
-                attributeConfigurationKey: '',
-                attributes: [
-                  {
-                    id: 'referrals-first-name',
-                    literal: 'CMP_REFERRALS_FIRST_NAME',
-                    infoText:
-                      'CMP_USER_WILL_BE_ABLE_TO_ENTER_REFERRALS_FIRST_NAME',
-                    actions: {
-                      type: 'checkbox',
-                      state: 'disabled',
-                    },
-                    configurationKey: '',
+                {
+                  id: 'location',
+                  literal: 'CMP_GIG_LOCATION',
+                  infoText: 'CMP_USER_WILL_BE_ABLE_TO_ENTER_THEIR_LOCATION',
+                  actions: {
+                    type: 'checkbox',
+                    state: 'enabled',
                   },
-                  {
-                    id: 'referrals-last-name',
-                    literal: 'CMP_REFERRALS_LAST_NAME',
-                    infoText:
-                      'CMP_USER_WILL_BE_ABLE_TO_ENTER_REFERRALS_LAST_NAME',
-                    actions: {
-                      type: 'checkbox',
-                      state: 'disabled',
-                    },
-                    configurationKey: '',
-                  },
-                  {
-                    id: 'referrals-email',
-                    literal: 'CMP_REFERRALS_EMAIL',
-                    infoText: 'CMP_USER_WILL_BE_ABLE_TO_ENTER_REFERRALS_EMAIL',
-                    actions: {
-                      type: 'checkbox',
-                      state: 'disabled',
-                    },
-                    configurationKey: '',
-                  },
-                  {
-                    id: 'referrals-phone',
-                    literal: 'CMP_REFERRALS_PHONE',
-                    infoText: 'CMP_USER_WILL_BE_ABLE_TO_ENTER_REFERRALS_PHONE',
-                    actions: {
-                      type: 'checkbox',
-                      state: 'enabled',
-                    },
-                    configurationKey: '',
-                  },
-                  {
-                    id: 'connection-to-referral',
-                    literal: 'CMP_CONNECTION_TO_REFERRAL',
-                    infoText:
-                      'CMP_USER_WILL_BE_ABLE_TO_ENTER_CONNECTION_WITH_REFERRAL',
-                    actions: {
-                      type: 'checkbox',
-                      state: 'disabled',
-                    },
-                    configurationKey: '',
-                  },
-                  {
-                    id: 'open-to-relocation',
-                    literal: 'CMP_OPEN_TO_RELOCATION',
-                    infoText:
-                      'CMP_USER_WILL_BE_ABLE_TO_ANSWER_IF_REFERRAL_IS_ABLE_TO_RELOCATE',
-                    actions: {
-                      type: 'checkbox',
-                      state: 'enabled',
-                    },
-                    configurationKey: '',
-                  },
-                  {
-                    id: 'is-referral-actively-looking',
-                    literal: 'CMP_IS_REFERRAL_ACTIVELY_LOOKING_FOR_A_JOB',
-                    infoText:
-                      'CMP_USER_WILL_BE_ABLE_TO_ANSWER_IF_REFERRAL_IS_ACTIVELY_LOOKING_FOR_A_JOB',
-                    actions: {
-                      type: 'checkbox',
-                      state: 'enabled',
-                    },
-                    configurationKey: '',
-                  },
-                  {
-                    id: 'current-organisation',
-                    literal: 'CMP_REFERRAL_CURRENT_ORGANISATION',
-                    infoText:
-                      'CMP_USER_WILL_BE_ABLE_TO_ENTER_REFERRALS_CURRENT_ORGANISATION',
-                    actions: {
-                      type: 'checkbox',
-                      state: 'disabled',
-                    },
-                    configurationKey: '',
-                  },
-                ],
-              },
-              {
-                id: 'quick-referral',
-                literal: 'CMP_QUICK_REFERRAL',
-                infoText: 'CMP_LET_EMPLOYEES_REFER_JOBS',
-                configurationKey: 'isQuickReferralEnabled',
-                actions: {
-                  type: 'toggle',
+                  configurationKey: 'city_state_country',
                 },
+              ],
+            },
+            {
+              id: 'quick-apply',
+              literal: 'CMP_QUICK_APPLY',
+              infoText: 'CMP_LET_EMPLOYEES_QUICK_APPLY',
+              actions: {
+                type: 'toggle',
               },
-              {
-                id: 'covid-menu',
-                literal: 'CMP_COVID_MENU',
-                infoText: 'CMP_LET_CANDIDATES_KNOW_ABOUT_LATEST_COVID_DETAILS',
-                configurationKey: 'isCovidMenuEnabled',
-                actions: {
-                  type: 'toggle',
+              attributeHeading: 'CMP_LIST_*',
+              configurationKey: 'isQuickApplyEnabled',
+              attributeConfigurationKey: 'quickApplySlots',
+              attributes: [
+                {
+                  id: 'name',
+                  literal: 'CMP_USER_NAME',
+                  infoText: 'CMP_USER_WILL_BE_ABLE_TO_ENTER_NAME',
+                  actions: {
+                    type: 'checkbox',
+                    state: 'enabled',
+                  },
+                  configurationKey: 'user_name',
                 },
-              },
-              {
-                id: 'screening',
-                literal: 'CMP_SCREENING',
-                infoText: 'CMP_LET_BOT_ASK_SCREENING_QUESTIONS_TO_CANDIDATES',
-                configurationKey: 'isScreeningEnabled',
-                actions: {
-                  type: 'toggle',
+                {
+                  id: 'email',
+                  literal: 'CMP_USER_EMAIL',
+                  infoText: 'CMP_USER_WILL_BE_ABLE_TO_ENTER_EMAIL',
+                  actions: {
+                    type: 'checkbox',
+                    state: 'enabled',
+                  },
+                  configurationKey: 'user_email',
                 },
+                {
+                  id: 'phone',
+                  literal: 'CMP_USER_PHONE',
+                  infoText: 'CMP_USER_WILL_BE_ABLE_TO_ENTER_PHONE',
+                  actions: {
+                    type: 'checkbox',
+                    state: 'enabled',
+                  },
+                  configurationKey: 'user_phone',
+                },
+              ],
+            },
+            {
+              id: 'refer-a-friend',
+              literal: 'CMP_REFER_A_FRIEND',
+              infoText: 'CMP_LET_EMPLOYEES_REFER_A_FRIEND',
+              actions: {
+                type: 'toggle',
               },
-            ],
-          },
-        ],
-      };
-      // this.skeleton = data;
-      console.log(data);
-      this.createFinalStructure(this.skeleton);
-    });
+              attributeHeading: 'CMP_LIST_*',
+              configurationKey: 'isReferralEnabled',
+              attributeConfigurationKey: '',
+              attributes: [
+                {
+                  id: 'referrals-first-name',
+                  literal: 'CMP_REFERRALS_FIRST_NAME',
+                  infoText:
+                    'CMP_USER_WILL_BE_ABLE_TO_ENTER_REFERRALS_FIRST_NAME',
+                  actions: {
+                    type: 'checkbox',
+                    state: 'disabled',
+                  },
+                  configurationKey: '',
+                },
+                {
+                  id: 'referrals-last-name',
+                  literal: 'CMP_REFERRALS_LAST_NAME',
+                  infoText:
+                    'CMP_USER_WILL_BE_ABLE_TO_ENTER_REFERRALS_LAST_NAME',
+                  actions: {
+                    type: 'checkbox',
+                    state: 'disabled',
+                  },
+                  configurationKey: '',
+                },
+                {
+                  id: 'referrals-email',
+                  literal: 'CMP_REFERRALS_EMAIL',
+                  infoText: 'CMP_USER_WILL_BE_ABLE_TO_ENTER_REFERRALS_EMAIL',
+                  actions: {
+                    type: 'checkbox',
+                    state: 'disabled',
+                  },
+                  configurationKey: '',
+                },
+                {
+                  id: 'referrals-phone',
+                  literal: 'CMP_REFERRALS_PHONE',
+                  infoText: 'CMP_USER_WILL_BE_ABLE_TO_ENTER_REFERRALS_PHONE',
+                  actions: {
+                    type: 'checkbox',
+                    state: 'enabled',
+                  },
+                  configurationKey: '',
+                },
+                {
+                  id: 'connection-to-referral',
+                  literal: 'CMP_CONNECTION_TO_REFERRAL',
+                  infoText:
+                    'CMP_USER_WILL_BE_ABLE_TO_ENTER_CONNECTION_WITH_REFERRAL',
+                  actions: {
+                    type: 'checkbox',
+                    state: 'disabled',
+                  },
+                  configurationKey: '',
+                },
+                {
+                  id: 'open-to-relocation',
+                  literal: 'CMP_OPEN_TO_RELOCATION',
+                  infoText:
+                    'CMP_USER_WILL_BE_ABLE_TO_ANSWER_IF_REFERRAL_IS_ABLE_TO_RELOCATE',
+                  actions: {
+                    type: 'checkbox',
+                    state: 'enabled',
+                  },
+                  configurationKey: '',
+                },
+                {
+                  id: 'is-referral-actively-looking',
+                  literal: 'CMP_IS_REFERRAL_ACTIVELY_LOOKING_FOR_A_JOB',
+                  infoText:
+                    'CMP_USER_WILL_BE_ABLE_TO_ANSWER_IF_REFERRAL_IS_ACTIVELY_LOOKING_FOR_A_JOB',
+                  actions: {
+                    type: 'checkbox',
+                    state: 'enabled',
+                  },
+                  configurationKey: '',
+                },
+                {
+                  id: 'current-organisation',
+                  literal: 'CMP_REFERRAL_CURRENT_ORGANISATION',
+                  infoText:
+                    'CMP_USER_WILL_BE_ABLE_TO_ENTER_REFERRALS_CURRENT_ORGANISATION',
+                  actions: {
+                    type: 'checkbox',
+                    state: 'disabled',
+                  },
+                  configurationKey: '',
+                },
+              ],
+            },
+            {
+              id: 'quick-referral',
+              literal: 'CMP_QUICK_REFERRAL',
+              infoText: 'CMP_LET_EMPLOYEES_REFER_JOBS',
+              configurationKey: 'isQuickReferralEnabled',
+              actions: {
+                type: 'toggle',
+              },
+            },
+            {
+              id: 'covid-menu',
+              literal: 'CMP_COVID_MENU',
+              infoText: 'CMP_LET_CANDIDATES_KNOW_ABOUT_LATEST_COVID_DETAILS',
+              configurationKey: 'isCovidMenuEnabled',
+              actions: {
+                type: 'toggle',
+              },
+            },
+            {
+              id: 'screening',
+              literal: 'CMP_SCREENING',
+              infoText: 'CMP_LET_BOT_ASK_SCREENING_QUESTIONS_TO_CANDIDATES',
+              configurationKey: 'isScreeningEnabled',
+              actions: {
+                type: 'toggle',
+              },
+            },
+          ],
+        },
+      ],
+    };
+    this.createFinalStructure(this.skeleton);
 
     this.configuration = {
       refNum: 'PHENA0059',
@@ -487,6 +486,13 @@ export class WebChatbotComponent implements OnInit {
       isBotPopUpCloseStateEnabled: true,
       showChatbot: false,
     };
+
+    this.currentRoute = this.route.snapshot.routeConfig?.path;
+    console.log(this.currentRoute);
+
+    this.sharedService.getskeleton(this.currentRoute).subscribe((data: any) => {
+      console.log(data);
+    });
   }
 
   createFinalStructure(skeleton: any) {

@@ -8,8 +8,14 @@ import { Observable } from 'rxjs';
 export class SharedService {
   constructor(private httpClient: HttpClient) {}
 
-  getskeleton(): Observable<any> {
-    return this.httpClient.get('https://api.npoint.io/d2511a5a4b7bcd4c16d1');
+  getskeleton(pageId: string | undefined): Observable<any> {
+    if (pageId === 'career-site-bot') {
+      return this.httpClient.get('https://api.npoint.io/d2511a5a4b7bcd4c16d1');
+    }
+    // return new Observable({data: 'hello'})
+    else {
+      return this.httpClient.get('https://api.npoint.io/d2511a5a4b7bcd4c16d1');
+    }
   }
 
   getI18nValues() {

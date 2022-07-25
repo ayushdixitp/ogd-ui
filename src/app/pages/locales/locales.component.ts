@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { AppEventType } from 'src/app/shared/enums/event.enum';
 import { AnalyticaDataService } from 'src/app/shared/services/analytics-data-service';
@@ -21,7 +22,8 @@ export class LocalesComponent implements OnInit {
   constructor(
     private utilsService: UtilsService,
     private analyticsDataService: AnalyticaDataService,
-    private broadcastService: BroadcastService
+    private broadcastService: BroadcastService,
+    private router: Router
   ) {}
 
   onSearchTextEntered(searchValue: string) {
@@ -29,7 +31,7 @@ export class LocalesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.refNum = 'PHENA0059';
+    this.refNum = 'PHENA0059';
     this.response = this.getDistinctLocale(this.refNum, 'cx');
   }
 
@@ -58,6 +60,9 @@ export class LocalesComponent implements OnInit {
     this.broadcastService.dispatch(
       new AppEvent(AppEventType.SELECTED_LOCALE, localeObj)
     );
+    // TODO: has to be removed
+
+    this.router.navigate(['/career-site-bot']);
   }
 
   getDisplayText(customerName: string, locale: string) {
