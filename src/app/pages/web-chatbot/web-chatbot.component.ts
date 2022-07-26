@@ -4,6 +4,7 @@ import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 import { SharedService } from 'src/app/shared/shared.service';
 import { Skeleton } from 'src/app/shared/interfaces/web-chatbot.interface';
 import { environment } from 'src/environments/environment';
+import { HttpService } from 'src/app/shared/services/http.service';
 
 @Component({
   selector: 'app-web-chatbot',
@@ -13,12 +14,12 @@ import { environment } from 'src/environments/environment';
 export class WebChatbotComponent implements OnInit {
   constructor(
     private broadcastService: BroadcastService,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private httpService: HttpService
   ) {}
   finalstructure: any = {};
   skeleton!: any;
   configurations: any;
-  // TODO: name is not proper. s is missing
   isDataLoaded: boolean = false;
   disableAllChannels: boolean = false;
 
@@ -47,15 +48,17 @@ export class WebChatbotComponent implements OnInit {
 
   getChatbotConfigurations() {
     const url = `v1/configurations/TEST_12345567/en_us/cx/web`;
-    this.sharedService
-      .publicFirePOSTAPI(url, 'chatbot_configurations_api', 'GET')
+
+    this.httpService
+      .httpGet(url, 'chatbot_configurations_api')
       .subscribe(result => {
         this.configurations = result;
-        console.log(this.configurations);
-        this.sharedService.getskeleton().subscribe((data: any) => {
-          this.skeleton = data;
-          this.createFinalStructure(this.skeleton);
-        });
+        this.sharedService
+          .getDashboardSchema('career-site-bot')
+          .subscribe((data: any) => {
+            this.skeleton = data;
+            this.createFinalStructure(this.skeleton);
+          });
       });
   }
 
@@ -137,22 +140,10 @@ export class WebChatbotComponent implements OnInit {
     }
     console.log(reqObj);
 
-    this.sharedService
-      .publicFirePOSTAPI(url, 'chatbot_configurations_api', 'PATCH', reqObj)
+    this.httpService
+      .httpPatch(url, 'chatbot_configurations_api', reqObj)
       .subscribe(result => {
         this.configurations = result;
-      });
-  }
-
-  getDistinctLocale() {
-    let experienceType = 'cx';
-    let methodName =
-      'v1/customers/' + 'HONEUS' + '/' + experienceType + '/distinct-locales';
-    // const url = `v1/configurations/PHENA0059/en_us/cx/web`
-    this.sharedService
-      .publicFirePOSTAPI(methodName, 'chatbot_configurations_api', 'GET')
-      .subscribe(result => {
-        console.log(result);
       });
   }
 
