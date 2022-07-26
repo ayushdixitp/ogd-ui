@@ -477,7 +477,7 @@
           path: '',
           children: [
             {
-              path: 'home',
+              path: 'career-site-bot',
               component: (() => {
                 class x {
                   constructor(p, n) {
@@ -1564,7 +1564,7 @@
         );
       })();
       const te = [
-        { path: '', redirectTo: '/home', pathMatch: 'full' },
+        { path: '', redirectTo: '/career-site-bot', pathMatch: 'full' },
         { path: 'sidebar', component: S(558).k },
         {
           path: '',

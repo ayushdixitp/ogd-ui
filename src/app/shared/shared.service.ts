@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { HttpService } from './services/http.service';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -13,7 +14,7 @@ export class SharedService {
   ) {}
 
   getDashboardSchema(pageId?: string): Observable<any> {
-    const url = `v1/dashboard-schema/${pageId}`;
+    const url = `v1/dashboard-schema${pageId}`;
     return this.httpService.httpGet(url, 'chatbot_management_api');
   }
 

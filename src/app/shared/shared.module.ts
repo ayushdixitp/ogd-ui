@@ -10,7 +10,7 @@ import { AccordionComponent } from '../lib/accordion/accordion.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { ProgressbarComponent } from '../lib/progressbar/progressbar.component';
 import { CardComponent } from '../lib/card/card.component';
-import { LocalesComponent } from '../pages/locales/locales.component';
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
   imports: [
@@ -27,6 +27,7 @@ import { LocalesComponent } from '../pages/locales/locales.component';
     DropdownComponent,
     SidebarComponent,
     CardComponent,
+    HeaderComponent,
   ],
   exports: [
     ProgressbarComponent,
@@ -36,6 +37,7 @@ import { LocalesComponent } from '../pages/locales/locales.component';
     AccordionComponent,
     SidebarComponent,
     CardComponent,
+    HeaderComponent,
   ],
 })
 export class SharedModule {}

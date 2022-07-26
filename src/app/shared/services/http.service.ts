@@ -88,7 +88,6 @@ export class HttpService {
   }
 
   public cmpHubPostAPI(methodName: any, params?: any): Observable<Response> {
-    debugger;
     let paramsObj: any = params ? params : {};
     let url = methodName;
     paramsObj['token'] = 'local';

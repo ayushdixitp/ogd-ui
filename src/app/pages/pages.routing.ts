@@ -7,7 +7,7 @@ export const PagesRoutes: Routes = [
     path: '',
     children: [
       {
-        path: 'home',
+        path: 'career-site-bot',
         component: WebChatbotComponent,
       },
       {
@@ -17,6 +17,10 @@ export const PagesRoutes: Routes = [
       {
         path: 'locales',
         component: LocalesComponent,
+      },
+      {
+        path: 'employee-site-bot',
+        component: WebChatbotComponent,
       },
     ],
   },

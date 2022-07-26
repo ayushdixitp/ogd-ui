@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AppEventType } from 'src/app/shared/enums/event.enum';
 import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 import { SharedService } from 'src/app/shared/shared.service';
-import { Skeleton } from 'src/app/shared/interfaces/web-chatbot.interface';
-import { environment } from 'src/environments/environment';
 import { HttpService } from 'src/app/shared/services/http.service';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-web-chatbot',
@@ -12,19 +11,32 @@ import { HttpService } from 'src/app/shared/services/http.service';
   styleUrls: ['./web-chatbot.component.scss'],
 })
 export class WebChatbotComponent implements OnInit {
+  currentRoute: string | undefined;
   constructor(
     private broadcastService: BroadcastService,
     private sharedService: SharedService,
-    private httpService: HttpService
-  ) {}
+    private httpService: HttpService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
+    router.events.subscribe((event: any) => {
+      if (event instanceof NavigationEnd) {
+        this.pageId = event.url;
+      }
+    });
+  }
+
   finalstructure: any = {};
   skeleton!: any;
   configurations: any;
   isDataLoaded: boolean = false;
   disableAllChannels: boolean = false;
+  pageId: string = 'career-site-bot';
 
   ngOnInit(): void {
     this.getChatbotConfigurations();
+    this.currentRoute = this.route.snapshot.routeConfig?.path;
+    console.log(this.currentRoute);
     this.broadcastService
       .on(AppEventType.CHECKBOX_EVENT)
       .subscribe((event: any) => {
@@ -42,7 +54,25 @@ export class WebChatbotComponent implements OnInit {
     this.broadcastService
       .on(AppEventType.ACCORDION_EVENT)
       .subscribe((event: any) => {
-        console.log(event.payload.data.selectedPageId);
+        if (event?.payload?.selectedPageId) {
+          this.pageId = event.payload.selectedPageId;
+          console.log(event.payload.selectedPageId);
+          this.sharedService
+            .getDashboardSchema(this.pageId)
+            .subscribe((data: any) => {
+              this.isDataLoaded = false;
+              this.skeleton = data;
+              this.createFinalStructure(this.skeleton);
+            });
+        }
+      });
+    this.broadcastService
+      .on(AppEventType.ACCORDION_EVENT)
+      .subscribe((event: any) => {
+        if (event?.payload?.selectedPageId) {
+          console.log(event.payload);
+          this.router.navigate([event?.payload?.selectedPageId]);
+        }
       });
   }
 
@@ -54,7 +84,7 @@ export class WebChatbotComponent implements OnInit {
       .subscribe(result => {
         this.configurations = result;
         this.sharedService
-          .getDashboardSchema('career-site-bot')
+          .getDashboardSchema(this.pageId)
           .subscribe((data: any) => {
             this.skeleton = data;
             this.createFinalStructure(this.skeleton);
@@ -89,14 +119,14 @@ export class WebChatbotComponent implements OnInit {
                 }
               );
             }
-            if (Object.keys(feature).includes(data.configurationKey)) {
+            if (Object.keys(feature)?.includes(data.configurationKey)) {
               this.skeleton.configurations[index].features[featureIndex][
                 data.configurationKey
               ] = data.isActive;
             }
           });
         }
-        if (Object.keys(configuration).includes(data.configurationKey)) {
+        if (Object.keys(configuration)?.includes(data.configurationKey)) {
           this.disableAllChannels = data.isActive;
           this.skeleton.configurations[index][data.configurationKey] =
             data.isActive;
@@ -124,7 +154,7 @@ export class WebChatbotComponent implements OnInit {
           },
         };
       } else {
-        if (!slots.includes(configurationKey)) slots.push(configurationKey);
+        if (!slots?.includes(configurationKey)) slots.push(configurationKey);
         reqObj = {
           update: {
             [attributeConfigurationKey]: slots,
@@ -143,7 +173,7 @@ export class WebChatbotComponent implements OnInit {
     this.httpService
       .httpPatch(url, 'chatbot_configurations_api', reqObj)
       .subscribe(result => {
-        this.configurations = result;
+        console.log(result);
       });
   }
 

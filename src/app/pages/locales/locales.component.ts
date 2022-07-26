@@ -1,5 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { AppEventType } from 'src/app/shared/enums/event.enum';
+import { AnalyticaDataService } from 'src/app/shared/services/analytics-data-service';
+import { AppEvent } from 'src/app/shared/services/broadcast.event.class';
+import { BroadcastService } from 'src/app/shared/services/broadcast.service';
+import { HttpService } from 'src/app/shared/services/http.service';
 import { UtilsService } from '../../shared/services/utils.service';
+HttpService;
 
 @Component({
   selector: 'locales',
@@ -7,56 +15,55 @@ import { UtilsService } from '../../shared/services/utils.service';
   styleUrls: ['./locales.component.scss'],
 })
 export class LocalesComponent implements OnInit {
-  response: any = {
-    customerName: 'Phenom',
-    locales: [
-      {
-        locale: 'en_US',
-      },
-      {
-        locale: 'en_FR',
-      },
-      {
-        locale: 'en_UK',
-      },
-      {
-        locale: 'en_IR',
-      },
-      {
-        locale: 'en_FR',
-      },
-      {
-        locale: 'en_UK',
-      },
-      {
-        locale: 'en_IR',
-      },
-    ],
-  };
+  @Input('refNum') public refNum!: string;
   data!: any;
   searchText: string = '';
   locales!: any;
+  response: any;
 
-  constructor(private utilsService: UtilsService) {}
+  constructor(
+    private utilsService: UtilsService,
+    private httpService: HttpService,
+    private broadcastService: BroadcastService,
+    private router: Router
+  ) {}
+
   onSearchTextEntered(searchValue: string) {
     this.searchText = searchValue;
   }
 
   ngOnInit(): void {
-    this.data = this.response.locales.map((locale: any) => {
-      locale['displayText'] = this.getDisplayText(
-        this.response.customerName,
-        locale.locale
-      );
-      return this.getDisplayText(this.response.customerName, locale.locale);
-    });
-    console.log(this.data);
-    this.locales = this.response.locales;
-    console.log(this.locales);
+    this.refNum = 'PHENA0059';
+    this.response = this.getDistinctLocale(this.refNum, 'cx');
   }
 
-  getSelectedLocale(event: any) {
-    console.log(event);
+  getDistinctLocale(refNum: string, experienceType: string) {
+    // const url = `v1/configurations/PHENA0059/en_us/cx/web`
+    let methodName = this.utilsService.getDistinctLocalesPath(
+      refNum,
+      experienceType
+    );
+    this.httpService
+      .httpGet(methodName, 'chatbot_configurations_api')
+      .subscribe((result: any) => {
+        this.locales = result.locales;
+        this.data = result.locales.map((locale: any) => {
+          locale['displayText'] = this.getDisplayText(
+            result.customerName,
+            locale.locale
+          );
+        });
+        return result;
+      });
+  }
+
+  getSelectedLocale(localeObj: any) {
+    console.log(localeObj);
+    this.broadcastService.dispatch(
+      new AppEvent(AppEventType.SELECTED_LOCALE, localeObj)
+    );
+    // TODO: has to be removed,, move them in constant
+    this.router.navigate(['/career-site-bot']);
   }
 
   getDisplayText(customerName: string, locale: string) {

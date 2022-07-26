@@ -1,2 +1,8 @@
-<section class="sidebar"></section>
-<router-outlet></router-outlet>
+<div class="main-container">
+    <aside>
+        <app-sidebar [isLocaleListPage]="isLocaleListPage" ></app-sidebar>
+    </aside>
+    <div class="container">
+        <router-outlet></router-outlet>
+    </div>
+</div>

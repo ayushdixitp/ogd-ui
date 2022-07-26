@@ -32,7 +32,7 @@ export class AccordionComponent implements OnInit {
   accordionData: any;
 
   ngOnInit(): void {
-    this.selectedPageId = this.pages.some(
+    this.selectedPageId = this?.pages?.some(
       page => page.pageId === this.defaultPageId
     )
       ? this.defaultPageId
@@ -51,7 +51,6 @@ export class AccordionComponent implements OnInit {
   onClick() {
     this.broadcastService.dispatch(
       new AppEvent(AppEventType.ACCORDION_EVENT, {
-        selectedPageId: this.selectedPageId,
         accordionId: this.id,
         isAccordionOpen: this.isShowPages,
       })

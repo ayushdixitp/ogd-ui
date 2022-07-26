@@ -6,8 +6,8 @@
         <app-dropdown [id]="'drop1'"></app-dropdown>
         <app-dropdown [id]="'drop2'"></app-dropdown>
         <span></span>
-        <app-accordion experienceType="Candidate Experience" id="cx"></app-accordion>
-        <app-accordion experienceType="Employee Experience" id="ex"></app-accordion>
+        <app-accordion [pages]="accord1" experienceType="Candidate Experience" id="cx"></app-accordion>
+        <app-accordion [pages]="accord2" experienceType="Employee Experience" id="ex"></app-accordion>
         <app-accordion experienceType="Recruiter Experience" id="rx"></app-accordion>
     </ng-template>
 </section>

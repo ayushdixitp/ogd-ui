@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
+import { AppEventType } from 'src/app/shared/enums/event.enum';
+import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 
 @Component({
   selector: 'app-base',
@@ -6,7 +9,28 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./base.component.scss'],
 })
 export class BaseComponent implements OnInit {
-  constructor() {}
+  isLocaleListPage!: boolean;
+  currentUrl!: string;
 
-  ngOnInit(): void {}
+  constructor(
+    private router: Router,
+    private broadcastService: BroadcastService
+  ) {
+    router.events.subscribe((event: any) => {
+      if (event instanceof NavigationEnd) {
+        this.currentUrl = event.url;
+      }
+    });
+  }
+
+  ngOnInit(): void {
+    if (this.currentUrl == '/' || this.currentUrl == '/locales') {
+      this.isLocaleListPage = true;
+    } else {
+      this.isLocaleListPage = false;
+    }
+    this.broadcastService
+      .on(AppEventType.SELECTED_LOCALE)
+      .subscribe(() => (this.isLocaleListPage = false));
+  }
 }

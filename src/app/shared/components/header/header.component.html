@@ -1,0 +1,28 @@
+<section class="header">
+    <ng-container *ngIf="isLocaleListPage">
+        <span class="only-title">Select a Locale</span>
+    </ng-container>
+    <ng-container *ngIf="!isLocaleListPage">
+        <span class="experience-type">{{experienceType}}</span>
+        <div class="sms-bound">
+            <span class="bot-type">{{botType}}</span>
+            <ng-container *ngIf='experienceType==="Employee Experience" && botType==="SMS Bot"'>
+                <div class="sms-pad">
+                    <span class="sms">SID
+                    </span>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="botType==='SMS Bot'">
+                <div class="sms-pad">
+                    <span class="sms">Phone Number: {{phnNumber}}
+                    </span>
+                </div>
+            </ng-container>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="meta.reset">
+        <button class="reset-button">
+            Reset to default
+        </button>
+    </ng-container>
+</section>
