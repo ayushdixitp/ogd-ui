@@ -2,12 +2,11 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AppEventType } from 'src/app/shared/enums/event.enum';
-import { AnalyticaDataService } from 'src/app/shared/services/analytics-data-service';
 import { AppEvent } from 'src/app/shared/services/broadcast.event.class';
 import { BroadcastService } from 'src/app/shared/services/broadcast.service';
-import { HttpService } from 'src/app/shared/services/http.service';
-import { UtilsService } from '../../shared/services/utils.service';
-HttpService;
+import { LocalStorageService } from 'src/app/shared/services/localstorage.service';
+import { UtilsService } from 'src/app/shared/services/utils.service';
+import { SharedService } from 'src/app/shared/shared.service';
 
 @Component({
   selector: 'locales',
@@ -15,7 +14,7 @@ HttpService;
   styleUrls: ['./locales.component.scss'],
 })
 export class LocalesComponent implements OnInit {
-  @Input('refNum') public refNum!: string;
+  @Input('refNum') public refNum!: string | null;
   data!: any;
   searchText: string = '';
   locales!: any;
@@ -23,9 +22,10 @@ export class LocalesComponent implements OnInit {
 
   constructor(
     private utilsService: UtilsService,
-    private httpService: HttpService,
     private broadcastService: BroadcastService,
-    private router: Router
+    private router: Router,
+    private sharedService: SharedService,
+    private localStorageService: LocalStorageService
   ) {
     router.events.subscribe();
   }
@@ -35,7 +35,7 @@ export class LocalesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.refNum = 'PHENA0059';
+    this.refNum = this.localStorageService.getLocalStorageItem('refNum');
     this.utilsService
       .getDistinctLocale(this.refNum, 'cx')
       .then((data: any) => (this.locales = data.locales));
@@ -43,8 +43,9 @@ export class LocalesComponent implements OnInit {
 
   getSelectedLocale(localeObj: any) {
     this.broadcastService.dispatch(
-      new AppEvent(AppEventType.SELECTED_LOCALE, localeObj)
+      new AppEvent(AppEventType.SELECTED_LOCALE_EVENT, localeObj)
     );
+    this.localStorageService.setLocalStorageItem('locale', localeObj.locale);
     // TODO: has to be removed,, move them in constant
     this.router.navigate(['/career-site-bot']);
   }

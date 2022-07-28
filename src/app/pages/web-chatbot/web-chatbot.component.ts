@@ -1,11 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AppEventType } from 'src/app/shared/enums/event.enum';
+import { Channels } from 'src/app/shared/enums/channels.enum';
 import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 import { SharedService } from 'src/app/shared/shared.service';
 import { HttpService } from 'src/app/shared/services/http.service';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
-import { Subscription } from 'rxjs';
-
+import { map, Subscription } from 'rxjs';
+import { UtilsService } from 'src/app/shared/services/utils.service';
+import { LocalStorageService } from 'src/app/shared/services/localstorage.service';
 @Component({
   selector: 'app-web-chatbot',
   templateUrl: './web-chatbot.component.html',
@@ -17,6 +19,8 @@ export class WebChatbotComponent implements OnInit, OnDestroy {
     private broadcastService: BroadcastService,
     private sharedService: SharedService,
     private httpService: HttpService,
+    private utilsService: UtilsService,
+    private localStorageService: LocalStorageService,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -33,10 +37,34 @@ export class WebChatbotComponent implements OnInit, OnDestroy {
   isDataLoaded: boolean = false;
   disableAllChannels: boolean = false;
   routeSubscription!: Subscription;
-  pageId: string = '/career-site-bot';
+  pageId!: string;
+  refNum!: string | null;
+  locale!: string | null;
+  experienceType!: string;
 
   ngOnInit(): void {
+    this.refNum = this.localStorageService.getLocalStorageItem('refNum');
+    this.locale = this.localStorageService.getLocalStorageItem('locale');
+    this.experienceType = this.pageId == '/career-site-bot' ? 'cx' : 'ex';
+    console.log(this.experienceType, this.locale, this.refNum);
     this.getChatbotConfigurations();
+    this.broadcastService
+      .on(AppEventType.SELECTED_LOCALE_EVENT)
+      .subscribe((data: any) => {
+        console.log(data);
+      });
+
+    this.broadcastService
+      .on(AppEventType.SELECTED_LOCALE_EVENT)
+      .pipe(
+        map(res => {
+          let data = res.payload;
+          return data;
+        })
+      )
+      .subscribe(({ locale }) => {
+        this.locale = locale;
+      });
     this.broadcastService
       .on(AppEventType.CHECKBOX_EVENT)
       .subscribe((event: any) => {
@@ -50,11 +78,22 @@ export class WebChatbotComponent implements OnInit, OnDestroy {
         this.updateSkeleton(event?.payload);
         this.updateChatbotConfigurations(event?.payload?.data);
       });
+    this.broadcastService
+      .on(AppEventType.CLICKED_ON_LOCALE_DROPDOWN)
+      .subscribe((event: any) => {
+        this.isDataLoaded = false;
+        this.refreshLocalStorageValue();
+        this.getChatbotConfigurations();
+      });
   }
 
   getChatbotConfigurations() {
-    const url = `v1/configurations/TEST_12345567/en_us/cx/web`;
-
+    const url = this.utilsService.getChatbotConfigurationsPath(
+      this.refNum,
+      this.locale,
+      this.experienceType,
+      Channels.WEB
+    );
     this.httpService
       .httpGet(url, 'chatbot_configurations_api')
       .subscribe(result => {
@@ -126,9 +165,12 @@ export class WebChatbotComponent implements OnInit, OnDestroy {
     configurationKey,
     isActive,
   }: any) {
-    // TODO: to be moved in util servies function for building url
-    const url = `v1/configurations/TEST_12345567/en_us/cx/web`;
-
+    const url = this.utilsService.getChatbotConfigurationsPath(
+      this.refNum,
+      this.locale,
+      this.experienceType,
+      Channels.WEB
+    );
     let reqObj;
     let slots: string[] = this.configurations[attributeConfigurationKey];
     if (attributeConfigurationKey) {
@@ -223,6 +265,11 @@ export class WebChatbotComponent implements OnInit, OnDestroy {
       skeleton.configurations = finalstructure;
     });
     console.log(skeleton);
+  }
+
+  refreshLocalStorageValue() {
+    this.refNum = this.localStorageService.getLocalStorageItem('refNum');
+    this.locale = this.localStorageService.getLocalStorageItem('locale');
   }
 
   ngOnDestroy(): void {

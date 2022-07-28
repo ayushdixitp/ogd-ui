@@ -3,6 +3,7 @@ import { AppEventType } from 'src/app/shared/enums/event.enum';
 import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 import { Router } from '@angular/router';
 import { UtilsService } from 'src/app/shared/services/utils.service';
+import { LocalStorageService } from '../../services/localstorage.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -10,14 +11,15 @@ import { UtilsService } from 'src/app/shared/services/utils.service';
   styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent implements OnInit {
-  refNum!: string;
+  refNum!: string | null;
   locales: any;
   isDataLoaded: boolean = false;
 
   constructor(
     private broadcastService: BroadcastService,
     private router: Router,
-    private utilsService: UtilsService
+    private utilsService: UtilsService,
+    private localStorageService: LocalStorageService
   ) {}
 
   @Input('isLocaleListPage') public isLocaleListPage!: boolean;
@@ -37,7 +39,7 @@ export class SidebarComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    this.refNum = 'PHENA0059';
+    this.refNum = this.localStorageService.getLocalStorageItem('refNum');
     this.broadcastService
       .on(AppEventType.ACCORDION_EVENT)
       .subscribe((event: any) => {

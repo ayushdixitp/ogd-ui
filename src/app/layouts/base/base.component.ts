@@ -30,7 +30,7 @@ export class BaseComponent implements OnInit, OnChanges {
       this.isLocaleListPage = false;
     }
     this.broadcastService
-      .on(AppEventType.SELECTED_LOCALE)
+      .on(AppEventType.SELECTED_LOCALE_EVENT)
       .subscribe(() => (this.isLocaleListPage = false));
   }
 
@@ -42,7 +42,7 @@ export class BaseComponent implements OnInit, OnChanges {
       this.isLocaleListPage = false;
     }
     this.broadcastService
-      .on(AppEventType.SELECTED_LOCALE)
+      .on(AppEventType.SELECTED_LOCALE_EVENT)
       .subscribe(() => (this.isLocaleListPage = false));
   }
 }

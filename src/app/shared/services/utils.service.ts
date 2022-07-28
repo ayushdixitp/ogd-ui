@@ -12,8 +12,20 @@ export class UtilsService {
     return locale.toUpperCase().split('_').join(' | ');
   }
 
-  getDistinctLocalesPath(refNum: string, experienceType: string): string {
+  getDistinctLocalesPath(
+    refNum: string | null,
+    experienceType: string
+  ): string {
     return `v1/customers/${refNum}/${experienceType}/distinct-locales`;
+  }
+
+  getChatbotConfigurationsPath(
+    refNum: string | null,
+    locale: string | null,
+    experienceType: string,
+    channel: string
+  ): string {
+    return `v1/configurations/${refNum}/${locale}/${experienceType}/${channel}`;
   }
 
   getDropdownFormatList(list: [], keyToBeDisplay: string) {
@@ -28,7 +40,7 @@ export class UtilsService {
     return `${customerName} ${this.formatLocale(locale)}`;
   }
 
-  getDistinctLocale(refNum: string, experienceType: string) {
+  getDistinctLocale(refNum: string | null, experienceType: string) {
     // const url = `v1/configurations/PHENA0059/en_us/cx/web`
     let methodName = this.getDistinctLocalesPath(refNum, experienceType);
     return new Promise((resolve, reject) => {

@@ -16,6 +16,7 @@ import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 import { AppEventType } from 'src/app/shared/enums/event.enum';
 import { DropdownItem } from 'src/app/shared/interfaces/dropdown.interface';
 import { AppEvent } from 'src/app/shared/services/broadcast.event.class';
+import { LocalStorageService } from 'src/app/shared/services/localstorage.service';
 
 @Component({
   selector: 'app-dropdown',
@@ -62,6 +63,7 @@ export class DropdownComponent implements OnInit, OnChanges {
       item: 'Phenom People FR | US',
     },
   ];
+  locale!: string | null;
 
   @HostListener('window:click', ['$event.target']) onWindowClick(e: any) {
     // if condition to if check if click is happened outside or not
@@ -78,11 +80,17 @@ export class DropdownComponent implements OnInit, OnChanges {
 
   constructor(
     private formBuilder: FormBuilder,
-    private broadcastService: BroadcastService
+    private broadcastService: BroadcastService,
+    private LocalStorageService: LocalStorageService
   ) {}
 
   ngOnInit(): void {
-    this.title = this.listOfLocales[0]?.item;
+    this.locale = this.LocalStorageService.getLocalStorageItem('locale');
+    this.listOfLocales.forEach(localeItem => {
+      if (localeItem.locale == this.locale) {
+        this.title = localeItem.item;
+      }
+    });
     this.selectedItem = new FormGroup({
       name: new FormControl(this.title, [Validators.required]),
     });
@@ -119,10 +127,14 @@ export class DropdownComponent implements OnInit, OnChanges {
     this.selectedItem.patchValue({ name: selectedItem.item });
 
     this.broadcastService.dispatch(
-      new AppEvent(AppEventType.DROPDOWN_EVENT, {
+      new AppEvent(AppEventType.CLICKED_ON_LOCALE_DROPDOWN, {
         name: AppEventType.CLICKED_ON_LOCALE_DROPDOWN,
         data: { selectedItem },
       })
+    );
+    this.LocalStorageService.setLocalStorageItem(
+      'locale',
+      selectedItem?.locale
     );
   }
 
