@@ -26,7 +26,9 @@ export class LocalesComponent implements OnInit {
     private httpService: HttpService,
     private broadcastService: BroadcastService,
     private router: Router
-  ) {}
+  ) {
+    router.events.subscribe();
+  }
 
   onSearchTextEntered(searchValue: string) {
     this.searchText = searchValue;
@@ -34,39 +36,16 @@ export class LocalesComponent implements OnInit {
 
   ngOnInit(): void {
     this.refNum = 'PHENA0059';
-    this.response = this.getDistinctLocale(this.refNum, 'cx');
-  }
-
-  getDistinctLocale(refNum: string, experienceType: string) {
-    // const url = `v1/configurations/PHENA0059/en_us/cx/web`
-    let methodName = this.utilsService.getDistinctLocalesPath(
-      refNum,
-      experienceType
-    );
-    this.httpService
-      .httpGet(methodName, 'chatbot_configurations_api')
-      .subscribe((result: any) => {
-        this.locales = result.locales;
-        this.data = result.locales.map((locale: any) => {
-          locale['displayText'] = this.getDisplayText(
-            result.customerName,
-            locale.locale
-          );
-        });
-        return result;
-      });
+    this.utilsService
+      .getDistinctLocale(this.refNum, 'cx')
+      .then((data: any) => (this.locales = data.locales));
   }
 
   getSelectedLocale(localeObj: any) {
-    console.log(localeObj);
     this.broadcastService.dispatch(
       new AppEvent(AppEventType.SELECTED_LOCALE, localeObj)
     );
     // TODO: has to be removed,, move them in constant
     this.router.navigate(['/career-site-bot']);
-  }
-
-  getDisplayText(customerName: string, locale: string) {
-    return `${customerName} ${this.utilsService.formatLocale(locale)}`;
   }
 }

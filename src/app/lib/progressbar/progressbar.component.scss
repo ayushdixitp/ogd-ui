@@ -13,7 +13,7 @@
 .container {
   position: relative;
 
-  .range {
+  .range, .range-disabled {
     width: -webkit-fill-available;
     appearance: none;
     // width: 30%;
@@ -45,12 +45,29 @@
   background: linear-gradient(to bottom, #01B2C0, #01B2C0) 100% 50% / 100% 3px no-repeat transparent;
 }
 
+.range-disabled::-webkit-slider-runnable-track {
+  height: 30px;
+  background: linear-gradient(to bottom, #93A1AB, #93A1AB) 100% 50% / 100% 3px no-repeat transparent;
+}
+
 .range::-webkit-slider-thumb {
   position: relative;
   appearance: none;
   height: 13px;
   width: 13px;
   background: #01B2C0;
+  border-radius: 50%;
+  top: 50%;
+  margin-top: calc(-13px/2);
+  box-shadow: webkit-slider-thumb-shadow();
+}
+
+.range-disabled::-webkit-slider-thumb {
+  position: relative;
+  appearance: none;
+  height: 13px;
+  width: 13px;
+  background: #93A1AB;
   border-radius: 50%;
   top: 50%;
   margin-top: calc(-13px/2);

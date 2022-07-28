@@ -1,12 +1,12 @@
-<section class="container">
+<section *ngIf="isDataLoaded" class="container">
     <ng-container *ngIf="isLocaleListPage; else others">
         <div class="button"></div>
     </ng-container>
     <ng-template #others>
-        <app-dropdown [id]="'drop1'"></app-dropdown>
-        <app-dropdown [id]="'drop2'"></app-dropdown>
+        <app-dropdown [listOfLocales]="locales" [id]="'drop1'"></app-dropdown>
+        <app-dropdown [listOfLocales]="locales" [id]="'drop2'"></app-dropdown>
         <span></span>
-        <app-accordion [pages]="accord1" experienceType="Candidate Experience" id="cx"></app-accordion>
+        <app-accordion [defaultPageId]="'career-site-bot'" [pages]="accord1" experienceType="Candidate Experience" id="cx"></app-accordion>
         <app-accordion [pages]="accord2" experienceType="Employee Experience" id="ex"></app-accordion>
         <app-accordion experienceType="Recruiter Experience" id="rx"></app-accordion>
     </ng-template>

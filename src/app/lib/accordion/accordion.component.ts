@@ -32,11 +32,13 @@ export class AccordionComponent implements OnInit {
   accordionData: any;
 
   ngOnInit(): void {
-    this.selectedPageId = this?.pages?.some(
+    this.selectedPageId = this.pages.some(
       page => page.pageId === this.defaultPageId
     )
       ? this.defaultPageId
-      : this.pages[0].pageId;
+      : '';
+
+    if (this.defaultPageId === this.selectedPageId) this.isShowPages = true;
 
     this.broadcastService.on(AppEventType.ACCORDION_EVENT).subscribe(data => {
       this.accordionData = data.payload;

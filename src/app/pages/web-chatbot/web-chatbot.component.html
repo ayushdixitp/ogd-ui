@@ -1,3 +1,6 @@
+<ng-container *ngIf="!isDataLoaded">
+    <app-loader></app-loader>
+</ng-container>
 <main *ngIf="isDataLoaded" class="container">
 <app-header [experienceType]="skeleton?.experience" [botType]="skeleton?.heading">
 </app-header>
@@ -53,13 +56,13 @@
                                                 <phenom-checkbox
                                                     [attributeConfigurationKey]="feature.attributeConfigurationKey"
                                                     [id]="attribute.configurationKey"
-                                                    [isDisabled]="!feature[feature.configurationKey] ||attribute.actions.state"
+                                                    [isDisabled]="!feature[feature.configurationKey] || (attribute.actions.disabled)"
                                                     [isActive]="attribute[attribute.configurationKey]"
                                                     >
                                                 </phenom-checkbox>
                                             </ng-container>
                                             <ng-container *ngIf="attribute.actions.type=='progress-bar'">
-                                                <app-progressbar [isDisabled]="attribute.actions.state" [value]="attribute[attribute.configurationKey]">
+                                                <app-progressbar [isDisabled]="!feature[feature.configurationKey] || (attribute.actions.disabled)" [value]="attribute[attribute.configurationKey]">
                                                 </app-progressbar>
                                             </ng-container>
                                         </div>

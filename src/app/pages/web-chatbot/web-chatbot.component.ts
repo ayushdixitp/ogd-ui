@@ -1,16 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AppEventType } from 'src/app/shared/enums/event.enum';
 import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 import { SharedService } from 'src/app/shared/shared.service';
 import { HttpService } from 'src/app/shared/services/http.service';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-web-chatbot',
   templateUrl: './web-chatbot.component.html',
   styleUrls: ['./web-chatbot.component.scss'],
 })
-export class WebChatbotComponent implements OnInit {
+export class WebChatbotComponent implements OnInit, OnDestroy {
   currentRoute: string | undefined;
   constructor(
     private broadcastService: BroadcastService,
@@ -19,7 +20,7 @@ export class WebChatbotComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router
   ) {
-    router.events.subscribe((event: any) => {
+    this.routeSubscription = router.events.subscribe((event: any) => {
       if (event instanceof NavigationEnd) {
         this.pageId = event.url;
       }
@@ -31,12 +32,11 @@ export class WebChatbotComponent implements OnInit {
   configurations: any;
   isDataLoaded: boolean = false;
   disableAllChannels: boolean = false;
-  pageId: string = 'career-site-bot';
+  routeSubscription!: Subscription;
+  pageId: string = '/career-site-bot';
 
   ngOnInit(): void {
     this.getChatbotConfigurations();
-    this.currentRoute = this.route.snapshot.routeConfig?.path;
-    console.log(this.currentRoute);
     this.broadcastService
       .on(AppEventType.CHECKBOX_EVENT)
       .subscribe((event: any) => {
@@ -49,30 +49,6 @@ export class WebChatbotComponent implements OnInit {
       .subscribe((event: any) => {
         this.updateSkeleton(event?.payload);
         this.updateChatbotConfigurations(event?.payload?.data);
-      });
-
-    this.broadcastService
-      .on(AppEventType.ACCORDION_EVENT)
-      .subscribe((event: any) => {
-        if (event?.payload?.selectedPageId) {
-          this.pageId = event.payload.selectedPageId;
-          console.log(event.payload.selectedPageId);
-          this.sharedService
-            .getDashboardSchema(this.pageId)
-            .subscribe((data: any) => {
-              this.isDataLoaded = false;
-              this.skeleton = data;
-              this.createFinalStructure(this.skeleton);
-            });
-        }
-      });
-    this.broadcastService
-      .on(AppEventType.ACCORDION_EVENT)
-      .subscribe((event: any) => {
-        if (event?.payload?.selectedPageId) {
-          console.log(event.payload);
-          this.router.navigate([event?.payload?.selectedPageId]);
-        }
       });
   }
 
@@ -123,6 +99,15 @@ export class WebChatbotComponent implements OnInit {
               this.skeleton.configurations[index].features[featureIndex][
                 data.configurationKey
               ] = data.isActive;
+              console.log(
+                this.skeleton.configurations[index].features[featureIndex]
+                  .attributes
+              );
+              console.log(
+                this.skeleton.configurations[index].features[featureIndex][
+                  data.configurationKey
+                ]
+              );
             }
           });
         }
@@ -141,6 +126,7 @@ export class WebChatbotComponent implements OnInit {
     configurationKey,
     isActive,
   }: any) {
+    // TODO: to be moved in util servies function for building url
     const url = `v1/configurations/TEST_12345567/en_us/cx/web`;
 
     let reqObj;
@@ -168,8 +154,6 @@ export class WebChatbotComponent implements OnInit {
         },
       };
     }
-    console.log(reqObj);
-
     this.httpService
       .httpPatch(url, 'chatbot_configurations_api', reqObj)
       .subscribe(result => {
@@ -239,5 +223,9 @@ export class WebChatbotComponent implements OnInit {
       skeleton.configurations = finalstructure;
     });
     console.log(skeleton);
+  }
+
+  ngOnDestroy(): void {
+    this.routeSubscription.unsubscribe();
   }
 }

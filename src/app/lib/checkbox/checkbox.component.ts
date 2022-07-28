@@ -5,6 +5,8 @@ import {
   AfterViewInit,
   ElementRef,
   ViewChild,
+  OnChanges,
+  SimpleChanges,
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { AppEvent } from 'src/app/shared/services/broadcast.event.class';
@@ -16,7 +18,7 @@ import { BroadcastService } from '../../shared/services/broadcast.service';
   templateUrl: './checkbox.component.html',
   styleUrls: ['./checkbox.component.scss'],
 })
-export class CheckboxComponent implements OnInit {
+export class CheckboxComponent implements OnInit, AfterViewInit, OnChanges {
   @ViewChild('svg') svg: ElementRef | undefined;
   @Input('isActive') public isActive!: string;
   @Input('isDisabled') public isDisabled!: boolean;
@@ -33,8 +35,18 @@ export class CheckboxComponent implements OnInit {
     });
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.isDisabled && this.isActive) {
+      this.svg?.nativeElement.setAttribute('fill', '#8D949A');
+      this.svg?.nativeElement.setAttribute('stroke', '#8D949A');
+    } else {
+      this.svg?.nativeElement.setAttribute('fill', '#FFFFFF');
+      this.svg?.nativeElement.setAttribute('stroke', '#FFFFFF');
+    }
+  }
+
   ngAfterViewInit(): void {
-    if (this.isDisabled) {
+    if (this.isDisabled && this.isActive) {
       this.svg?.nativeElement.setAttribute('fill', '#8D949A');
       this.svg?.nativeElement.setAttribute('stroke', '#8D949A');
     }

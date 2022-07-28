@@ -1,4 +1,11 @@
-import { Component, Input, OnInit, HostListener } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  HostListener,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -15,21 +22,45 @@ import { AppEvent } from 'src/app/shared/services/broadcast.event.class';
   templateUrl: './dropdown.component.html',
   styleUrls: ['./dropdown.component.scss'],
 })
-export class DropdownComponent implements OnInit {
+export class DropdownComponent implements OnInit, OnChanges {
   @Input() id!: string;
   @Input() listOfLocales: Array<DropdownItem> = [
-    { id: 1, item: 'Cognizant EN/US' },
-    { id: 1, item: 'Cognizant EN/FR' },
-    { id: 1, item: 'Cognizant EN/US' },
-    { id: 1, item: 'Cognizant EN/FR' },
-    { id: 1, item: 'Cognizant EN/US' },
-    { id: 1, item: 'Cognizant EN/FR' },
-    { id: 1, item: 'Cognizant EN/US' },
-    { id: 1, item: 'Cognizant EN/FR' },
-    { id: 1, item: 'Cognizant EN/US' },
-    { id: 1, item: 'Cognizant EN/FR' },
-    { id: 1, item: 'Cognizant EN/US' },
-    { id: 1, item: 'Cognizant EN/FR' },
+    {
+      locale: 'es_us',
+      regionName: 'United States',
+      displayText: 'Phenom People ES | US',
+      item: 'Phenom People ES | US',
+    },
+    {
+      locale: 'fr_ca',
+      regionName: 'Canadian French',
+      displayText: 'Phenom People FR | CA',
+      item: 'Phenom People FR | CA',
+    },
+    {
+      locale: 'ts_ts',
+      regionName: 'Test Locale 1',
+      displayText: 'Phenom People TS | TS',
+      item: 'Phenom People TS | TS',
+    },
+    {
+      locale: 'ts_ts2',
+      regionName: 'Test Locale 2',
+      displayText: 'Phenom People TS | TS2',
+      item: 'Phenom People TS | TS2',
+    },
+    {
+      locale: 'en_global',
+      regionName: 'Global',
+      displayText: 'Phenom People EN | GLOBAL',
+      item: 'Phenom People EN | GLOBAL',
+    },
+    {
+      locale: 'fr_us',
+      regionName: 'United States',
+      displayText: 'Phenom People FR | US',
+      item: 'Phenom People FR | US',
+    },
   ];
 
   @HostListener('window:click', ['$event.target']) onWindowClick(e: any) {
@@ -51,7 +82,23 @@ export class DropdownComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.title = this.listOfLocales[0].item;
+    this.title = this.listOfLocales[0]?.item;
+    this.selectedItem = new FormGroup({
+      name: new FormControl(this.title, [Validators.required]),
+    });
+    this.broadcastService
+      .on(AppEventType.DROPDOWN_EVENT)
+      .subscribe((event: any) => {
+        if (event.payload.data.id == this.id) {
+          this.isDropdownListVisible = !this.isDropdownListVisible;
+        } else {
+          this.isDropdownListVisible = false;
+        }
+      });
+  }
+
+  ngOnChanges(): void {
+    this.title = this.listOfLocales[0]?.item;
     this.selectedItem = new FormGroup({
       name: new FormControl(this.title, [Validators.required]),
     });
@@ -72,7 +119,7 @@ export class DropdownComponent implements OnInit {
     this.selectedItem.patchValue({ name: selectedItem.item });
 
     this.broadcastService.dispatch(
-      new AppEvent(AppEventType.CHECKBOX_EVENT, {
+      new AppEvent(AppEventType.DROPDOWN_EVENT, {
         name: AppEventType.CLICKED_ON_LOCALE_DROPDOWN,
         data: { selectedItem },
       })
@@ -80,7 +127,7 @@ export class DropdownComponent implements OnInit {
   }
 
   onTitleClick() {
-    // this.isDropdownListVisible = !this.isDropdownListVisible;
+    this.isDropdownListVisible = !this.isDropdownListVisible;
     this.broadcastService.dispatch(
       new AppEvent(AppEventType.DROPDOWN_EVENT, {
         name: AppEventType.DROPDOWN_EVENT,

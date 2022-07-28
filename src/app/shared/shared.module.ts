@@ -11,6 +11,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { ProgressbarComponent } from '../lib/progressbar/progressbar.component';
 import { CardComponent } from '../lib/card/card.component';
 import { HeaderComponent } from './components/header/header.component';
+import { LoaderComponent } from './components/loader/loader.component';
 
 @NgModule({
   imports: [
@@ -28,6 +29,7 @@ import { HeaderComponent } from './components/header/header.component';
     SidebarComponent,
     CardComponent,
     HeaderComponent,
+    LoaderComponent,
   ],
   exports: [
     ProgressbarComponent,
@@ -38,6 +40,7 @@ import { HeaderComponent } from './components/header/header.component';
     SidebarComponent,
     CardComponent,
     HeaderComponent,
+    LoaderComponent,
   ],
 })
 export class SharedModule {}

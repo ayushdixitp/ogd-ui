@@ -1,5 +1,6 @@
 <main [id]="id" class="dropdown" >
     <form [formGroup]="selectedItem" (ngSubmit)="selectOption">
+        <input type="hidden" formControlName="name">
             <p class="dropdown-title" id="dropdown" (click)="onTitleClick()">
                     {{ title }}
                     <span [ngStyle]="{transform: isDropdownListVisible? 'rotate(180deg)': 'rotate(0deg)'}">
@@ -9,8 +10,8 @@
                     </span>
            </p>
             <section *ngIf="isDropdownListVisible" class="dropdown-menu">
-                <ul>
-                    <li *ngFor="let listItem of listOfLocales" (click)="selectOption(listItem)">
+                <ul *ngIf="listOfLocales.length">
+                    <li *ngFor="let listItem of listOfLocales" (click)="selectOption(listItem)" [ngClass]="{'selected-item': listItem.item == title}">
                         {{ listItem.item }}
                     </li>
                 </ul>                

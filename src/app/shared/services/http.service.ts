@@ -94,8 +94,8 @@ export class HttpService {
     return this.httpClient.post<Response>(url, paramsObj, {}).pipe(
       map((res: Response) => {
         let data: any = res.data;
-        data['requestObject'] = paramsObj.request_object;
-        data['productRequestObject'] = paramsObj.request_object;
+        data['requestObject'] = paramsObj?.request_object;
+        data['productRequestObject'] = paramsObj?.request_object;
         return data;
       })
     );
