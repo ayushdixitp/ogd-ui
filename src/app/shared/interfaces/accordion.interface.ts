@@ -1,4 +1,5 @@
 export interface AccordionItem {
-  pageId: string;
-  heading: string;
+  pageId?: string;
+  heading?: string;
+  channel?: string;
 }

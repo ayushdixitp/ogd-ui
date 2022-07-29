@@ -9,6 +9,7 @@ export const PagesRoutes: Routes = [
       {
         path: 'career-site-bot',
         component: WebChatbotComponent,
+        data: { state: { ExperienceType: 'cx' } },
       },
       {
         path: 'home-ex',
@@ -21,6 +22,7 @@ export const PagesRoutes: Routes = [
       {
         path: 'employee-site-bot',
         component: WebChatbotComponent,
+        data: { state: { ExperienceType: 'ex' } },
       },
     ],
   },

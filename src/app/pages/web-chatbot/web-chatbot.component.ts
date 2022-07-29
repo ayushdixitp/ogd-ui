@@ -43,9 +43,13 @@ export class WebChatbotComponent implements OnInit, OnDestroy {
   experienceType!: string;
 
   ngOnInit(): void {
+    this.route.data
+      .pipe(map((data: any) => data.state))
+      .subscribe((state: any) => {
+        this.experienceType = state.ExperienceType;
+      });
     this.refNum = this.localStorageService.getLocalStorageItem('refNum');
     this.locale = this.localStorageService.getLocalStorageItem('locale');
-    this.experienceType = this.pageId == '/career-site-bot' ? 'cx' : 'ex';
     console.log(this.experienceType, this.locale, this.refNum);
     this.getChatbotConfigurations();
     this.broadcastService

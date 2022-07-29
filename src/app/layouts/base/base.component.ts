@@ -9,7 +9,7 @@ import { BroadcastService } from 'src/app/shared/services/broadcast.service';
   styleUrls: ['./base.component.scss'],
 })
 export class BaseComponent implements OnInit, OnChanges {
-  isLocaleListPage!: boolean;
+  isLocaleListPage: boolean = false;
   currentUrl!: string;
 
   constructor(

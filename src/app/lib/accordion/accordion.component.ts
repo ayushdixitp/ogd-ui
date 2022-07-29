@@ -46,6 +46,7 @@ export class AccordionComponent implements OnInit {
         this.isShowPages = !this.isShowPages;
       } else {
         this.isShowPages = false;
+        this.selectedPageId = '';
       }
     });
   }
