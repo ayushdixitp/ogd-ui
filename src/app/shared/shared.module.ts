@@ -12,6 +12,7 @@ import { ProgressbarComponent } from '../lib/progressbar/progressbar.component';
 import { CardComponent } from '../lib/card/card.component';
 import { HeaderComponent } from './components/header/header.component';
 import { LoaderComponent } from './components/loader/loader.component';
+import { InputBoxComponent } from '../lib/input-box/input-box.component';
 
 @NgModule({
   imports: [
@@ -30,6 +31,7 @@ import { LoaderComponent } from './components/loader/loader.component';
     CardComponent,
     HeaderComponent,
     LoaderComponent,
+    InputBoxComponent,
   ],
   exports: [
     ProgressbarComponent,
@@ -41,6 +43,7 @@ import { LoaderComponent } from './components/loader/loader.component';
     CardComponent,
     HeaderComponent,
     LoaderComponent,
+    InputBoxComponent,
   ],
 })
 export class SharedModule {}
