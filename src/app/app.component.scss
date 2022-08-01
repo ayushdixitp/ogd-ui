@@ -358,3 +358,88 @@ template {
 [hidden] {
     display: none;
 }
+.btn {
+    border: none;
+    border-radius: 4px;
+    background-color: tomato;
+    color: white;
+    padding: 12px 14px;
+    width: 150px;
+    height: 40px;
+    background: #00838F;
+    border-radius: 4px;
+    &-small {
+        width: 80px;
+        height: 30px;
+        font-size: small;
+        padding: 8px 10px;
+        &-outline {
+            color: #00838F;
+            background-color: white;
+            border: 1px solid #00838F;
+            &:hover {
+                color: #ffffff;
+                 border: none;
+             }
+        }
+    }
+    &-medium {
+        width: 120px;
+        height: 40px;
+        font-size: medium;
+        padding: 4px 6px;
+        &-outline {
+            color: #00838F;
+            background-color: white;
+            border: 1px solid #00838F;
+            &:hover {
+                color: #ffffff;
+                 border: none;
+             }
+        }
+    }
+    &-large {
+        width: 180px;
+        height: 50px;
+        font-size: large;
+        padding: 4px 6px;
+        &-outline {
+            color: #00838F;
+            background-color: white;
+            border: 1px solid #00838F;
+            &:hover {
+               color: #ffffff;
+                border: none;
+            }
+        }
+    }
+    &-disabled {
+        text-align: center;
+        color: #8C9BA5;
+        background: rgba(21, 41, 53, 0.04);
+        &:hover {
+            text-align: center;
+            color: #8C9BA5;
+            background: rgba(21, 41, 53, 0.04);
+            cursor: not-allowed;
+        }
+    }
+    &:disabled {
+        text-align: center;
+        color: #8C9BA5;
+        background: rgba(21, 41, 53, 0.04);
+        cursor: not-allowed;
+        &:hover {
+            text-align: center;
+            color: #8C9BA5;
+            background: rgba(21, 41, 53, 0.04);
+            cursor: not-allowed;
+        }
+    }
+    &:hover {
+    background: #29ABB9;        
+    }
+    &:active {
+    background: #00838F;        
+    }
+}
