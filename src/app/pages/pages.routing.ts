@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { Provisioning } from './provisioning/provisioning.component';
 import { LocalesComponent } from './locales/locales.component';
 import { WebChatbotComponent } from './web-chatbot/web-chatbot.component';
 
@@ -22,6 +23,11 @@ export const PagesRoutes: Routes = [
       {
         path: 'employee-site-bot',
         component: WebChatbotComponent,
+        data: { state: { ExperienceType: 'ex' } },
+      },
+      {
+        path: 'provisioning',
+        component: Provisioning,
         data: { state: { ExperienceType: 'ex' } },
       },
     ],

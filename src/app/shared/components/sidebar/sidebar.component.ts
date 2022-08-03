@@ -51,6 +51,11 @@ export class SidebarComponent implements OnInit {
           heading: 'CMP_CAREERS_SITE_BOT',
         },
         {
+          pageId: 'provisioning',
+          channel: 'whatsapp',
+          heading: 'CMP_WHATSAPP_BOT',
+        },
+        {
           pageId: 'whatsapp-bot',
           channel: 'whatsapp',
           heading: 'CMP_WHATSAPP_BOT',

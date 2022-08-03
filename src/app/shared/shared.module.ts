@@ -18,8 +18,8 @@ import { ButtonComponent } from 'src/app/lib/button/button.component';
 @NgModule({
   imports: [
     CommonModule,
-    ReactiveFormsModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     AccordionComponent,
   ],

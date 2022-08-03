@@ -13,6 +13,7 @@ export class ButtonComponent implements OnInit {
   @Input('icon') public icon!: string;
   @Input('iconPosotion') public iconPosition!: string;
   @Input('buttonClass') public buttonClass!: string;
+  @Input('isDisabled') public isDisabled!: boolean;
 
   @Output('onClick') onClick = new EventEmitter();
 

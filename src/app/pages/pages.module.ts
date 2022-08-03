@@ -7,7 +7,8 @@ import { LocalesComponent } from './locales/locales.component';
 import { SharedModule } from '../shared/shared.module';
 import { SearchboxComponent } from '../lib/searchbox/searchbox.component';
 import { SearchFilterPipe } from '../shared/pipes/search-filter.pipe';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Provisioning } from './provisioning/provisioning.component';
 
 @NgModule({
   declarations: [
@@ -15,12 +16,14 @@ import { FormsModule } from '@angular/forms';
     SearchboxComponent,
     SearchFilterPipe,
     LocalesComponent,
+    Provisioning,
   ],
   imports: [
     CommonModule,
     RouterModule.forChild(PagesRoutes),
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     SharedModule,
   ],
 })

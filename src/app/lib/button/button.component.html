@@ -1,8 +1,10 @@
 <button class="btn phenom-button" [class]="buttonClass"
-  [ngClass]="{'phenom-button-position-right': iconPosition == 'right'}" (click)="onButtonClick()">
-  <span class="icon">
-    <img [src]="icon" height="20px" alt="not_loaded">
-  </span>
+  [ngClass]="{'phenom-button-position-right': iconPosition == 'right'}" (click)="onButtonClick()" [disabled]="isDisabled">
+  <ng-container *ngIf="icon">
+    <span class="icon">
+      <img [src]="icon" height="20px" alt="not_loaded">
+    </span>
+  </ng-container>
   <span>{{ label }}</span>
 </button>
 
