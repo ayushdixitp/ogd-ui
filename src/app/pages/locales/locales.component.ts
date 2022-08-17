@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { AppEventType } from 'src/app/shared/enums/event.enum';
 import { AppEvent } from 'src/app/shared/services/broadcast.event.class';
 import { BroadcastService } from 'src/app/shared/services/broadcast.service';
-import { LocalStorageService } from 'src/app/shared/services/localstorage.service';
 import { UtilsService } from 'src/app/shared/services/utils.service';
 import { SharedService } from 'src/app/shared/shared.service';
 
@@ -24,8 +23,7 @@ export class LocalesComponent implements OnInit {
     private utilsService: UtilsService,
     private broadcastService: BroadcastService,
     private router: Router,
-    private sharedService: SharedService,
-    private localStorageService: LocalStorageService
+    private sharedService: SharedService
   ) {
     router.events.subscribe();
   }
@@ -35,18 +33,16 @@ export class LocalesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.refNum = this.localStorageService.getLocalStorageItem('refNum');
+    this.refNum = localStorage.getItem('refNum');
     this.utilsService
       .getDistinctLocale(this.refNum, 'cx')
       .then((data: any) => (this.locales = data.locales));
   }
 
   getSelectedLocale(localeObj: any) {
-    this.broadcastService.dispatch(
-      new AppEvent(AppEventType.SELECTED_LOCALE_EVENT, localeObj)
-    );
-    this.localStorageService.setLocalStorageItem('locale', localeObj.locale);
-    // TODO: has to be removed,, move them in constant
-    this.router.navigate(['/dashboard/career-site-bot']);
+    // this.broadcastService.dispatch(
+    //   new AppEvent(AppEventType.SELECTED_LOCALE_EVENT, localeObj)
+    // );
+    localStorage.setItem('locale', localeObj.locale);
   }
 }

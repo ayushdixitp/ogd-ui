@@ -3,7 +3,6 @@ import { AppEventType } from 'src/app/shared/enums/event.enum';
 import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { UtilsService } from 'src/app/shared/services/utils.service';
-import { LocalStorageService } from '../../services/localstorage.service';
 import { SharedService } from '../../shared.service';
 import { map } from 'rxjs';
 
@@ -25,7 +24,6 @@ export class SidebarComponent implements OnInit {
     private broadcastService: BroadcastService,
     private router: Router,
     private utilsService: UtilsService,
-    private localStorageService: LocalStorageService,
     private sharedService: SharedService
   ) {
     this.routeSubscription = router.events.subscribe((event: any) => {
@@ -87,7 +85,7 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit(): void {
     this.addTranslation();
-    this.refNum = this.localStorageService.getLocalStorageItem('refNum');
+    this.refNum = localStorage.getItem('refNum');
     this.broadcastService
       .on(AppEventType.ACCORDION_EVENT)
       .subscribe((event: any) => {

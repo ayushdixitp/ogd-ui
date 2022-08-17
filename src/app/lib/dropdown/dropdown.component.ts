@@ -16,7 +16,6 @@ import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 import { AppEventType } from 'src/app/shared/enums/event.enum';
 import { DropdownItem } from 'src/app/shared/interfaces/dropdown.interface';
 import { AppEvent } from 'src/app/shared/services/broadcast.event.class';
-import { LocalStorageService } from 'src/app/shared/services/localstorage.service';
 
 @Component({
   selector: 'app-dropdown',
@@ -80,12 +79,11 @@ export class DropdownComponent implements OnInit, OnChanges {
 
   constructor(
     private formBuilder: FormBuilder,
-    private broadcastService: BroadcastService,
-    private LocalStorageService: LocalStorageService
+    private broadcastService: BroadcastService
   ) {}
 
   ngOnInit(): void {
-    this.locale = this.LocalStorageService.getLocalStorageItem('locale');
+    this.locale = localStorage.getItem('locale');
     this.listOfLocales.forEach(localeItem => {
       if (localeItem.locale == this.locale) {
         this.title = localeItem.item;
@@ -132,10 +130,7 @@ export class DropdownComponent implements OnInit, OnChanges {
         data: { selectedItem },
       })
     );
-    this.LocalStorageService.setLocalStorageItem(
-      'locale',
-      selectedItem?.locale
-    );
+    localStorage.setItem('locale', selectedItem?.locale);
   }
 
   onTitleClick() {

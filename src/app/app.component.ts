@@ -1,6 +1,5 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { SharedService } from 'src/app/shared/shared.service';
-import { LocalStorageService } from 'src/app/shared/services/localstorage.service';
 
 @Component({
   selector: 'chatbot-management-app',
@@ -9,10 +8,7 @@ import { LocalStorageService } from 'src/app/shared/services/localstorage.servic
   encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent {
-  constructor(
-    private sharedService: SharedService,
-    private localStorageService: LocalStorageService
-  ) {}
+  constructor(private sharedService: SharedService) {}
   @Input() refNum!: string;
   title = 'chatbot-management-app';
 
@@ -20,6 +16,6 @@ export class AppComponent {
     if (this.refNum) this.setRefNum(this.refNum);
   }
   setRefNum(refNum: string) {
-    this.localStorageService.setLocalStorageItem('refNum', refNum);
+    localStorage.setItem('refNum', refNum);
   }
 }
