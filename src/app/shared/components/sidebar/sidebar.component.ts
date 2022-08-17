@@ -19,7 +19,7 @@ export class SidebarComponent implements OnInit {
   locales: any;
   isDataLoaded: boolean = false;
   routeSubscription: any;
-  defaultAccordionItem!: string;
+  defaultAccordionItem!: string | undefined;
 
   constructor(
     private broadcastService: BroadcastService,
@@ -30,8 +30,8 @@ export class SidebarComponent implements OnInit {
   ) {
     this.routeSubscription = router.events.subscribe((event: any) => {
       if (event instanceof NavigationEnd) {
-        this.defaultAccordionItem = event.url.slice(1, event.url.length);
-        if (event.url == '/' || event.url == '/locales') {
+        this.defaultAccordionItem = event.url.split('?')[0].split('/').pop();
+        if (event.url == 'dashboard/' || event.url == 'dashboard/locales') {
           this.isLocaleListPage = true;
         } else {
           this.isLocaleListPage = false;
@@ -92,7 +92,7 @@ export class SidebarComponent implements OnInit {
       .on(AppEventType.ACCORDION_EVENT)
       .subscribe((event: any) => {
         if (event?.payload?.selectedPageId) {
-          this.router.navigate([event?.payload?.selectedPageId]);
+          this.router.navigate([`dashboard/${event?.payload?.selectedPageId}`]);
         }
       });
     this.utilsService.getDistinctLocale(this.refNum, 'cx').then((data: any) => {

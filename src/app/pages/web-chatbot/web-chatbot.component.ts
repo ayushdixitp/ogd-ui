@@ -26,7 +26,7 @@ export class WebChatbotComponent implements OnInit, OnDestroy {
   ) {
     this.routeSubscription = router.events.subscribe((event: any) => {
       if (event instanceof NavigationEnd) {
-        this.pageId = event.url;
+        this.pageId = `/${event.url.split('?')[0].split('/').pop()}`;
       }
     });
   }
@@ -37,7 +37,7 @@ export class WebChatbotComponent implements OnInit, OnDestroy {
   isDataLoaded: boolean = false;
   disableAllChannels: boolean = false;
   routeSubscription!: Subscription;
-  pageId!: string;
+  pageId!: string | undefined;
   refNum!: string | null;
   locale!: string | null;
   experienceType!: string;

@@ -23,12 +23,12 @@ export class AccordionComponent implements OnInit {
     { pageId: 'whatsapp-bot', heading: 'Whatsapp Bot' },
   ];
   @Input() experienceType!: string;
-  @Input() defaultPageId!: string;
+  @Input() defaultPageId!: string | undefined;
   @Input() iconSrc!: string;
   @Input('isShowPages') public isShowPages: boolean = false;
   @Input('id') public id: string = '';
 
-  selectedPageId: string = '';
+  selectedPageId: string | undefined = '';
   accordionData: any;
 
   ngOnInit(): void {
@@ -37,7 +37,6 @@ export class AccordionComponent implements OnInit {
     )
       ? this.defaultPageId
       : '';
-
     if (this.defaultPageId === this.selectedPageId) this.isShowPages = true;
 
     this.broadcastService.on(AppEventType.ACCORDION_EVENT).subscribe(data => {

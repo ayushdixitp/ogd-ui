@@ -47,6 +47,6 @@ export class LocalesComponent implements OnInit {
     );
     this.localStorageService.setLocalStorageItem('locale', localeObj.locale);
     // TODO: has to be removed,, move them in constant
-    this.router.navigate(['/career-site-bot']);
+    this.router.navigate(['/dashboard/career-site-bot']);
   }
 }

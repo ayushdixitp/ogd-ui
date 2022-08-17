@@ -34,8 +34,7 @@ export class BaseComponent implements OnInit, OnChanges {
       .subscribe(() => (this.isLocaleListPage = false));
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    debugger;
+  ngOnChanges(): void {
     if (this.currentUrl == '/' || this.currentUrl == '/locales') {
       this.isLocaleListPage = true;
     } else {

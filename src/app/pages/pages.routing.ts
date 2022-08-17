@@ -4,7 +4,7 @@ import { WebChatbotComponent } from './web-chatbot/web-chatbot.component';
 
 export const PagesRoutes: Routes = [
   {
-    path: '',
+    path: 'dashboard',
     children: [
       {
         path: 'career-site-bot',
