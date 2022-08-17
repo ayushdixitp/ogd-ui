@@ -1,12 +1,11 @@
-import { Component, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BaseComponent } from './layouts/base/base.component';
-import { LocalesComponent } from './pages/locales/locales.component';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/dashboard/locales',
+    redirectTo: '/locales',
     pathMatch: 'full',
   },
   {
@@ -16,18 +15,7 @@ const routes: Routes = [
       {
         path: '',
         loadChildren: () =>
-          import('./pages/pages.module').then(m => m.PagesModule),
-      },
-    ],
-  },
-  {
-    path: '',
-    component: BaseComponent,
-    children: [
-      {
-        path: '',
-        loadChildren: () =>
-          import('./pages/pages.module').then(m => m.PagesModule),
+          import('./pages/locales/locales.module').then(m => m.LocalesModule),
       },
     ],
   },

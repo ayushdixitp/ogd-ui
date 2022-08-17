@@ -12,6 +12,8 @@ import { ProgressbarComponent } from '../lib/progressbar/progressbar.component';
 import { CardComponent } from '../lib/card/card.component';
 import { HeaderComponent } from './components/header/header.component';
 import { LoaderComponent } from './components/loader/loader.component';
+import { SearchboxComponent } from '../lib/searchbox/searchbox.component';
+import { SearchFilterPipe } from './pipes/search-filter.pipe';
 
 @NgModule({
   imports: [
@@ -30,6 +32,8 @@ import { LoaderComponent } from './components/loader/loader.component';
     CardComponent,
     HeaderComponent,
     LoaderComponent,
+    SearchboxComponent,
+    SearchFilterPipe,
   ],
   exports: [
     ProgressbarComponent,
@@ -41,6 +45,8 @@ import { LoaderComponent } from './components/loader/loader.component';
     CardComponent,
     HeaderComponent,
     LoaderComponent,
+    SearchboxComponent,
+    SearchFilterPipe,
   ],
 })
 export class SharedModule {}
