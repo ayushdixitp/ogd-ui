@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { AppEventType } from '../../enums/event.enum';
+import { BroadcastService } from '../../services/broadcast.service';
 
 @Component({
   selector: 'app-header',
@@ -6,7 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  constructor() {}
+  constructor(private broadcastService: BroadcastService) {}
 
   @Input('experienceType') public experienceType!: string;
   @Input('botType') public botType!: string;
@@ -14,5 +16,14 @@ export class HeaderComponent implements OnInit {
   @Input('isLocaleListPage') public isLocaleListPage!: boolean;
   @Input('meta') public meta: any = {};
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.broadcastService
+      .on(AppEventType.ACCORDION_EVENT)
+      .subscribe((event: any) => {
+        if (event.payload.experienceType && event.payload.heading) {
+          this.experienceType = event.payload.experienceType;
+          this.botType = event.payload.heading;
+        }
+      });
+  }
 }

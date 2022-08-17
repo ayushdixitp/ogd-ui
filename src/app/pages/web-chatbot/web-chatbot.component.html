@@ -2,8 +2,6 @@
     <app-loader></app-loader>
 </ng-container>
 <main *ngIf="isDataLoaded" class="container">
-<app-header [experienceType]="skeleton?.experience" [botType]="skeleton?.heading">
-</app-header>
     <section class="container-body">
         <section *ngFor="let section of skeleton?.configurations">
             <header class="config-heading">

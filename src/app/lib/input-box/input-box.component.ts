@@ -41,9 +41,7 @@ export class InputBoxComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {
-    console.log(this.control.value);
-  }
+  ngOnInit(): void {}
 
   emitCurrentValue() {
     console.log(this.control.value);

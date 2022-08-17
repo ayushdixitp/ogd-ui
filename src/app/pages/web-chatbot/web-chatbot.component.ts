@@ -15,6 +15,7 @@ import { LocalStorageService } from 'src/app/shared/services/localstorage.servic
 })
 export class WebChatbotComponent implements OnInit, OnDestroy {
   currentRoute: string | undefined;
+  channel!: string | null;
   constructor(
     private broadcastService: BroadcastService,
     private sharedService: SharedService,
@@ -37,17 +38,15 @@ export class WebChatbotComponent implements OnInit, OnDestroy {
   isDataLoaded: boolean = false;
   disableAllChannels: boolean = false;
   routeSubscription!: Subscription;
-  pageId!: string;
+  pageId!: string | undefined;
   refNum!: string | null;
   locale!: string | null;
-  experienceType!: string;
+  experienceType!: string | null;
 
   ngOnInit(): void {
-    this.route.data
-      .pipe(map((data: any) => data.state))
-      .subscribe((state: any) => {
-        this.experienceType = state.ExperienceType;
-      });
+    this.channel = this.localStorageService.getLocalStorageItem('channel');
+    this.experienceType =
+      this.localStorageService.getLocalStorageItem('experienceType');
     this.refNum = this.localStorageService.getLocalStorageItem('refNum');
     this.locale = this.localStorageService.getLocalStorageItem('locale');
     console.log(this.experienceType, this.locale, this.refNum);
@@ -96,7 +95,7 @@ export class WebChatbotComponent implements OnInit, OnDestroy {
       this.refNum,
       this.locale,
       this.experienceType,
-      Channels.WEB
+      this.channel
     );
     this.httpService
       .httpGet(url, 'chatbot_configurations_api')

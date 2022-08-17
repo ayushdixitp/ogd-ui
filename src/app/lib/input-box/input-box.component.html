@@ -3,7 +3,7 @@
     <input [id]="id" type="text" [name]="name" [placeholder]="(placeholder)?placeholder: ''"
         [formControl]="control"
         [ngClass]="{'p-input-box-valid': state == 'valid','p-input-box-invalid': state == 'invalid'}"
-        (keyup)="emitCurrentValue()">
+        (keyup)="emitCurrentValue()" autocomplete="off">
         <ng-container *ngIf="isCopyEnabled">
             <app-button [label]="'Copy'" [buttonClass]="'btn-small'"></app-button>
         </ng-container>

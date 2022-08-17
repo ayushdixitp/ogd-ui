@@ -22,8 +22,8 @@ export class UtilsService {
   getChatbotConfigurationsPath(
     refNum: string | null,
     locale: string | null,
-    experienceType: string,
-    channel: string
+    experienceType: string | null,
+    channel: string | null
   ): string {
     return `v1/configurations/${refNum}/${locale}/${experienceType}/${channel}`;
   }

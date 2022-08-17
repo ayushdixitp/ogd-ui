@@ -1,14 +1,12 @@
 <!-- USE AS to avoid long names of variables -->
 <main class="container" *ngIf="isDataLoaded">
-    <app-header [experienceType]="skeleton?.experience" [botType]="skeleton?.heading">
-    </app-header>
     <div class="container-body">
         <p class="heading-block">
-            {{ skeleton?.facebookConfigurations?.heading }}
+            {{ skeleton?.configurations?.heading }}
         </p>
         <form FormGroup="provisioningForm" (ngSubmit)="submitForm()">
             <div class="form-block">
-                <ng-container *ngFor="let input of skeleton?.facebookConfigurations?.inputs; index as index">
+                <ng-container *ngFor="let input of skeleton?.configurations?.inputs; index as index">
                     <div class="input-block">
                         <label>
                             {{ input?.label }}
@@ -18,7 +16,7 @@
                     </div>
                 </ng-container>
                 <footer class="footer-block">
-                    <app-button [label]="skeleton?.facebookConfigurations?.submitButton?.label" [buttonClass]="''" [isDisabled]="(this.provisioningForm.status == 'INVALID')"></app-button>
+                    <app-button [label]="skeleton?.configurations?.submitButton?.label" [buttonClass]="''" [isDisabled]="(this.provisioningForm.status == 'INVALID')"></app-button>
                 </footer>
             </div>
         </form>

@@ -3,8 +3,8 @@ import { AppEventType } from 'src/app/shared/enums/event.enum';
 import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { UtilsService } from 'src/app/shared/services/utils.service';
-import { LocalStorageService } from '../../services/localstorage.service';
-import { SharedService } from '../../shared.service';
+import { LocalStorageService } from 'src/app/shared/services/localstorage.service';
+import { SharedService } from 'src/app/shared/shared.service';
 import { map } from 'rxjs';
 
 @Component({
@@ -51,14 +51,14 @@ export class SidebarComponent implements OnInit {
           heading: 'CMP_CAREERS_SITE_BOT',
         },
         {
-          pageId: 'provisioning',
+          pageId: 'configure-facebook-channel',
           channel: 'whatsapp',
-          heading: 'CMP_WHATSAPP_BOT',
+          heading: 'CMP_FACEBOOK_BOT',
         },
         {
-          pageId: 'whatsapp-bot',
-          channel: 'whatsapp',
-          heading: 'CMP_WHATSAPP_BOT',
+          pageId: 'configure-msteams-channel',
+          channel: 'msteams',
+          heading: 'CMP_MS_TEAMS_BOT',
         },
         {
           pageId: 'sms-bot',
@@ -77,9 +77,14 @@ export class SidebarComponent implements OnInit {
           pageId: 'employee-site-bot',
         },
         {
-          pageId: 'whatsapp-bot',
-          channel: 'whatsapp',
-          heading: 'CMP_WHATSAPP_BOT',
+          pageId: 'facebook-bot',
+          channel: 'facebook',
+          heading: 'CMP_FACEBOOK_BOT',
+        },
+        {
+          pageId: 'msteams-bot',
+          channel: 'msteams',
+          heading: 'CMP_MS_TEAMS_BOT',
         },
         {
           pageId: 'sms-bot',
@@ -96,8 +101,18 @@ export class SidebarComponent implements OnInit {
     this.broadcastService
       .on(AppEventType.ACCORDION_EVENT)
       .subscribe((event: any) => {
+        this.localStorageService.setLocalStorageItem(
+          'channel',
+          event.payload.channel
+        );
+        this.localStorageService.setLocalStorageItem(
+          'experienceType',
+          event.payload.accordionId
+        );
         if (event?.payload?.selectedPageId) {
-          this.router.navigate([event?.payload?.selectedPageId]);
+          this.router.navigate([event?.payload?.selectedPageId], {
+            state: { pageId: event?.payload?.selectedPageId },
+          });
         }
       });
     this.utilsService.getDistinctLocale(this.refNum, 'cx').then((data: any) => {
@@ -118,14 +133,17 @@ export class SidebarComponent implements OnInit {
       .subscribe((i18n: any) => {
         this.data = this.data.map((experience: any) => {
           experience.channels = experience.channels.map((channel: any) => {
-            channel.heading = i18n[channel.heading];
+            channel.heading = i18n[channel.heading]
+              ? i18n[channel.heading]
+              : channel.heading;
             return channel;
           });
-          experience.heading = i18n[experience.heading];
+          experience.heading = i18n[experience.heading]
+            ? i18n[experience.heading]
+            : 'SS';
           return experience;
         });
       });
-    console.log(this.data);
   }
 }
 

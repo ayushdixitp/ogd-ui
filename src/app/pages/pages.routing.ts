@@ -13,10 +13,6 @@ export const PagesRoutes: Routes = [
         data: { state: { ExperienceType: 'cx' } },
       },
       {
-        path: 'home-ex',
-        component: WebChatbotComponent,
-      },
-      {
         path: 'locales',
         component: LocalesComponent,
       },
@@ -26,9 +22,22 @@ export const PagesRoutes: Routes = [
         data: { state: { ExperienceType: 'ex' } },
       },
       {
-        path: 'provisioning',
+        path: 'facebook-bot',
+        component: WebChatbotComponent,
+      },
+      {
+        path: 'msteams-bot',
+        component: WebChatbotComponent,
+      },
+      {
+        path: 'configure-facebook-channel',
         component: Provisioning,
-        data: { state: { ExperienceType: 'ex' } },
+        data: {},
+      },
+      {
+        path: 'configure-msteams-channel',
+        component: Provisioning,
+        data: {},
       },
     ],
   },

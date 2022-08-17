@@ -22,6 +22,7 @@ export class AccordionComponent implements OnInit {
     { pageId: 'facebook-bot', heading: 'Facebook Bot' },
     { pageId: 'whatsapp-bot', heading: 'Whatsapp Bot' },
   ];
+
   @Input() experienceType!: string;
   @Input() defaultPageId!: string;
   @Input() iconSrc!: string;
@@ -38,7 +39,20 @@ export class AccordionComponent implements OnInit {
       ? this.defaultPageId
       : '';
 
-    if (this.defaultPageId === this.selectedPageId) this.isShowPages = true;
+    if (this.defaultPageId === this.selectedPageId) {
+      this.isShowPages = true;
+      this.broadcastService.dispatch(
+        new AppEvent(AppEventType.ACCORDION_EVENT, {
+          accordionId: this.id,
+          isAccordionOpen: this.isShowPages,
+          experienceType: this.experienceType,
+          page: this.defaultPageId,
+          heading: this.pages.filter(
+            page => page.pageId == this.defaultPageId
+          )[0].heading,
+        })
+      );
+    }
 
     this.broadcastService.on(AppEventType.ACCORDION_EVENT).subscribe(data => {
       this.accordionData = data.payload;
@@ -62,12 +76,16 @@ export class AccordionComponent implements OnInit {
 
   onBotCardClick(event: any) {
     this.isShowPages = !this.isShowPages;
-    this.selectedPageId = event.target.id;
+    this.selectedPageId = event.pageId;
     this.broadcastService.dispatch(
       new AppEvent(AppEventType.ACCORDION_EVENT, {
         selectedPageId: this.selectedPageId,
         accordionId: this.id,
         isAccordionOpen: this.isShowPages,
+        experienceType: this.experienceType,
+        heading: event.heading,
+        channel: event.channel,
+        page: this.defaultPageId,
       })
     );
   }
