@@ -14,7 +14,7 @@ export class UtilsService {
 
   getDistinctLocalesPath(
     refNum: string | null,
-    experienceType: string
+    experienceType: string | null
   ): string {
     return `v1/customers/${refNum}/${experienceType}/distinct-locales`;
   }
@@ -22,7 +22,7 @@ export class UtilsService {
   getChatbotConfigurationsPath(
     refNum: string | null,
     locale: string | null,
-    experienceType: string,
+    experienceType: string | null,
     channel: string
   ): string {
     return `v1/configurations/${refNum}/${locale}/${experienceType}/${channel}`;

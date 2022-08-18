@@ -19,6 +19,19 @@ const routes: Routes = [
       },
     ],
   },
+  {
+    path: '',
+    component: BaseComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('./pages/configurations/configurations.module').then(
+            m => m.ConfigurationsModule
+          ),
+      },
+    ],
+  },
 ];
 
 @NgModule({

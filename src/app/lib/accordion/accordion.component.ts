@@ -37,6 +37,20 @@ export class AccordionComponent implements OnInit {
     )
       ? this.defaultPageId
       : '';
+    if (this.defaultPageId === this.selectedPageId) {
+      this.isShowPages = true;
+      this.broadcastService.dispatch(
+        new AppEvent(AppEventType.ACCORDION_EVENT, {
+          accordionId: this.id,
+          isAccordionOpen: this.isShowPages,
+          experienceType: this.experienceType,
+          page: this.defaultPageId,
+          heading: this.pages.filter(
+            page => page.pageId == this.defaultPageId
+          )[0].heading,
+        })
+      );
+    }
     if (this.defaultPageId === this.selectedPageId) this.isShowPages = true;
 
     this.broadcastService.on(AppEventType.ACCORDION_EVENT).subscribe(data => {

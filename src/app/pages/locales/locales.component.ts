@@ -40,9 +40,10 @@ export class LocalesComponent implements OnInit {
   }
 
   getSelectedLocale(localeObj: any) {
-    // this.broadcastService.dispatch(
-    //   new AppEvent(AppEventType.SELECTED_LOCALE_EVENT, localeObj)
-    // );
+    this.broadcastService.dispatch(
+      new AppEvent(AppEventType.SELECTED_LOCALE_EVENT, localeObj)
+    );
+
     localStorage.setItem('locale', localeObj.locale);
   }
 }
