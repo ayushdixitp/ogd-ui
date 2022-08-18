@@ -22,6 +22,7 @@ export class AccordionComponent implements OnInit {
     { pageId: 'facebook-bot', heading: 'Facebook Bot' },
     { pageId: 'whatsapp-bot', heading: 'Whatsapp Bot' },
   ];
+
   @Input() experienceType!: string;
   @Input() defaultPageId!: string | undefined;
   @Input() iconSrc!: string;
@@ -75,12 +76,16 @@ export class AccordionComponent implements OnInit {
 
   onBotCardClick(event: any) {
     this.isShowPages = !this.isShowPages;
-    this.selectedPageId = event.target.id;
+    this.selectedPageId = event.pageId;
     this.broadcastService.dispatch(
       new AppEvent(AppEventType.ACCORDION_EVENT, {
         selectedPageId: this.selectedPageId,
         accordionId: this.id,
         isAccordionOpen: this.isShowPages,
+        experienceType: this.experienceType,
+        heading: event.heading,
+        channel: event.channel,
+        page: this.defaultPageId,
       })
     );
   }

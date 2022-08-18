@@ -1,0 +1,12 @@
+<button class="btn phenom-button" [class]="buttonClass"
+  [ngClass]="{'phenom-button-position-right': iconPosition == 'right'}" (click)="onButtonClick()" [disabled]="isDisabled">
+  <ng-container *ngIf="icon">
+    <span class="icon">
+      <img [src]="icon" height="20px" alt="not_loaded">
+    </span>
+  </ng-container>
+  <span>{{ label }}</span>
+</button>
+
+<!-- how to use it <app-button [label]="'Click Me!'" [icon]="'https://d7pkvxpsevxsc.cloudfront.net/bot-icons/icon_2.svg'" [buttonClass]="'btn-medium'">
+</app-button> -->

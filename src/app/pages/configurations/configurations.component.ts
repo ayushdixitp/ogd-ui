@@ -16,6 +16,7 @@ import { SidebarComponent } from 'src/app/shared/components/sidebar/sidebar.comp
 })
 export class ConfigurationsComponent implements OnInit {
   currentRoute: string | undefined;
+  channel!: string | null;
   constructor(
     private broadcastService: BroadcastService,
     private sharedService: SharedService,
@@ -37,7 +38,7 @@ export class ConfigurationsComponent implements OnInit {
   isDataLoaded: boolean = false;
   disableAllChannels: boolean = false;
   routeSubscription!: Subscription;
-  pageId!: string;
+  pageId!: string | undefined;
   refNum!: string | null;
   locale!: string | null;
   experienceType!: string | null;
@@ -97,7 +98,7 @@ export class ConfigurationsComponent implements OnInit {
       this.refNum,
       this.locale,
       this.experienceType,
-      Channels.WEB
+      this.channel
     );
     this.httpService
       .httpGet(url, 'chatbot_configurations_api')

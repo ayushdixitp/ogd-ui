@@ -49,9 +49,14 @@ export class SidebarComponent implements OnInit {
           heading: 'CMP_CAREERS_SITE_BOT',
         },
         {
-          pageId: 'whatsapp-bot',
+          pageId: 'configure-facebook-channel',
           channel: 'whatsapp',
-          heading: 'CMP_WHATSAPP_BOT',
+          heading: 'CMP_FACEBOOK_BOT',
+        },
+        {
+          pageId: 'configure-msteams-channel',
+          channel: 'msteams',
+          heading: 'CMP_MS_TEAMS_BOT',
         },
         {
           pageId: 'sms-bot',
@@ -70,9 +75,14 @@ export class SidebarComponent implements OnInit {
           pageId: 'employee-site-bot',
         },
         {
-          pageId: 'whatsapp-bot',
-          channel: 'whatsapp',
-          heading: 'CMP_WHATSAPP_BOT',
+          pageId: 'facebook-bot',
+          channel: 'facebook',
+          heading: 'CMP_FACEBOOK_BOT',
+        },
+        {
+          pageId: 'msteams-bot',
+          channel: 'msteams',
+          heading: 'CMP_MS_TEAMS_BOT',
         },
         {
           pageId: 'sms-bot',
@@ -118,14 +128,17 @@ export class SidebarComponent implements OnInit {
       .subscribe((i18n: any) => {
         this.data = this.data.map((experience: any) => {
           experience.channels = experience.channels.map((channel: any) => {
-            channel.heading = i18n[channel.heading];
+            channel.heading = i18n[channel.heading]
+              ? i18n[channel.heading]
+              : channel.heading;
             return channel;
           });
-          experience.heading = i18n[experience.heading];
+          experience.heading = i18n[experience.heading]
+            ? i18n[experience.heading]
+            : 'SS';
           return experience;
         });
       });
-    console.log(this.data);
   }
 }
 

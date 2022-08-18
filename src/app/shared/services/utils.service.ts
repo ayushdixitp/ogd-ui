@@ -23,7 +23,7 @@ export class UtilsService {
     refNum: string | null,
     locale: string | null,
     experienceType: string | null,
-    channel: string
+    channel: string | null
   ): string {
     return `v1/configurations/${refNum}/${locale}/${experienceType}/${channel}`;
   }

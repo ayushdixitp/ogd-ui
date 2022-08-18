@@ -1,0 +1,10 @@
+<!-- usecase:  <input-box [name]="'name_of_input_box'" [placeholder]="'testing placeholder'" (currentValue)="readValue($event)" [state]="'valid'"></input-box> -->
+<span class="p-input-box p-input-box-success">
+    <input [id]="id" type="text" [name]="name" [placeholder]="(placeholder)?placeholder: ''"
+        [formControl]="control"
+        [ngClass]="{'p-input-box-valid': state == 'valid','p-input-box-invalid': state == 'invalid'}"
+        (keyup)="emitCurrentValue()" autocomplete="off">
+        <ng-container *ngIf="isCopyEnabled">
+            <app-button [label]="'Copy'" [buttonClass]="'btn-small'"></app-button>
+        </ng-container>
+</span>

@@ -1,0 +1,9 @@
+.phenom-button {
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    justify-content: space-around;
+    &-position-right {
+        flex-direction: row-reverse;
+    }
+}
