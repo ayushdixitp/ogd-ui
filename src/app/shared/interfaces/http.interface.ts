@@ -3,4 +3,5 @@ export interface Response {
   timestamp: Date;
   path: string;
   statusCode?: number;
+  error: any;
 }

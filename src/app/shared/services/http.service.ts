@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, Observable } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { HttpType } from 'src/app/shared/enums/http.enum';
 import { environment } from 'src/environments/environment';
 import { Response } from 'src/app/shared/interfaces/http.interface';
@@ -93,10 +93,14 @@ export class HttpService {
     paramsObj['token'] = 'local';
     return this.httpClient.post<Response>(url, paramsObj, {}).pipe(
       map((res: Response) => {
-        let data: any = res.data ? res.data : {};
-        data['requestObject'] = paramsObj?.request_object;
-        data['productRequestObject'] = paramsObj?.request_object;
-        return data;
+        if (res.data) {
+          let data: any = res.data ? res.data : {};
+          data['requestObject'] = paramsObj?.request_object;
+          data['productRequestObject'] = paramsObj?.request_object;
+          return data;
+        } else if (res.error) {
+          return res.error;
+        }
       })
     );
   }

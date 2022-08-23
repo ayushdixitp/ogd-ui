@@ -123,7 +123,7 @@ export class DropdownComponent implements OnInit, OnChanges {
     this.isDropdownListVisible = !this.isDropdownListVisible;
     this.title = selectedItem.item;
     this.selectedItem.patchValue({ name: selectedItem.item });
-    debugger;
+    localStorage.setItem('locale', selectedItem?.locale);
     this.broadcastService.dispatch(
       new AppEvent(AppEventType.CLICKED_ON_LOCALE_DROPDOWN, {
         name: AppEventType.CLICKED_ON_LOCALE_DROPDOWN,

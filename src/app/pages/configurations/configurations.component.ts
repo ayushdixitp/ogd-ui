@@ -7,7 +7,6 @@ import { HttpService } from 'src/app/shared/services/http.service';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { map, Subscription } from 'rxjs';
 import { UtilsService } from 'src/app/shared/services/utils.service';
-import { SidebarComponent } from 'src/app/shared/components/sidebar/sidebar.component';
 
 @Component({
   selector: 'configurations',
@@ -27,7 +26,7 @@ export class ConfigurationsComponent implements OnInit {
   ) {
     this.routeSubscription = router.events.subscribe((event: any) => {
       if (event instanceof NavigationEnd) {
-        this.pageId = event.url;
+        this.pageId = `/${event.url.split('?')[0].split('/').pop()}`;
       }
     });
   }
@@ -42,18 +41,21 @@ export class ConfigurationsComponent implements OnInit {
   refNum!: string | null;
   locale!: string | null;
   experienceType!: string | null;
+  isCustomerIsProvisioned!: boolean;
+  configurationPageId!: string | undefined;
 
   ngOnInit(): void {
     this.experienceType = localStorage.getItem('ExperienceType');
-    this.route.data
-      .pipe(map((data: any) => data.state))
-      .subscribe((state: any) => {
-        // this.experienceType = state.ExperienceType;
-      });
+    // this.route.data
+    //   .pipe(map((data: any) => data.state))
+    //   .subscribe((state: any) => {
+    //     // this.experienceType = state.ExperienceType;
+    //   });
     this.refNum = localStorage.getItem('refNum');
     this.locale = localStorage.getItem('locale');
+    this.experienceType = localStorage.getItem('experienceType');
     console.log(this.experienceType, this.locale, this.refNum);
-    this.getChatbotConfigurations();
+    // this.getChatbotConfigurations();
     this.broadcastService
       .on(AppEventType.SELECTED_LOCALE_EVENT)
       .subscribe((data: any) => {
@@ -86,20 +88,32 @@ export class ConfigurationsComponent implements OnInit {
       });
     this.broadcastService
       .on(AppEventType.CLICKED_ON_LOCALE_DROPDOWN)
-      .subscribe((event: any) => {
+      .subscribe(() => {
         this.isDataLoaded = false;
-        this.refreshLocalStorageValue();
         this.getChatbotConfigurations();
+        this.checkIfCustomerisProvisioned();
+      });
+
+    this.broadcastService
+      .on(AppEventType.ACCORDION_EVENT)
+      .subscribe((event: any) => {
+        if (event.payload.experienceType && event.payload.heading) {
+          this.isDataLoaded = false;
+          this.getChatbotConfigurations();
+          this.checkIfCustomerisProvisioned();
+        }
       });
   }
 
   getChatbotConfigurations() {
+    this.refreshLocalStorageValue();
     const url = this.utilsService.getChatbotConfigurationsPath(
       this.refNum,
       this.locale,
       this.experienceType,
       this.channel
     );
+
     this.httpService
       .httpGet(url, 'chatbot_configurations_api')
       .subscribe(result => {
@@ -166,6 +180,7 @@ export class ConfigurationsComponent implements OnInit {
     );
   }
 
+  // TODO: this function needs refactoring
   updateChatbotConfigurations({
     attributeConfigurationKey,
     configurationKey,
@@ -276,6 +291,32 @@ export class ConfigurationsComponent implements OnInit {
   refreshLocalStorageValue() {
     this.refNum = localStorage.getItem('refNum');
     this.locale = localStorage.getItem('locale');
+    this.channel = localStorage.getItem('channel');
+    this.experienceType = localStorage.getItem('experienceType');
+  }
+
+  checkIfCustomerisProvisioned() {
+    this.refreshLocalStorageValue();
+    const url = this.utilsService.getChatbotConfigurationsPath(
+      this.refNum,
+      this.locale,
+      this.experienceType,
+      this.channel
+    );
+    this.utilsService
+      .checkIfCustomerIsProvisioned(url, this.pageId)
+      .then(data => {
+        if (data.status !== 404) {
+          console.log('Provisioned');
+          this.isCustomerIsProvisioned = true;
+        } else {
+          this.sharedService.getDashboardSchema(this.pageId).subscribe(data => {
+            this.configurationPageId = data?.configurationPageId;
+          });
+          console.log('Not Provisioned', this.configurationPageId);
+          this.isCustomerIsProvisioned = false;
+        }
+      });
   }
 
   ngOnDestroy(): void {

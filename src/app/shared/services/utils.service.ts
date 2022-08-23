@@ -12,6 +12,23 @@ export class UtilsService {
     return locale.toUpperCase().split('_').join(' | ');
   }
 
+  checkIfCustomerIsProvisioned(
+    url: string | undefined,
+    pageId: string | undefined
+  ): Promise<any> {
+    return new Promise((resolve, reject) => {
+      if (url && pageId) {
+        this.httpService
+          .httpGet(url, 'chatbot_configurations_api')
+          .subscribe(response => {
+            resolve(response);
+          });
+      }
+    });
+  }
+
+  getRequiredSkeleton() {}
+
   getDistinctLocalesPath(
     refNum: string | null,
     experienceType: string | null

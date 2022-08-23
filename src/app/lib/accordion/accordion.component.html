@@ -18,9 +18,9 @@
     <div class="container">
         <ng-container *ngFor="let page of pages">
             <div id="{{page.pageId}}" class="botcard" (click)="onBotCardClick(page)"
-                [ngStyle]="{background: page.pageId===defaultPageId ? '#F7F9FA':'#FFFFFF'}">
-                <span class="botcard-title" id="{{page.pageId}}"
-                    [ngStyle]="{color: page.pageId===defaultPageId ? '#00838F':'#4B6479'}">{{page.heading}}</span>
+                [ngStyle]="{background: (id === currentOpenAccordion && (page.pageId===defaultPageId)) ? '#F7F9FA':'#FFFFFF'}">
+                <span class="botcard-title" id="{{page.pageId}}" 
+                    [ngStyle]="{color: (id === currentOpenAccordion && page.pageId===defaultPageId) ? '#00838F':'#4B6479'}">{{page.heading}}</span>
             </div>
         </ng-container>
     </div>

@@ -14,6 +14,8 @@ import { HeaderComponent } from './components/header/header.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { SearchboxComponent } from '../lib/searchbox/searchbox.component';
 import { SearchFilterPipe } from './pipes/search-filter.pipe';
+import { InputBoxComponent } from '../lib/input-box/input-box.component';
+import { ButtonComponent } from '../lib/button/button.component';
 
 @NgModule({
   imports: [
@@ -34,6 +36,8 @@ import { SearchFilterPipe } from './pipes/search-filter.pipe';
     LoaderComponent,
     SearchboxComponent,
     SearchFilterPipe,
+    InputBoxComponent,
+    ButtonComponent,
   ],
   exports: [
     ProgressbarComponent,
@@ -47,6 +51,8 @@ import { SearchFilterPipe } from './pipes/search-filter.pipe';
     LoaderComponent,
     SearchboxComponent,
     SearchFilterPipe,
+    InputBoxComponent,
+    ButtonComponent,
   ],
 })
 export class SharedModule {}

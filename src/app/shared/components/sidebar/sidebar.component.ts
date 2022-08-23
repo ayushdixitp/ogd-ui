@@ -49,12 +49,12 @@ export class SidebarComponent implements OnInit {
           heading: 'CMP_CAREERS_SITE_BOT',
         },
         {
-          pageId: 'configure-facebook-channel',
-          channel: 'whatsapp',
+          pageId: 'facebook-bot',
+          channel: 'facebook',
           heading: 'CMP_FACEBOOK_BOT',
         },
         {
-          pageId: 'configure-msteams-channel',
+          pageId: 'msteams-bot',
           channel: 'msteams',
           heading: 'CMP_MS_TEAMS_BOT',
         },
@@ -99,15 +99,19 @@ export class SidebarComponent implements OnInit {
     this.broadcastService
       .on(AppEventType.SELECTED_LOCALE_EVENT)
       .subscribe((event: any) => {
-        this.router.navigate([`/${this.data[0].channels[0].pageId}`]);
+        this.router.navigate([
+          `/${this.data[0].experienceType}/${this.data[0].channels[0].pageId}`,
+        ]);
       });
     this.broadcastService
       .on(AppEventType.ACCORDION_EVENT)
       .subscribe((event: any) => {
         localStorage.setItem('channel', event.payload.channel);
-        localStorage.setItem('experienceType', event.payload.accordionId);
         if (event?.payload?.selectedPageId) {
-          this.router.navigate([`/${event?.payload?.selectedPageId}`]);
+          localStorage.setItem('experienceType', event.payload.accordionId);
+          this.router.navigate([
+            `${event.payload.accordionId}/${event?.payload?.selectedPageId}`,
+          ]);
         }
       });
     this.utilsService.getDistinctLocale(this.refNum, 'cx').then((data: any) => {
@@ -115,7 +119,7 @@ export class SidebarComponent implements OnInit {
         data.locales,
         'displayText'
       );
-      console.log(data);
+
       this.locales = data.locales;
       this.isDataLoaded = true;
     });
@@ -141,12 +145,3 @@ export class SidebarComponent implements OnInit {
       });
   }
 }
-
-// {
-// "CMP_CANDIDATE_EXPERIENCE":"Candidate Experience",
-// "CMP_CAREERS_SITE_BOT":"Career Site Bot",
-// "CMP_WHATSAPP_BOT":"Whatsapp Bot",
-// "CMP_SMS_BOT":"SMS bot",
-// "CMP_EMPLOYEE_EXPERIENCE":"Employee Experience",
-// "CMP_EMPLOYEE_SITE":"Employee Site Bot",
-// }

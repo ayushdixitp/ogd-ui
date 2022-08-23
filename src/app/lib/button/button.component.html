@@ -1,4 +1,4 @@
-<button class="btn phenom-button" [class]="buttonClass"
+<button [type]="type" class="btn phenom-button" [class]="buttonClass"
   [ngClass]="{'phenom-button-position-right': iconPosition == 'right'}" (click)="onButtonClick()" [disabled]="isDisabled">
   <ng-container *ngIf="icon">
     <span class="icon">
