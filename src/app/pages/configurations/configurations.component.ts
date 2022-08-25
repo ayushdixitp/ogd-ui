@@ -16,21 +16,6 @@ import { UtilsService } from 'src/app/shared/services/utils.service';
 export class ConfigurationsComponent implements OnInit {
   currentRoute: string | undefined;
   channel!: string | null;
-  constructor(
-    private broadcastService: BroadcastService,
-    private sharedService: SharedService,
-    private httpService: HttpService,
-    private utilsService: UtilsService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {
-    this.routeSubscription = router.events.subscribe((event: any) => {
-      if (event instanceof NavigationEnd) {
-        this.pageId = `/${event.url.split('?')[0].split('/').pop()}`;
-      }
-    });
-  }
-
   finalstructure: any = {};
   skeleton!: any;
   configurations: any;
@@ -44,8 +29,25 @@ export class ConfigurationsComponent implements OnInit {
   isCustomerIsProvisioned!: boolean;
   configurationPageId!: string | undefined;
 
+  constructor(
+    private broadcastService: BroadcastService,
+    private sharedService: SharedService,
+    private httpService: HttpService,
+    private utilsService: UtilsService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
+    this.routeSubscription = router.events.subscribe((event: any) => {
+      if (event instanceof NavigationEnd) {
+        this.pageId = `/${event.url.split('?')[0].split('/').pop()}`;
+        this.experienceType = event.url.split('/')[1];
+        localStorage.setItem('experienceType', event.url.split('/')[1]);
+      }
+    });
+  }
+
   ngOnInit(): void {
-    this.experienceType = localStorage.getItem('ExperienceType');
+    // this.experienceType = localStorage.getItem('ExperienceType');
     // this.route.data
     //   .pipe(map((data: any) => data.state))
     //   .subscribe((state: any) => {
@@ -53,6 +55,7 @@ export class ConfigurationsComponent implements OnInit {
     //   });
     this.refNum = localStorage.getItem('refNum');
     this.locale = localStorage.getItem('locale');
+    this.experienceType = localStorage.getItem('ExperienceType');
     this.experienceType = localStorage.getItem('experienceType');
     console.log(this.experienceType, this.locale, this.refNum);
     // this.getChatbotConfigurations();

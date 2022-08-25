@@ -33,7 +33,7 @@ export class LocalesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.refNum = localStorage.getItem('refNum');
+    if (!this.refNum) this.refNum = localStorage.getItem('refNum');
     this.utilsService
       .getDistinctLocale(this.refNum, 'cx')
       .then((data: any) => (this.locales = data.locales));

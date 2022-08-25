@@ -5,12 +5,13 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "concat:bundles": "cat dist/chatbot-management-app/{*}.js > elements.js",
-    "build:js": "rm -rf dist && prettier --write \"src/**/*.ts\" && ng build --output-hashing none",
+    "concat:bundles": "rm -rf elements.js && cat dist/chatbot-management-app/*.js > elements.js",
+    "build:js": "rm -rf dist && prettier --write \"src/**/*.ts\" && ng build --output-hashing none --named-chunks=true",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "prettier": "prettier --write \"src/**/*.ts\"",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "build:module": "node moduleScript.js"
   },
   "private": true,
   "dependencies": {
@@ -23,6 +24,7 @@
     "@angular/platform-browser": "^14.0.0",
     "@angular/platform-browser-dynamic": "^14.0.0",
     "@angular/router": "^14.0.0",
+    "fs-extra": "^10.1.0",
     "http-server": "^14.1.1",
     "rxjs": "~7.5.0",
     "scss-scaffold": "^0.0.5",
@@ -33,6 +35,8 @@
     "@angular-devkit/build-angular": "^14.0.2",
     "@angular/cli": "~14.0.2",
     "@angular/compiler-cli": "^14.0.0",
+    "@commitlint/cli": "15.0.0",
+    "@commitlint/config-conventional": "15.0.0",
     "@types/jasmine": "~4.0.0",
     "husky": "^8.0.1",
     "jasmine-core": "~4.1.0",
@@ -43,9 +47,7 @@
     "karma-jasmine-html-reporter": "~1.7.0",
     "lint-staged": "^13.0.3",
     "prettier": "^2.7.1",
-    "typescript": "~4.7.2",
-    "@commitlint/cli": "15.0.0",
-    "@commitlint/config-conventional": "15.0.0"
+    "typescript": "~4.7.2"
   },
   "lint-staged": {
     "*.{js,css,md}": "prettier --write"

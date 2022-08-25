@@ -1,5 +1,8 @@
-@import '../styles/fonts';
-@import '../styles/variables';
+@import './fonts';
+@import './variables';
+@import './mixins';
+@import './normalize.scss';
+
 
 html {
     line-height: 1.15;
