@@ -7,6 +7,7 @@
         </svg>
         <span class="title">{{experienceType}}</span>
     </div>
+    <!-- <svg class="svg2" width="10" height="6" viewBox="0 0 10 6" -->
     <svg class="svg2" [ngStyle]="{transform: !isShowPages?'rotate(90deg)':''}" width="10" height="6" viewBox="0 0 10 6"
         fill="none" xmlns="http://www.w3.org/2000/svg">
         <path
@@ -15,7 +16,7 @@
     </svg>
 </div>
 <ng-container *ngIf="isShowPages">
-    <div class="container">
+    <div class="accodion-container">
         <ng-container *ngFor="let page of pages">
             <div id="{{page.pageId}}" class="botcard" (click)="onBotCardClick(page)"
                 [ngStyle]="{background: (id === currentOpenAccordion && (page.pageId===defaultPageId)) ? '#F7F9FA':'#FFFFFF'}">

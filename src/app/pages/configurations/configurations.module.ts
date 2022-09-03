@@ -7,7 +7,11 @@ import { ConfigurationsComponent } from './configurations.component';
 import { ProvisionComponent } from './provision/provision.component';
 
 @NgModule({
+  imports: [CommonModule, SharedModule, ConfigurationsRoutingModule],
   declarations: [ConfigurationsComponent, ProvisionComponent],
-  imports: [CommonModule, ConfigurationsRoutingModule, SharedModule],
 })
-export class ConfigurationsModule {}
+export class ConfigurationsModule {
+  constructor() {
+    console.log('config module');
+  }
+}

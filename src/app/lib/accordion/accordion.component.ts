@@ -1,11 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 import { AppEventType } from 'src/app/shared/enums/event.enum';
 import { AccordionItem } from 'src/app/shared/interfaces/accordion.interface';
 import { AppEvent } from 'src/app/shared/services/broadcast.event.class';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-accordion',
@@ -14,18 +14,9 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: './accordion.component.html',
   styleUrls: ['./accordion.component.scss'],
 })
-export class AccordionComponent implements OnInit {
-  constructor(
-    private broadcastService: BroadcastService,
-    router: Router,
-    route: ActivatedRoute
-  ) {
-    console.log(router.url.split('/')[1]);
-    this.currentOpenAccordion = router?.url?.split('/')[1];
-  }
-
+export class AccordionComponent implements OnInit, OnChanges {
   @Input() pages: Array<AccordionItem> = [
-    { pageId: 'career-site-bot', heading: 'Career Site Bot' },
+    { pageId: 'web-site-bot', heading: 'Career Site Bot' },
     { pageId: 'sms-bot', heading: 'SMS Bot' },
     { pageId: 'facebook-bot', heading: 'Facebook Bot' },
     { pageId: 'whatsapp-bot', heading: 'Whatsapp Bot' },
@@ -41,8 +32,33 @@ export class AccordionComponent implements OnInit {
   accordionData: any;
   currentOpenAccordion!: string | null;
 
+  constructor(
+    private broadcastService: BroadcastService,
+    router: Router,
+    route: ActivatedRoute
+  ) {
+    console.log('hi');
+    this.currentOpenAccordion = router?.url?.split('/')[1];
+  }
+
+  ngOnChanges() {
+    this.isShowPages = this.isShowPages;
+    this.broadcastService.dispatch(
+      new AppEvent(AppEventType.ACCORDION_EVENT_INIT, {
+        accordionId: this.id,
+        isAccordionOpen: this.isShowPages,
+        experienceType: this.experienceType,
+        page: this.defaultPageId,
+        heading: this.pages.filter(page => page.pageId == this.defaultPageId)[0]
+          ?.heading,
+        channel: this.pages.filter(page => page.pageId == this.defaultPageId)[0]
+          ?.channel,
+      })
+    );
+  }
+
   ngOnInit(): void {
-    // this.currentOpenAccordion = localStorage.getItem('experienceType');
+    this.currentOpenAccordion = localStorage.getItem('experienceType');
     this.selectedPageId = this.pages.some(
       page => page.pageId === this.defaultPageId
     )
@@ -53,26 +69,29 @@ export class AccordionComponent implements OnInit {
       this.defaultPageId === this.selectedPageId
     ) {
       this.isShowPages = true;
-      this.broadcastService.dispatch(
-        new AppEvent(AppEventType.ACCORDION_EVENT, {
-          accordionId: this.id,
-          isAccordionOpen: this.isShowPages,
-          experienceType: this.experienceType,
-          page: this.defaultPageId,
-          heading: this.pages.filter(
-            page => page.pageId == this.defaultPageId
-          )[0].heading,
-          channel: this.pages.filter(
-            page => page.pageId == this.defaultPageId
-          )[0].channel,
-        })
-      );
+      if (this.isShowPages) {
+        this.broadcastService.dispatch(
+          new AppEvent(AppEventType.ACCORDION_EVENT_INIT, {
+            accordionId: this.id,
+            isAccordionOpen: this.isShowPages,
+            experienceType: this.experienceType,
+            // page: this.defaultPageId,
+            heading: this.pages.filter(
+              page => page.pageId == this.defaultPageId
+            )[0].heading,
+            channel: this.pages.filter(
+              page => page.pageId == this.defaultPageId
+            )[0].channel,
+          })
+        );
+      }
     }
-    if (
-      this.id === this.currentOpenAccordion &&
-      this.defaultPageId === this.selectedPageId
-    )
-      this.isShowPages = true;
+    // if (
+    //   this.id === this.currentOpenAccordion &&
+    //   this.defaultPageId === this.selectedPageId
+    // ){
+    //   this.isShowPages = true;
+    // }
 
     this.broadcastService.on(AppEventType.ACCORDION_EVENT).subscribe(data => {
       this.accordionData = data.payload;

@@ -11,7 +11,7 @@
     "test": "ng test",
     "prettier": "prettier --write \"src/**/*.ts\"",
     "prepare": "husky install",
-    "build:module": "node moduleScript.js"
+    "build:module": "rm -rf elements.bundle.js && node moduleScript.js"
   },
   "private": true,
   "dependencies": {

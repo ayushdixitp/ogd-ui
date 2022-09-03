@@ -1,4 +1,10 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  Input,
+  ViewEncapsulation,
+  OnInit,
+  OnDestroy,
+} from '@angular/core';
 import { SharedService } from 'src/app/shared/shared.service';
 
 @Component({
@@ -7,7 +13,7 @@ import { SharedService } from 'src/app/shared/shared.service';
   styleUrls: ['./app.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class AppComponent {
+export class AppComponent implements OnDestroy {
   constructor(private sharedService: SharedService) {}
   @Input() refNum!: string;
   title = 'chatbot-management-app';
@@ -17,5 +23,9 @@ export class AppComponent {
   }
   setRefNum(refNum: string) {
     localStorage.setItem('refNum', refNum);
+  }
+
+  ngOnDestroy(): void {
+    localStorage.setItem('mfe-state', location.pathname);
   }
 }

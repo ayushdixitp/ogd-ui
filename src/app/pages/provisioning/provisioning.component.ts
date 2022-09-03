@@ -61,7 +61,7 @@ export class Provisioning implements OnInit, OnDestroy {
   addTranslation() {
     this.sharedService
       .getI18nValues()
-      .pipe(map((data: any) => data.record))
+      .pipe(map((data: any) => data))
       .subscribe((i18n: any) => {
         this.skeleton.heading = i18n[this.skeleton.heading];
         this.skeleton.configurations.submitButton.label = i18n[

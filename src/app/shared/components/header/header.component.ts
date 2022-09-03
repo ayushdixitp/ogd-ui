@@ -18,8 +18,9 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.broadcastService
-      .on(AppEventType.ACCORDION_EVENT)
+      .on(AppEventType.ACCORDION_EVENT_INIT)
       .subscribe((event: any) => {
+        console.log('Accordion Init event fired');
         if (event.payload.experienceType && event.payload.heading) {
           this.experienceType = event.payload.experienceType;
           this.botType = event.payload.heading;

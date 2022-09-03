@@ -1,15 +1,15 @@
 import { Routes } from '@angular/router';
 import { Provisioning } from './provisioning/provisioning.component';
 import { LocalesComponent } from './locales/locales.component';
-import { WebChatbotComponent } from './web-chatbot/web-chatbot.component';
+import { ConfigurationsComponent } from './configurations/configurations.component';
 
 export const PagesRoutes: Routes = [
   {
     path: '',
     children: [
       {
-        path: 'career-site-bot',
-        component: WebChatbotComponent,
+        path: 'web',
+        component: ConfigurationsComponent,
         data: { state: { ExperienceType: 'cx' } },
       },
       {
@@ -18,16 +18,16 @@ export const PagesRoutes: Routes = [
       },
       {
         path: 'employee-site-bot',
-        component: WebChatbotComponent,
+        component: ConfigurationsComponent,
         data: { state: { ExperienceType: 'ex' } },
       },
       {
         path: 'facebook-bot',
-        component: WebChatbotComponent,
+        component: ConfigurationsComponent,
       },
       {
         path: 'msteams-bot',
-        component: WebChatbotComponent,
+        component: ConfigurationsComponent,
       },
       {
         path: 'configure-facebook-channel',

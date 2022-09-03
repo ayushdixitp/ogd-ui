@@ -1,13 +1,13 @@
 @import "../../app.component.scss";
 
  /* Customize the label (the container) */
-  .container {
+  .check-container {
     box-sizing: border-box;
     cursor: pointer;
   }
   
   /* Hide the browser's default checkbox */
-  .container input {
+  .check-container input {
     display: none;
   }
   
@@ -23,23 +23,23 @@
     background-color: $color-white;
   }
   
-  .container input ~ .checkmark {
+  .check-container input ~ .checkmark {
     background-color: $color-white;
     border: 1px solid $color_spanish_gray-5;
   }
   
-  .container input:checked ~ .checkmark {
+  .check-container input:checked ~ .checkmark {
     background-color: $color-pp-dark-light-blue3;
     border: 1px solid $color-pp-dark-light-blue3;
   }
   
-  .container input:disabled ~ .checkmark {
+  .check-container input:disabled ~ .checkmark {
     background-color: $color-white;   
     border: 1px solid $color_spanish_gray-5;
     cursor: not-allowed;
   }
   
   /* Show the checkmark when checked */
-  .container input:checked ~ .checkmark:after {
+  .check-container input:checked ~ .checkmark:after {
     display: block;
   }

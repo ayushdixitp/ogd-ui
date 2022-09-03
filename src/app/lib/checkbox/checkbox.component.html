@@ -1,5 +1,5 @@
 
-<label class="container" for="checkbox-{{id}}">
+<label class="check-container" for="checkbox-{{id}}">
     <input type="checkbox" (change)="onChange($event)" id="checkbox-{{id}}" [checked]=isActive [disabled]=isDisabled>
     <span class="checkmark">
         <div *ngIf="isActive">

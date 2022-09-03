@@ -1,10 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AppEventType } from 'src/app/shared/enums/event.enum';
 import { BroadcastService } from 'src/app/shared/services/broadcast.service';
-import { NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { UtilsService } from 'src/app/shared/services/utils.service';
 import { SharedService } from '../../shared.service';
 import { map } from 'rxjs';
+import { ConfigurationsComponent } from 'src/app/pages/configurations/configurations.component';
+import { CommonModule } from '@angular/common';
+import { BaseComponent } from 'src/app/layouts/base/base.component';
 
 @Component({
   selector: 'app-sidebar',
@@ -19,17 +22,25 @@ export class SidebarComponent implements OnInit {
   isDataLoaded: boolean = false;
   routeSubscription: any;
   defaultAccordionItem!: string | undefined;
+  currentExperienceType!: string | undefined;
 
   constructor(
     private broadcastService: BroadcastService,
     private router: Router,
     private utilsService: UtilsService,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private route: ActivatedRoute
   ) {
     this.routeSubscription = router.events.subscribe((event: any) => {
       if (event instanceof NavigationEnd) {
-        this.defaultAccordionItem = event.url.split('?')[0].split('/').pop();
-        if (event.url == '/' || event.url == '/locales') {
+        let urlArray = event.url.split('?')[0].split('/');
+        this.defaultAccordionItem = urlArray.pop();
+        this.currentExperienceType = urlArray.pop();
+        if (
+          this.defaultAccordionItem == '/' ||
+          this.defaultAccordionItem == '/locales' ||
+          this.defaultAccordionItem == 'locales'
+        ) {
           this.isLocaleListPage = true;
         } else {
           this.isLocaleListPage = false;
@@ -44,7 +55,7 @@ export class SidebarComponent implements OnInit {
       experienceType: 'cx',
       channels: [
         {
-          pageId: 'career-site-bot',
+          pageId: 'web',
           channel: 'web',
           heading: 'CMP_CAREERS_SITE_BOT',
         },
@@ -94,24 +105,86 @@ export class SidebarComponent implements OnInit {
   ];
 
   ngOnInit(): void {
+    if (this.data[0]?.channels[0]?.channel)
+      localStorage.setItem('channel', this.data[0]?.channels[0]?.channel);
+    console.log(this.data[0].channels[0].channel);
     this.addTranslation();
     this.refNum = localStorage.getItem('refNum');
     this.broadcastService
       .on(AppEventType.SELECTED_LOCALE_EVENT)
       .subscribe((event: any) => {
+        let add = location.pathname;
+        add = add.replace('locales', '');
+        add = add.slice(1);
+        console.log(add);
+        // this.router.config.push({
+        //   path: `${add}configuration/${this.data[0].experienceType}/${this.data[0].channels[0].pageId}`,
+        //   loadChildren: () =>
+        //     import('../../../pages/configurations/configurations.module').then(
+        //       m => {
+        //         console.log('Normal ROUTE');
+        //         return m.ConfigurationsModule;
+        //       }
+        //     ),
+        // });
+        this.router.config.push({
+          path: `${add}configuration/:exp/:pageId`,
+          component: BaseComponent,
+          loadChildren: () =>
+            import('../../../pages/configurations/configurations.module').then(
+              m => {
+                console.log('Normal ROUTE');
+                return m.ConfigurationsModule;
+              }
+            ),
+        });
+        console.log(this.router.config);
         this.router.navigate([
-          `/${this.data[0].experienceType}/${this.data[0].channels[0].pageId}`,
+          `${add}/configuration/${this.data[0].experienceType}/${this.data[0].channels[0].pageId}`,
         ]);
       });
+
     this.broadcastService
       .on(AppEventType.ACCORDION_EVENT)
       .subscribe((event: any) => {
-        localStorage.setItem('channel', event.payload.channel);
+        if (event.payload.channel)
+          localStorage.setItem('channel', event.payload.channel);
         if (event?.payload?.selectedPageId) {
+          console.log(event.payload);
           localStorage.setItem('experienceType', event.payload.accordionId);
-          this.router.navigate([
-            `${event.payload.accordionId}/${event?.payload?.selectedPageId}`,
-          ]);
+          if (event.payload.channel)
+            localStorage.setItem('channel', event.payload.channel);
+          let currentUrl = location.pathname;
+          currentUrl = currentUrl.replace('locales', '');
+          currentUrl = currentUrl.slice(1);
+          let currentUrlArray = currentUrl.split('/');
+          currentUrlArray = currentUrlArray.slice(
+            0,
+            currentUrlArray.length - 2
+          );
+          currentUrlArray.push(event.payload.accordionId);
+          currentUrlArray.push(event.payload.selectedPageId);
+          currentUrl = currentUrlArray.join('/');
+          console.log(currentUrl);
+          this.router.config.push({
+            // path: `configuration/${event.payload.accordionId}/${event?.payload?.selectedPageId}`,
+            path: `${currentUrl}`,
+            component: BaseComponent,
+            loadChildren: () =>
+              import(
+                '../../../pages/configurations/configurations.module'
+              ).then(m => {
+                console.log('Normal ROUTE');
+                return m.ConfigurationsModule;
+              }),
+          });
+          console.log(this.router.config);
+          this.router.navigate(
+            [
+              `../../${event.payload.accordionId}/${event?.payload?.selectedPageId}`,
+            ],
+            { relativeTo: this.route }
+          );
         }
       });
     this.utilsService.getDistinctLocale(this.refNum, 'cx').then((data: any) => {
@@ -128,7 +201,7 @@ export class SidebarComponent implements OnInit {
   addTranslation() {
     this.sharedService
       .getI18nValues()
-      .pipe(map((data: any) => data.record))
+      .pipe(map((data: any) => data))
       .subscribe((i18n: any) => {
         this.data = this.data.map((experience: any) => {
           experience.channels = experience.channels.map((channel: any) => {

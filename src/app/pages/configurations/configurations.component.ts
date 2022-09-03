@@ -22,7 +22,7 @@ export class ConfigurationsComponent implements OnInit {
   isDataLoaded: boolean = false;
   disableAllChannels: boolean = false;
   routeSubscription!: Subscription;
-  pageId!: string | undefined;
+  pageId!: string | null;
   refNum!: string | null;
   locale!: string | null;
   experienceType!: string | null;
@@ -37,33 +37,26 @@ export class ConfigurationsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router
   ) {
-    this.routeSubscription = router.events.subscribe((event: any) => {
+    this.routeSubscription = this.router.events.subscribe((event: any) => {
       if (event instanceof NavigationEnd) {
-        this.pageId = `/${event.url.split('?')[0].split('/').pop()}`;
-        this.experienceType = event.url.split('/')[1];
-        localStorage.setItem('experienceType', event.url.split('/')[1]);
+        const len = event.url.split('?')[0].split('/').length;
+        const paramsList = event.url.split('?')[0].split('/');
+        this.pageId = `/${paramsList[len - 1]}`;
+        this.experienceType = paramsList[len - 2];
+        localStorage.setItem('experienceType', this.experienceType);
       }
     });
   }
 
   ngOnInit(): void {
-    // this.experienceType = localStorage.getItem('ExperienceType');
-    // this.route.data
-    //   .pipe(map((data: any) => data.state))
-    //   .subscribe((state: any) => {
-    //     // this.experienceType = state.ExperienceType;
-    //   });
+    this.isDataLoaded = false;
     this.refNum = localStorage.getItem('refNum');
     this.locale = localStorage.getItem('locale');
     this.experienceType = localStorage.getItem('ExperienceType');
     this.experienceType = localStorage.getItem('experienceType');
     console.log(this.experienceType, this.locale, this.refNum);
-    // this.getChatbotConfigurations();
-    this.broadcastService
-      .on(AppEventType.SELECTED_LOCALE_EVENT)
-      .subscribe((data: any) => {
-        console.log(data);
-      });
+    this.getChatbotConfigurations();
+    this.broadcastService.on(AppEventType.SELECTED_LOCALE_EVENT).subscribe();
 
     this.broadcastService
       .on(AppEventType.SELECTED_LOCALE_EVENT)
@@ -92,23 +85,26 @@ export class ConfigurationsComponent implements OnInit {
     this.broadcastService
       .on(AppEventType.CLICKED_ON_LOCALE_DROPDOWN)
       .subscribe(() => {
-        this.isDataLoaded = false;
+        // this.isDataLoaded = false;
         this.getChatbotConfigurations();
-        this.checkIfCustomerisProvisioned();
+        // this.checkIfCustomerisProvisioned();
       });
 
     this.broadcastService
       .on(AppEventType.ACCORDION_EVENT)
       .subscribe((event: any) => {
-        if (event.payload.experienceType && event.payload.heading) {
-          this.isDataLoaded = false;
+        // if (event.payload.experienceType && event.payload.heading) {
+        //   this.isDataLoaded = false;
+        // }
+        if (event.payload.page) {
           this.getChatbotConfigurations();
-          this.checkIfCustomerisProvisioned();
+          // this.checkIfCustomerisProvisioned();
         }
       });
   }
 
   getChatbotConfigurations() {
+    this.isDataLoaded = false;
     this.refreshLocalStorageValue();
     const url = this.utilsService.getChatbotConfigurationsPath(
       this.refNum,
@@ -116,17 +112,20 @@ export class ConfigurationsComponent implements OnInit {
       this.experienceType,
       this.channel
     );
-
     this.httpService
       .httpGet(url, 'chatbot_configurations_api')
       .subscribe(result => {
+        console.log(this.pageId);
         this.configurations = result;
-        this.sharedService
-          .getDashboardSchema(this.pageId)
-          .subscribe((data: any) => {
-            this.skeleton = data;
-            this.createFinalStructure(this.skeleton);
-          });
+        if (this.pageId) {
+          this.sharedService
+            .getDashboardSchema(this.pageId)
+            .subscribe((data: any) => {
+              this.skeleton = data;
+              console.log(this.skeleton);
+              this.createFinalStructure(this.skeleton);
+            });
+        }
       });
   }
 
@@ -229,7 +228,7 @@ export class ConfigurationsComponent implements OnInit {
 
   createFinalStructure(skeleton: any) {
     this.sharedService.getI18nValues().subscribe((data: any) => {
-      data = data.record;
+      // data = data.record;
       let finalstructure = skeleton.configurations.map((configuration: any) => {
         if (configuration.features?.length) {
           configuration.features = configuration?.features.map(
@@ -296,31 +295,32 @@ export class ConfigurationsComponent implements OnInit {
     this.locale = localStorage.getItem('locale');
     this.channel = localStorage.getItem('channel');
     this.experienceType = localStorage.getItem('experienceType');
+    this.pageId = `/${localStorage.getItem('channel')}`;
   }
 
-  checkIfCustomerisProvisioned() {
-    this.refreshLocalStorageValue();
-    const url = this.utilsService.getChatbotConfigurationsPath(
-      this.refNum,
-      this.locale,
-      this.experienceType,
-      this.channel
-    );
-    this.utilsService
-      .checkIfCustomerIsProvisioned(url, this.pageId)
-      .then(data => {
-        if (data.status !== 404) {
-          console.log('Provisioned');
-          this.isCustomerIsProvisioned = true;
-        } else {
-          this.sharedService.getDashboardSchema(this.pageId).subscribe(data => {
-            this.configurationPageId = data?.configurationPageId;
-          });
-          console.log('Not Provisioned', this.configurationPageId);
-          this.isCustomerIsProvisioned = false;
-        }
-      });
-  }
+  // checkIfCustomerisProvisioned() {
+  //   this.refreshLocalStorageValue();
+  //   const url = this.utilsService.getChatbotConfigurationsPath(
+  //     this.refNum,
+  //     this.locale,
+  //     this.experienceType,
+  //     this.channel
+  //   );
+  //   this.utilsService
+  //     .checkIfCustomerIsProvisioned(url, this.pageId)
+  //     .then(data => {
+  //       if (data.status !== 404) {
+  //         console.log('Provisioned');
+  //         this.isCustomerIsProvisioned = true;
+  //       } else {
+  //         this.sharedService.getDashboardSchema(this.pageId).subscribe(data => {
+  //           this.configurationPageId = data?.configurationPageId;
+  //         });
+  //         console.log('Not Provisioned', this.configurationPageId);
+  //         this.isCustomerIsProvisioned = false;
+  //       }
+  //     });
+  // }
 
   ngOnDestroy(): void {
     this.routeSubscription.unsubscribe();

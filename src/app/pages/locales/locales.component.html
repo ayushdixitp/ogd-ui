@@ -1,9 +1,10 @@
-<section class="regions">
-  <app-searchbox
-    (searchTextChanged)="onSearchTextEntered($event)"></app-searchbox>
-  <ng-container *ngFor="let locale of locales | searchFilter: searchText">
-    <phenom-simple-card
-      [text]="locale.displayText"
-      (click)="getSelectedLocale(locale)"></phenom-simple-card>
-  </ng-container>
-</section>
+  <div class="locale-container">
+    <section class="regions">
+      <app-searchbox
+        (searchTextChanged)="onSearchTextEntered($event)"></app-searchbox>
+      <ng-container *ngFor="let locale of locales | searchFilter: searchText">
+        <phenom-simple-card
+          [text]="locale.displayText"
+          (click)="getSelectedLocale(locale)"></phenom-simple-card>
+      </ng-container>
+    </section>  

@@ -1,13 +1,12 @@
 @import "../../../app.component.scss" ;
 
-.container{
-    position: fixed;
+.sidebar-container{
     display: flex;
     flex-direction: column;
     gap: 4px;
-    width: 15%;
+    width: 100%;
     @media screen and (max-width: 1500px) {
-        width: 25%;
+        // width: 25%;
       }
     height: 100vh;
     left: 0px;
