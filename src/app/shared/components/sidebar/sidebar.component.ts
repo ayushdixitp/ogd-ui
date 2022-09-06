@@ -42,11 +42,15 @@ export class SidebarComponent implements OnInit {
           this.defaultAccordionItem == 'locales'
         ) {
           this.isLocaleListPage = true;
-        } else {
-          this.isLocaleListPage = false;
         }
+        // else {
+        //   this.isLocaleListPage = false;
+        // }
       }
     });
+    this.defaultAccordionItem = 'web';
+    this.currentExperienceType = 'cx';
+    localStorage.setItem('channel', this.defaultAccordionItem);
   }
 
   data: any = [
@@ -105,8 +109,10 @@ export class SidebarComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    if (this.data[0]?.channels[0]?.channel)
-      localStorage.setItem('channel', this.data[0]?.channels[0]?.channel);
+    if (!localStorage.getItem('channel')) {
+      if (this.data[0]?.channels[0]?.channel)
+        localStorage.setItem('channel', this.data[0]?.channels[0]?.channel);
+    }
     console.log(this.data[0].channels[0].channel);
     this.addTranslation();
     this.refNum = localStorage.getItem('refNum');
@@ -133,7 +139,6 @@ export class SidebarComponent implements OnInit {
           loadChildren: () =>
             import('../../../pages/configurations/configurations.module').then(
               m => {
-                console.log('Normal ROUTE');
                 return m.ConfigurationsModule;
               }
             ),
@@ -174,7 +179,6 @@ export class SidebarComponent implements OnInit {
               import(
                 '../../../pages/configurations/configurations.module'
               ).then(m => {
-                console.log('Normal ROUTE');
                 return m.ConfigurationsModule;
               }),
           });
@@ -194,7 +198,6 @@ export class SidebarComponent implements OnInit {
       );
 
       this.locales = data.locales;
-      this.isDataLoaded = true;
     });
   }
 
@@ -205,13 +208,14 @@ export class SidebarComponent implements OnInit {
       .subscribe((i18n: any) => {
         this.data = this.data.map((experience: any) => {
           experience.channels = experience.channels.map((channel: any) => {
-            channel.heading = i18n[channel.heading]
-              ? i18n[channel.heading]
-              : channel.heading;
+            channel.heading = i18n[channel?.heading]
+              ? i18n[channel?.heading]
+              : channel?.heading;
+            this.isDataLoaded = true;
             return channel;
           });
-          experience.heading = i18n[experience.heading]
-            ? i18n[experience.heading]
+          experience.heading = i18n[experience?.heading]
+            ? i18n[experience?.heading]
             : 'SS';
           return experience;
         });

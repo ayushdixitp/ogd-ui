@@ -119,7 +119,7 @@ export class ConfigurationsComponent implements OnInit {
         this.configurations = result;
         if (this.pageId) {
           this.sharedService
-            .getDashboardSchema(this.pageId)
+            .getDashboardSchema(`/${this.channel}`)
             .subscribe((data: any) => {
               this.skeleton = data;
               console.log(this.skeleton);

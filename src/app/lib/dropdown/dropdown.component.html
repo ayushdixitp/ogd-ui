@@ -1,7 +1,7 @@
-<main [id]="id" class="dropdown" >
+<main [id]="id" class="mfe-dropdown" >
     <form [formGroup]="selectedItem" (ngSubmit)="selectOption">
         <input type="hidden" formControlName="name">
-            <p class="dropdown-title" id="dropdown" (click)="onTitleClick()">
+            <p class="mfe-dropdown-title" id="dropdown" (click)="onTitleClick()">
                     {{ title }}
                     <span [ngStyle]="{transform: isDropdownListVisible? 'rotate(180deg)': 'rotate(0deg)'}">
                         <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -9,7 +9,7 @@
                         </svg>
                     </span>
            </p>
-            <section *ngIf="isDropdownListVisible" class="dropdown-menu">
+            <section *ngIf="isDropdownListVisible" class="mfe-dropdown-menu">
                 <ul *ngIf="listOfLocales.length">
                     <li *ngFor="let listItem of listOfLocales" (click)="selectOption(listItem)" [ngClass]="{'selected-item': listItem.item == title}">
                         {{ listItem.item }}

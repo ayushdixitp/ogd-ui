@@ -16,7 +16,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 })
 export class AccordionComponent implements OnInit, OnChanges {
   @Input() pages: Array<AccordionItem> = [
-    { pageId: 'web-site-bot', heading: 'Career Site Bot' },
+    { pageId: 'web', heading: 'Career Site Bot' },
     { pageId: 'sms-bot', heading: 'SMS Bot' },
     { pageId: 'facebook-bot', heading: 'Facebook Bot' },
     { pageId: 'whatsapp-bot', heading: 'Whatsapp Bot' },
@@ -37,7 +37,8 @@ export class AccordionComponent implements OnInit, OnChanges {
     router: Router,
     route: ActivatedRoute
   ) {
-    console.log('hi');
+    console.log('accordion comp loaded');
+    console.log(this.defaultPageId);
     this.currentOpenAccordion = router?.url?.split('/')[1];
   }
 
@@ -51,8 +52,7 @@ export class AccordionComponent implements OnInit, OnChanges {
         page: this.defaultPageId,
         heading: this.pages.filter(page => page.pageId == this.defaultPageId)[0]
           ?.heading,
-        channel: this.pages.filter(page => page.pageId == this.defaultPageId)[0]
-          ?.channel,
+        channel: this.defaultPageId,
       })
     );
   }
@@ -75,13 +75,11 @@ export class AccordionComponent implements OnInit, OnChanges {
             accordionId: this.id,
             isAccordionOpen: this.isShowPages,
             experienceType: this.experienceType,
-            // page: this.defaultPageId,
+            page: this.defaultPageId,
             heading: this.pages.filter(
               page => page.pageId == this.defaultPageId
-            )[0].heading,
-            channel: this.pages.filter(
-              page => page.pageId == this.defaultPageId
-            )[0].channel,
+            )[0]?.heading,
+            channel: this.defaultPageId,
           })
         );
       }
