@@ -5,7 +5,13 @@ var finalElemenBundle = 'elements.bundle.js';
 var modules = process.argv.slice(2);
 let isFilePresent = false;
 
-let initialFiles = ['main.js', 'runtime.js', 'polyfills.js', 'styles.css'];
+let initialFiles = [
+  'main.js',
+  'runtime.js',
+  'polyfills.js',
+  'styles.css',
+  'common.js',
+];
 
 const mainJsAddress = `${baseRoute}/main.js`;
 const polyfillsJsAddress = `${baseRoute}/polyfills.js`;

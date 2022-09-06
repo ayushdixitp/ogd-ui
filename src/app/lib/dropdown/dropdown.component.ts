@@ -84,7 +84,7 @@ export class DropdownComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.locale = localStorage.getItem('locale');
-    this.listOfLocales.forEach(localeItem => {
+    this.listOfLocales?.forEach(localeItem => {
       if (localeItem.locale == this.locale) {
         this.title = localeItem.item;
       }
@@ -104,7 +104,7 @@ export class DropdownComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(): void {
-    this.title = this.listOfLocales[0]?.item;
+    this.title = this.listOfLocales ? this.listOfLocales[0]?.item : '';
     this.selectedItem = new FormGroup({
       name: new FormControl(this.title, [Validators.required]),
     });

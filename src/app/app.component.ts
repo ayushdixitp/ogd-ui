@@ -33,7 +33,7 @@ export class AppComponent implements OnInit, OnChanges, OnDestroy {
     let oldRoute: string = location.pathname;
     if (this.refNum) this.setRefNum(this.refNum);
 
-    console.log('I am inside app comp.');
+    console.log('I am inside app comp.', oldRoute);
     switch (this.bundleName) {
       case 'locale':
         console.log('inside switch', this.bundleName);
@@ -112,6 +112,38 @@ export class AppComponent implements OnInit, OnChanges, OnDestroy {
           }
         }
         break;
+      // default: {
+      //   if (oldRoute.includes('/locale')) {
+      //     if (oldRoute[0] == '/') {
+      //       oldRoute = oldRoute.slice(1);
+      //     }
+      //     this.router.config.push({
+      //       path: `${oldRoute}`,
+      //       component: BaseComponent,
+      //       loadChildren: () =>
+      //         import('./pages/locales/locales.module').then(m => {
+      //           return m.LocalesModule;
+      //         }),
+      //     });
+      //     this.router.navigate([
+      //       `/${this.router.config[this.router.config.length - 1]?.path}`,
+      //     ]);
+      //   } else {
+      //     oldRoute = (location.pathname + '/locales').slice(1);
+      //     oldRoute = oldRoute.replace('//', '/');
+      //     this.router.config.push({
+      //       path: `${oldRoute}`,
+      //       component: BaseComponent,
+      //       loadChildren: () =>
+      //         import('./pages/locales/locales.module').then(m => {
+      //           console.log('Normal ROUTE');
+      //           return m.LocalesModule;
+      //         }),
+      //     });
+      //     this.router.navigate([`${oldRoute}`]);
+      //   }
+      //   break;
+      // }
     }
 
     // if (localStorage.getItem('mfe-state')) {
@@ -174,6 +206,7 @@ export class AppComponent implements OnInit, OnChanges, OnDestroy {
   ngOnChanges(): void {
     console.log('inside changes');
     let oldRoute: string = location.pathname;
+    console.log('I am inside app comp.', oldRoute);
     if (this.refNum) this.setRefNum(this.refNum);
     switch (this.bundleName) {
       case 'locale':

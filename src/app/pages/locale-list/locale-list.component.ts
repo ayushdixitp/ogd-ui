@@ -1,18 +1,14 @@
-import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-locale-list',
+  selector: 'locale-list',
   templateUrl: './locale-list.component.html',
   styleUrls: ['./locale-list.component.scss'],
 })
 export class LocaleListComponent implements OnInit {
-  constructor() {}
-  // @Input('localeList') public localeList!: Array<string>;
-  localeList = ['Hyderabad', 'Chennai', 'Mumbai', 'Agra', 'Delhi'];
-  searchText: string = '';
-
-  onSearchTextEntered(searchValue: any) {
-    this.searchText = searchValue;
+  constructor(private router: Router) {
+    console.log(this.router.config);
   }
 
   ngOnInit(): void {}

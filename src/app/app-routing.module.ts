@@ -9,22 +9,27 @@ import {
 } from '@angular/router';
 import { BaseComponent } from './layouts/base/base.component';
 import { ConfigurationsComponent } from './pages/configurations/configurations.component';
+import { LocaleListComponent } from './pages/locale-list/locale-list.component';
 import { LocalesComponent } from './pages/locales/locales.component';
+import { LocalesModule } from './pages/locales/locales.module';
+import { SharedModule } from './shared/shared.module';
 
 const routes: Routes = [
-  // {
-  //   path: '',
-  //   redirectTo: '/locales',
-  //   pathMatch: 'full',
-  // },
+  {
+    path: '',
+    redirectTo: '/locales',
+    pathMatch: 'full',
+  },
   {
     path: 'locales',
-    component: BaseComponent,
+    component: LocaleListComponent,
     children: [
       {
         path: '',
         loadChildren: () =>
-          import('./pages/locales/locales.module').then(m => m.LocalesModule),
+          import('./pages/locale-list/locale-list.module').then(
+            m => m.LocaleListModule
+          ),
       },
     ],
   },
@@ -56,6 +61,20 @@ const routes: Routes = [
       },
     ],
   },
+  {
+    path: 'configuration/:experience/:channel',
+    component: BaseComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('./pages/locale-list/locale-list.module').then(m => {
+            console.log('Normal ROUTE');
+            return m.LocaleListModule;
+          }),
+      },
+    ],
+  },
 ];
 
 @NgModule({
@@ -64,62 +83,57 @@ const routes: Routes = [
 })
 export class AppRoutingModule {
   constructor(private router: Router) {
-    // logic for maitaining state
-    // if (localStorage.getItem('mfe-state')) {
-    //   console.log(localStorage.getItem('mfe-state'));
-    // } else {
-    //   // logic for refresh handling
-    //   let oldRoute: string = location.pathname;
-    //   if (oldRoute.includes('/locale')) {
-    //     if (oldRoute[0] == '/') {
-    //       oldRoute = oldRoute.slice(1);
-    //     }
-    //     this.router.config.push({
-    //       path: `${oldRoute}`,
-    //       component: BaseComponent,
-    //       loadChildren: () =>
-    //         import('./pages/locales/locales.module').then(m => {
-    //           console.log('Normal ROUTE');
-    //           return m.LocalesModule;
-    //         }),
-    //     });
-    //     this.router.navigate([
-    //       `/${this.router.config[this.router.config.length - 1]?.path}`,
-    //     ]);
-    //   } else if (oldRoute.includes('/configuration')) {
-    //     if (oldRoute[0] == '/') {
-    //       oldRoute = oldRoute.slice(1);
-    //     }
-    //     let channel: string | undefined = oldRoute?.split('/')?.pop();
-    //     if (channel) localStorage.setItem('channel', channel);
-    //     let currentUrlArray = oldRoute.split('/');
-    //     currentUrlArray = currentUrlArray.slice(0, currentUrlArray.length - 2);
-    //     let currentUrl = currentUrlArray.join('/');
-    //     console.log(oldRoute);
-    //     this.router.config.push({
-    //       path: `${currentUrl}/:exp/:pageId`,
-    //       component: BaseComponent,
-    //       loadChildren: () =>
-    //         import('./pages/configurations/configurations.module').then(m => {
-    //           console.log('Normal ROUTE');
-    //           return m.ConfigurationsModule;
-    //         }),
-    //     });
-    //     this.router.navigate([`${oldRoute}`]);
-    //   } else {
-    //     oldRoute = (location.pathname + '/locales').slice(1);
-    //     oldRoute = oldRoute.replace('//', '/');
-    //     this.router.config.push({
-    //       path: `${oldRoute}`,
-    //       component: BaseComponent,
-    //       loadChildren: () =>
-    //         import('./pages/locales/locales.module').then(m => {
-    //           console.log('Normal ROUTE');
-    //           return m.LocalesModule;
-    //         }),
-    //     });
-    //     this.router.navigate([`${oldRoute}`]);
-    //   }
-    // }
+    // logic for refresh handling
+    let oldRoute: string = location.pathname;
+    if (oldRoute.includes('/locale')) {
+      if (oldRoute[0] == '/') {
+        oldRoute = oldRoute.slice(1);
+      }
+      this.router.config.push({
+        path: `${oldRoute}`,
+        component: LocaleListComponent,
+        loadChildren: () =>
+          import('./pages/configurations/configurations.module').then(m => {
+            console.log('Normal ROUTE');
+            return m.ConfigurationsModule;
+          }),
+      });
+      this.router.navigate([
+        `/${this.router.config[this.router.config.length - 1]?.path}`,
+      ]);
+    } else if (oldRoute.includes('/configuration')) {
+      if (oldRoute[0] == '/') {
+        oldRoute = oldRoute.slice(1);
+      }
+      let channel: string | undefined = oldRoute?.split('/')?.pop();
+      if (channel) localStorage.setItem('channel', channel);
+      let currentUrlArray = oldRoute.split('/');
+      currentUrlArray = currentUrlArray.slice(0, currentUrlArray.length - 2);
+      let currentUrl = currentUrlArray.join('/');
+      console.log(oldRoute);
+      this.router.config.push({
+        path: `${currentUrl}/:exp/:pageId`,
+        component: BaseComponent,
+        loadChildren: () =>
+          import('./pages/configurations/configurations.module').then(m => {
+            console.log('Normal ROUTE');
+            return m.ConfigurationsModule;
+          }),
+      });
+      this.router.navigate([`${oldRoute}`]);
+    } else {
+      oldRoute = (location.pathname + '/locales').slice(1);
+      oldRoute = oldRoute.replace('//', '/');
+      this.router.config.push({
+        path: `${oldRoute}`,
+        component: LocaleListComponent,
+        loadChildren: () =>
+          import('./pages/configurations/configurations.module').then(m => {
+            console.log('Normal ROUTE');
+            return m.ConfigurationsModule;
+          }),
+      });
+      this.router.navigate([`${oldRoute}`]);
+    }
   }
 }

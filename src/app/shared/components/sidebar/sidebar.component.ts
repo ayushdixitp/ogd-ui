@@ -1,12 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AppEventType } from 'src/app/shared/enums/event.enum';
+import { Channels } from 'src/app/shared/enums/channels.enum';
 import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { UtilsService } from 'src/app/shared/services/utils.service';
 import { SharedService } from '../../shared.service';
 import { map } from 'rxjs';
-import { ConfigurationsComponent } from 'src/app/pages/configurations/configurations.component';
-import { CommonModule } from '@angular/common';
 import { BaseComponent } from 'src/app/layouts/base/base.component';
 
 @Component({
@@ -50,7 +49,11 @@ export class SidebarComponent implements OnInit {
     });
     this.defaultAccordionItem = 'web';
     this.currentExperienceType = 'cx';
-    localStorage.setItem('channel', this.defaultAccordionItem);
+    if (localStorage.getItem('channel')) {
+      let currentChannel = localStorage.getItem('channel');
+      if (Object.keys(Channels).includes(`${currentChannel}`))
+        localStorage.setItem('channel', this.defaultAccordionItem);
+    }
   }
 
   data: any = [

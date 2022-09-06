@@ -7,5 +7,6 @@ import { SharedModule } from 'src/app/shared/shared.module';
 @NgModule({
   declarations: [LocalesComponent],
   imports: [CommonModule, SharedModule, LocalesRoutingModule],
+  exports: [LocalesComponent],
 })
 export class LocalesModule {}
