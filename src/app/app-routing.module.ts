@@ -9,6 +9,7 @@ import {
 } from '@angular/router';
 import { BaseComponent } from './layouts/base/base.component';
 import { ConfigurationsComponent } from './pages/configurations/configurations.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { LocaleListComponent } from './pages/locale-list/locale-list.component';
 import { LocalesComponent } from './pages/locales/locales.component';
 import { LocalesModule } from './pages/locales/locales.module';
@@ -71,6 +72,20 @@ const routes: Routes = [
           import('./pages/locale-list/locale-list.module').then(m => {
             console.log('Normal ROUTE');
             return m.LocaleListModule;
+          }),
+      },
+    ],
+  },
+  {
+    path: 'mfe-config/:experience/:channel',
+    component: DashboardComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('./pages/dashboard/dashboard-routing.module').then(m => {
+            console.log('Normal ROUTE');
+            return m.DashboardRoutingModule;
           }),
       },
     ],

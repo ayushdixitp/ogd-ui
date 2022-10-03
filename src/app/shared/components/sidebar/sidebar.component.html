@@ -1,4 +1,4 @@
-<section *ngIf="isDataLoaded" class="sidebar-container">
+<section *ngIf="isDataLoaded && areLocalesLoaded" class="sidebar-container">
     <ng-container *ngIf="isLocaleListPage; else others">
         <div class="button"></div>
     </ng-container>

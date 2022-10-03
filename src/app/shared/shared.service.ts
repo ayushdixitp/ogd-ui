@@ -19,6 +19,6 @@ export class SharedService {
   }
 
   getI18nValues() {
-    return this.httpClient.get('https://api.npoint.io/1aa706dbf5aeacdacdd4');
+    return this.httpClient.get('https://api.npoint.io/abcca999b018210fb3fd');
   }
 }

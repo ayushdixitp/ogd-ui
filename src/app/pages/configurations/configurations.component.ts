@@ -52,7 +52,7 @@ export class ConfigurationsComponent implements OnInit {
     this.isDataLoaded = false;
     this.refNum = localStorage.getItem('refNum');
     this.locale = localStorage.getItem('locale');
-    this.experienceType = localStorage.getItem('ExperienceType');
+    // this.experienceType = localStorage.getItem('ExperienceType');
     this.experienceType = localStorage.getItem('experienceType');
     console.log(this.experienceType, this.locale, this.refNum);
     this.getChatbotConfigurations();
@@ -188,11 +188,12 @@ export class ConfigurationsComponent implements OnInit {
     configurationKey,
     isActive,
   }: any) {
+    this.refreshLocalStorageValue();
     const url = this.utilsService.getChatbotConfigurationsPath(
       this.refNum,
       this.locale,
       this.experienceType,
-      Channels.WEB
+      this.channel
     );
     let reqObj;
     let slots: string[] = this.configurations[attributeConfigurationKey];

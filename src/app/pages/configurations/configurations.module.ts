@@ -9,6 +9,7 @@ import { ProvisionComponent } from './provision/provision.component';
 @NgModule({
   imports: [CommonModule, SharedModule, ConfigurationsRoutingModule],
   declarations: [ConfigurationsComponent, ProvisionComponent],
+  exports: [ConfigurationsComponent, ProvisionComponent],
 })
 export class ConfigurationsModule {
   constructor() {

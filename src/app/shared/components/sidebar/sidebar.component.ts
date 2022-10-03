@@ -15,10 +15,13 @@ import { BaseComponent } from 'src/app/layouts/base/base.component';
 })
 export class SidebarComponent implements OnInit {
   @Input('isLocaleListPage') public isLocaleListPage!: boolean;
+  @Input('parentMfe') public parentMfe!: string;
+  @Input('refNum') public refNum!: string | null;
 
-  refNum!: string | null;
+  // refNum!: string | null;
   locales: any;
   isDataLoaded: boolean = false;
+  areLocalesLoaded!: boolean;
   routeSubscription: any;
   defaultAccordionItem!: string | undefined;
   currentExperienceType!: string | undefined;
@@ -72,12 +75,7 @@ export class SidebarComponent implements OnInit {
           heading: 'CMP_FACEBOOK_BOT',
         },
         {
-          pageId: 'msteams-bot',
-          channel: 'msteams',
-          heading: 'CMP_MS_TEAMS_BOT',
-        },
-        {
-          pageId: 'sms-bot',
+          pageId: 'cx-sms-bot',
           channel: 'sms',
           heading: 'CMP_SMS_BOT',
         },
@@ -88,14 +86,9 @@ export class SidebarComponent implements OnInit {
       experienceType: 'ex',
       channels: [
         {
-          channel: 'web',
+          channel: 'employee-site-bot',
           heading: 'CMP_EMPLOYEE_SITE',
           pageId: 'employee-site-bot',
-        },
-        {
-          pageId: 'facebook-bot',
-          channel: 'facebook',
-          heading: 'CMP_FACEBOOK_BOT',
         },
         {
           pageId: 'msteams-bot',
@@ -103,7 +96,7 @@ export class SidebarComponent implements OnInit {
           heading: 'CMP_MS_TEAMS_BOT',
         },
         {
-          pageId: 'sms-bot',
+          pageId: 'ex-sms-bot',
           channel: 'sms',
           heading: 'CMP_SMS_BOT',
         },
@@ -112,13 +105,14 @@ export class SidebarComponent implements OnInit {
   ];
 
   ngOnInit(): void {
+    this.loadLocales();
     if (!localStorage.getItem('channel')) {
       if (this.data[0]?.channels[0]?.channel)
         localStorage.setItem('channel', this.data[0]?.channels[0]?.channel);
     }
     console.log(this.data[0].channels[0].channel);
     this.addTranslation();
-    this.refNum = localStorage.getItem('refNum');
+    this.refNum = localStorage.getItem('refNum') as string;
     this.broadcastService
       .on(AppEventType.SELECTED_LOCALE_EVENT)
       .subscribe((event: any) => {
@@ -166,6 +160,9 @@ export class SidebarComponent implements OnInit {
           currentUrl = currentUrl.replace('locales', '');
           currentUrl = currentUrl.slice(1);
           let currentUrlArray = currentUrl.split('/');
+          // if(Object.keys(Channels).includes(currentUrl[currentUrl.length-1])){
+
+          // }
           currentUrlArray = currentUrlArray.slice(
             0,
             currentUrlArray.length - 2
@@ -174,33 +171,72 @@ export class SidebarComponent implements OnInit {
           currentUrlArray.push(event.payload.selectedPageId);
           currentUrl = currentUrlArray.join('/');
           console.log(currentUrl);
-          this.router.config.push({
-            // path: `configuration/${event.payload.accordionId}/${event?.payload?.selectedPageId}`,
-            path: `${currentUrl}`,
-            component: BaseComponent,
-            loadChildren: () =>
-              import(
-                '../../../pages/configurations/configurations.module'
-              ).then(m => {
-                return m.ConfigurationsModule;
-              }),
-          });
-          console.log(this.router.config);
-          this.router.navigate(
-            [
-              `../../${event.payload.accordionId}/${event?.payload?.selectedPageId}`,
-            ],
-            { relativeTo: this.route }
-          );
+          if ((this.parentMfe = 'dashboard')) {
+            this.router.config.push(
+              {
+                path: `${currentUrl}`,
+              },
+              {
+                path: `mfe-dashboard/${currentUrl}`,
+              },
+              {
+                path: `${location.pathname}/mfe-dashboard/${currentUrl}`,
+              }
+            );
+            console.log(this.router.config);
+            if (currentUrl.includes('mfe-dashboard')) {
+              this.router.navigate([`${currentUrl}`]);
+            } else {
+              this.router.navigate([
+                `${location.pathname}/mfe-dashboard/${currentUrl}`,
+              ]);
+            }
+            // { relativeTo: this.route }
+          } else {
+            this.router.config.push({
+              // path: `configuration/${event.payload.accordionId}/${event?.payload?.selectedPageId}`,
+              path: `${currentUrl}`,
+              component: BaseComponent,
+              loadChildren: () =>
+                import(
+                  '../../../pages/configurations/configurations.module'
+                ).then(m => {
+                  return m.ConfigurationsModule;
+                }),
+            });
+            console.log(this.router.config);
+            this.router.navigate(
+              [
+                `../../${event.payload.accordionId}/${event?.payload?.selectedPageId}`,
+              ],
+              { relativeTo: this.route }
+            );
+          }
         }
       });
+    // this.utilsService.getDistinctLocale(this.refNum, 'cx').then((data: any) => {
+    //   data.locales = this.utilsService.getDropdownFormatList(
+    //     data.locales,
+    //     'displayText'
+    //   );
+
+    //   this.locales = data.locales;
+    //   debugger
+    // });
+  }
+
+  loadLocales() {
+    this.areLocalesLoaded = false;
+    this.refNum = localStorage.getItem('refNum');
     this.utilsService.getDistinctLocale(this.refNum, 'cx').then((data: any) => {
       data.locales = this.utilsService.getDropdownFormatList(
         data.locales,
         'displayText'
       );
-
       this.locales = data.locales;
+      this.areLocalesLoaded = true;
+      if (!localStorage.getItem('locale'))
+        localStorage.setItem('locale', this.locales[0].locale);
     });
   }
 

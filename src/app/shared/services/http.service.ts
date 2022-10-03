@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, Observable, tap } from 'rxjs';
 import { HttpType } from 'src/app/shared/enums/http.enum';
 import { environment } from 'src/environments/environment';
@@ -88,10 +88,13 @@ export class HttpService {
   }
 
   public cmpHubPostAPI(methodName: any, params?: any): Observable<Response> {
+    const headers = new HttpHeaders()
+      .set('content-type', 'application/json')
+      .set('Access-Control-Allow-Origin', '*');
     let paramsObj: any = params ? params : {};
     let url = methodName;
     paramsObj['token'] = 'local';
-    return this.httpClient.post<Response>(url, paramsObj, {}).pipe(
+    return this.httpClient.post<Response>(url, paramsObj).pipe(
       map((res: Response) => {
         if (res.data) {
           let data: any = res.data ? res.data : {};
