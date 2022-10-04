@@ -11,7 +11,6 @@ import { BaseComponent } from './layouts/base/base.component';
 import { ConfigurationsComponent } from './pages/configurations/configurations.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { LocaleListComponent } from './pages/locale-list/locale-list.component';
-import { LocalesComponent } from './pages/locales/locales.component';
 import { LocalesModule } from './pages/locales/locales.module';
 import { SharedModule } from './shared/shared.module';
 

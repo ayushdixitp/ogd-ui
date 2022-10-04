@@ -4,6 +4,7 @@ import { DashboardComponent } from './dashboard.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { ConfigurationsModule } from '../configurations/configurations.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [DashboardComponent],
@@ -12,6 +13,8 @@ import { ConfigurationsModule } from '../configurations/configurations.module';
     SharedModule,
     DashboardRoutingModule,
     ConfigurationsModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
 })
 export class DashboardModule {}

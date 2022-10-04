@@ -1,4 +1,5 @@
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import {
   ApplicationRef,
   CUSTOM_ELEMENTS_SCHEMA,
@@ -6,8 +7,9 @@ import {
   NgModule,
 } from '@angular/core';
 import { createCustomElement } from '@angular/elements';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,7 +22,16 @@ import { SharedModule } from './shared/shared.module';
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [AppComponent, CleanComponent, BaseComponent],
-  imports: [BrowserModule, AppRoutingModule, CommonModule, SharedModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    CommonModule,
+    SharedModule,
+    HttpClientModule,
+    RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
   providers: [],
   bootstrap: [],
 })

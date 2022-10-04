@@ -1,5 +1,6 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { RouterTestingModule } from '@angular/router/testing';
 import { ProvisionComponent } from './provision.component';
 
 describe('ProvisionComponent', () => {
@@ -9,6 +10,7 @@ describe('ProvisionComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ProvisionComponent],
+      imports: [RouterTestingModule.withRoutes([]), HttpClientTestingModule],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ProvisionComponent);

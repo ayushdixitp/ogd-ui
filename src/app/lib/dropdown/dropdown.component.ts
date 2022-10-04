@@ -77,10 +77,7 @@ export class DropdownComponent implements OnInit, OnChanges {
   isDropdownListVisible: boolean = false;
   selectedItem!: FormGroup;
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private broadcastService: BroadcastService
-  ) {}
+  constructor(private broadcastService: BroadcastService) {}
 
   ngOnInit(): void {
     this.locale = localStorage.getItem('locale');
