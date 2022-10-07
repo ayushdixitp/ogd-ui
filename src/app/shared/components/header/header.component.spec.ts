@@ -19,4 +19,15 @@ describe('HeaderComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should render current heading and subheading', () => {
+    component.botType = 'Career Site Bot';
+    component.experienceType = 'Candidate Experience';
+    fixture.detectChanges();
+    let expType =
+      fixture.debugElement.nativeElement.querySelector('#experience-type');
+    let botType = fixture.debugElement.nativeElement.querySelector('#bot-type');
+    expect(expType.innerText).toBe(component.experienceType);
+    expect(botType.innerText).toBe(component.botType);
+  });
 });

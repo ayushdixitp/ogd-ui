@@ -4,9 +4,9 @@
         <span class="only-title">Select a Locale</span>
     </ng-container>
     <ng-container *ngIf="!isLocaleListPage">
-        <span class="experience-type">{{experienceType}}</span>
+        <span id="experience-type" class="experience-type">{{experienceType}}</span>
         <div class="sms-bound">
-            <span class="bot-type">{{botType}}</span>
+            <span id="bot-type" class="bot-type">{{botType}}</span>
             <ng-container *ngIf='experienceType==="Employee Experience" && botType==="SMS Bot"'>
                 <div class="sms-pad">
                     <span class="sms">SID

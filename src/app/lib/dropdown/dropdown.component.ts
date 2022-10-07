@@ -76,6 +76,7 @@ export class DropdownComponent implements OnInit, OnChanges {
   title!: string;
   isDropdownListVisible: boolean = false;
   selectedItem!: FormGroup;
+  testing: boolean = false;
 
   constructor(private broadcastService: BroadcastService) {}
 
@@ -132,11 +133,17 @@ export class DropdownComponent implements OnInit, OnChanges {
 
   onTitleClick() {
     this.isDropdownListVisible = !this.isDropdownListVisible;
-    this.broadcastService.dispatch(
-      new AppEvent(AppEventType.DROPDOWN_EVENT, {
-        name: AppEventType.DROPDOWN_EVENT,
-        data: { id: this.id },
-      })
-    );
+    this.testing = true;
+    console.log('I m called', this.isDropdownListVisible);
+    // this.broadcastService.dispatch(
+    //   new AppEvent(AppEventType.DROPDOWN_EVENT, {
+    //     name: AppEventType.DROPDOWN_EVENT,
+    //     data: { id: this.id },
+    //   })
+    // );
+  }
+
+  check() {
+    this.testing = true;
   }
 }
