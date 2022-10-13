@@ -50,7 +50,7 @@ export class SidebarComponent implements OnInit {
         // }
       }
     });
-    this.defaultAccordionItem = 'web';
+    this.defaultAccordionItem = 'career-site-bot';
     this.currentExperienceType = 'cx';
     if (localStorage.getItem('channel')) {
       let currentChannel = localStorage.getItem('channel');
@@ -65,7 +65,7 @@ export class SidebarComponent implements OnInit {
       experienceType: 'cx',
       channels: [
         {
-          pageId: 'web',
+          pageId: 'career-site-bot',
           channel: 'web',
           heading: 'CMP_CAREERS_SITE_BOT',
         },
@@ -86,7 +86,7 @@ export class SidebarComponent implements OnInit {
       experienceType: 'ex',
       channels: [
         {
-          channel: 'employee-site-bot',
+          channel: 'web',
           heading: 'CMP_EMPLOYEE_SITE',
           pageId: 'employee-site-bot',
         },

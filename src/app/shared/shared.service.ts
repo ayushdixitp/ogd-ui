@@ -18,6 +18,11 @@ export class SharedService {
     return this.httpService.httpGet(url, 'chatbot_management_api');
   }
 
+  getDashboardSchemaFromLocale(pageId?: string | null): Observable<any> {
+    const url = `../../assets/dashboard-skeleton${pageId}.json`;
+    return this.httpClient.get(url);
+  }
+
   getI18nValues() {
     return this.httpClient.get('https://api.npoint.io/abcca999b018210fb3fd');
   }

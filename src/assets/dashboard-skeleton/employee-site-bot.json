@@ -1,0 +1,102 @@
+{
+    "pageId": "employee-site-bot",
+    "heading": "Employee Site Bot",
+    "experience": "Employee Experience",
+    "configurations": [
+        {
+            "id": "feature-activation",
+            "svg": "",
+            "heading": "CMP_FEATURE_ACTIVATION",
+            "infoText": "CMP_ENABLING_THIS_FEATURE_HELPS_CANDIDATES_TO_ENGAGE_WITH_CHATBOT_IN_EVERY_PAGE",
+            "actions": {
+                "type": "toggle"
+            },
+            "configurationKey": "isChannelEnabled",
+            "isChannelEnabled": true
+        },
+        {
+            "id": "feature-details",
+            "heading": "CMP_FEATURE_DETAILS",
+            "features": [
+                {
+                    "id": "find-a-job",
+                    "actions": {
+                        "type": "toggle"
+                    },
+                    "literal": "CMP_FIND_A_JOB",
+                    "infoText": "CMP_ENABLING_THIS_FEATURE_LET_EMPLOYEES_ASK_QUESTIONS_TO_BOT",
+                    "configurationKey": "isPersonalizationOnDemandEnabled"
+                },
+                {
+                    "id": "job-cards",
+                    "literal": "CMP_JOB_CARDS",
+                    "infoText": "CMP_CONFIGURE_WHAT_TO_SHOW_IN_JOB_CARDS",
+                    "configurationKey": ""
+                },
+                {
+                    "id": "faq",
+                    "literal": "CMP_FAQ",
+                    "infoText": "CMP_FAQ_ENABLING_THIS_FEATURE_LET_CANDIDATES_ASK_QUESTION_TO_BOT",
+                    "actions": {
+                        "type": "toggle"
+                    },
+                    "configurationKey": "isFaqEnabled"
+                },
+                {
+                    "id": "gig-flow",
+                    "literal": "CMP_GIG_FLOW",
+                    "infoText": "CMP_ENABLING_THIS_FEATURE_LET_EMPLOYEES_LOOK_FOR_GIG_WORKS",
+                    "actions": {
+                        "type": "toggle"
+                    },
+                    "configurationKey": "isGigSearchEnabled"
+                },
+                {
+                    "id": "quick-apply",
+                    "literal": "CMP_QUICK_APPLY",
+                    "infoText": "CMP_ENABLING_THIS_FEATURE_LET_EMPLOYEES_QUICK_APPLY",
+                    "actions": {
+                        "type": "toggle"
+                    },
+                    "configurationKey": "isQuickApplyEnabled"
+                },
+                {
+                    "id": "refer-a-friend",
+                    "literal": "CMP_REFER_A_FRIEND",
+                    "infoText": "CMP_ENABLING_THIS_FEATURE_LET_EMPLOYEES_REFER_JOB",
+                    "actions": {
+                        "type": "toggle"
+                    },
+                    "configurationKey": "isReferralEnabled"
+                },
+                {
+                    "id": "quick-referral",
+                    "literal": "CMP_QUICK_REFERRAL",
+                    "infoText": "CMP_ENABLING_THIS_FEATURE_LET_EMPLOYEES_REFER_JOB",
+                    "configurationKey": "isQuickReferralEnabled",
+                    "actions": {
+                        "type": "toggle"
+                    }
+                },
+                {
+                    "id": "covid-menu",
+                    "literal": "CMP_COVID_MENU",
+                    "infoText": "CMP_ENABLING_THIS_FEATURE_LET_CANDIDATES_KNOW_ABOUT_LATEST_COVID_DETAILS",
+                    "configurationKey": "isCovidMenuEnabled",
+                    "actions": {
+                        "type": "toggle"
+                    }
+                },
+                {
+                    "id": "screening",
+                    "literal": "CMP_SCREENING",
+                    "infoText": "CMP_ENABLING_THIS_FEATURE_LET_BOT_ASK_SCREENING_QUESTIONS_TO_CANDIDATES",
+                    "configurationKey": "isScreeningEnabled",
+                    "actions": {
+                        "type": "toggle"
+                    }
+                }
+            ]
+        }
+    ]
+}

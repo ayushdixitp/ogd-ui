@@ -58,7 +58,7 @@ export class UtilsService {
   }
 
   getDistinctLocale(refNum: string | null, experienceType: string) {
-    // const url = `v1/configurations/PHENA0059/en_us/cx/web`
+    // const url = `v1/configurations/PHENA0059/en_us/cx/career-site-bot`
     let methodName = this.getDistinctLocalesPath(refNum, experienceType);
     return new Promise((resolve, reject) => {
       this.httpService

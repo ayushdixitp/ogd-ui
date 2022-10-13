@@ -16,7 +16,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 })
 export class AccordionComponent implements OnInit, OnChanges {
   @Input() pages: Array<AccordionItem> = [
-    { pageId: 'web', heading: 'Career Site Bot' },
+    { pageId: 'career-site-bot', heading: 'Career Site Bot' },
     { pageId: 'sms-bot', heading: 'SMS Bot' },
     { pageId: 'facebook-bot', heading: 'Facebook Bot' },
     { pageId: 'whatsapp-bot', heading: 'Whatsapp Bot' },

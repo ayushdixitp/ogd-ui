@@ -89,7 +89,9 @@ export class AppComponent implements OnInit, OnChanges, OnDestroy {
               }),
           });
           console.log(this.router.config);
-          this.router.navigate([`${oldRoute}/configuration/cx/web`]);
+          this.router.navigate([
+            `${oldRoute}/configuration/cx/career-site-bot`,
+          ]);
         } else {
           let channel: string | undefined = oldRoute?.split('/')?.pop();
           if (channel && localStorage.getItem('channel'))
@@ -107,8 +109,8 @@ export class AppComponent implements OnInit, OnChanges, OnDestroy {
           console.log(this.router.config);
           if (oldRoute) this.router.navigate([`${oldRoute}`]);
           else {
-            localStorage.setItem('channel', 'web');
-            this.router.navigate([`${currentUrl}/cx/web`]);
+            localStorage.setItem('channel', 'career-site-bot');
+            this.router.navigate([`${currentUrl}/cx/career-site-bot`]);
           }
         }
         break;
@@ -263,7 +265,9 @@ export class AppComponent implements OnInit, OnChanges, OnDestroy {
               }),
           });
           console.log(this.router.config);
-          this.router.navigate([`${oldRoute}/configuration/cx/web`]);
+          this.router.navigate([
+            `${oldRoute}/configuration/cx/career-site-bot`,
+          ]);
         } else {
           let channel: string | undefined = oldRoute?.split('/')?.pop();
           if (channel && localStorage.getItem('channel'))
@@ -281,8 +285,8 @@ export class AppComponent implements OnInit, OnChanges, OnDestroy {
           console.log(this.router.config);
           if (oldRoute) this.router.navigate([`${oldRoute}`]);
           else {
-            localStorage.setItem('channel', 'web');
-            this.router.navigate([`${currentUrl}/cx/web`]);
+            localStorage.setItem('channel', 'career-site-bot');
+            this.router.navigate([`${currentUrl}/cx/career-site-bot`]);
           }
         }
         break;

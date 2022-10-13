@@ -33,7 +33,7 @@ export class ConfigurationsRoutingModule {
       channels: [
         {
           pageId: 'career-site-bot',
-          channel: 'web',
+          channel: 'career-site-bot',
           heading: 'CMP_CAREERS_SITE_BOT',
         },
         {
@@ -58,7 +58,7 @@ export class ConfigurationsRoutingModule {
       experienceType: 'ex',
       channels: [
         {
-          channel: 'web',
+          channel: 'career-site-bot',
           heading: 'CMP_EMPLOYEE_SITE',
           pageId: 'employee-site-bot',
         },

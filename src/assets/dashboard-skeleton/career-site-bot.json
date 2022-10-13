@@ -1,0 +1,88 @@
+{
+    "pageId": "web",
+    "heading": "Career Site Bot",
+    "experience": "Candidate Experiance",
+    "configurations": [
+        {
+            "id": "feature-activation",
+            "svg": "cdn.com/x.svg",
+            "heading": "CMP_FEATURE_ACTIVATION",
+            "infoText": "CMP_ENABLING_THIS_FEATURE_HELPS_CANDIDATES_TO_ENGAGE_WITH_CHATBOT_IN_EVERY_PAGE",
+            "actions": {
+                "type": "toggle"
+            },
+            "configurationKey": "isChannelEnabled"
+        },
+        {
+            "id": "feature-details",
+            "heading": "CMP_FEATURE_DETAILS",
+            "features": [
+                {
+                    "id": "find-a-job",
+                    "actions": {
+                        "type": "toggle"
+                    },
+                    "literal": "CMP_FIND_A_JOB",
+                    "infoText": "CMP_ENABLING_THIS_FEATURE_LET_CANDIDATES_FIND_RIGHT_JOB",
+                    "configurationKey": "isPersonalizationOnDemandEnabled"
+                },
+                {
+                    "id": "job-search",
+                    "actions": {
+                        "type": "toggle"
+                    },
+                    "literal": "CMP_JOB_SEARCH",
+                    "infoText": "CMP_CONFIGURE_ENABLING_THIS_FEATURE_LET_CANDIDATE_SEARCH_FOR_JOBS",
+                    "configurationKey": "isJobSearchEnabled"
+                },
+                {
+                    "id": "faq",
+                    "literal": "CMP_FAQ",
+                    "infoText": "CMP_FAQ_ENABLING_THIS_FEATURE_LET_CANDIDATES_ASK_QUESTION_TO_BOT",
+                    "configurationKey": "isFaqEnabled",
+                    "actions": {
+                        "type": "toggle"
+                    }
+                },
+                {
+                    "id": "is-job-alert-enabled",
+                    "literal": "CMP_JOB_ALERTS",
+                    "actions": {
+                        "type": "toggle"
+                    },
+                    "infoText": "CMP_ENABLING_THIS_FEATURE_LET_CANDIDATES_SET_JOB_ALERTS",
+                    "configurationKey": "isJobAlertsEnabled"
+                },
+                {
+                    "id": "is-quick-apply-enabled",
+                    "actions": {
+                        "type": "toggle"
+                    },
+                    "literal": "CMP_QUICK_APPLY",
+                    "infoText": "CMP_ENABLING_THIS_FEATURE_LET_CANDIDATES_QUICK_APPLY",
+                    "configurationKey": "isQuickApplyEnabled"
+                },
+                {
+                    "id": "is-covid-menu-enabled",
+                    "svg": "cdn.com/x.svg",
+                    "literal": "CMP_COVID_MENU",
+                    "infoText": "CMP_ENABLING_THIS_FEATURE_LET_CANDIDATES_KNOW_ABOUT_LATEST_COVID_DETAILS",
+                    "actions": {
+                        "type": "toggle"
+                    },
+                    "configurationKey": "isCovidMenuEnabled"
+                },
+                {
+                    "id": "is-screening-enabled",
+                    "svg": "cdn.com/x.svg",
+                    "literal": "CMP_SCREENING",
+                    "infoText": "CMP_ENABLING_THIS_FEATURE_LET_BOT_ASK_SCREENING_QUESTIONS_TO_CANDIDATES",
+                    "actions": {
+                        "type": "toggle"
+                    },
+                    "configurationKey": "isScreeningEnabled"
+                }
+            ]
+        }
+    ]
+}

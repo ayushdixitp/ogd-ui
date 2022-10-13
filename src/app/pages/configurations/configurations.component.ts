@@ -112,6 +112,7 @@ export class ConfigurationsComponent implements OnInit {
       this.experienceType,
       this.channel
     );
+    // this.sharedService.getDashboardSchemaFromLocale(`/${this.channel}`).subscribe((data) => { debugger });
     this.httpService
       .httpGet(url, 'chatbot_configurations_api')
       .subscribe(result => {
@@ -119,7 +120,7 @@ export class ConfigurationsComponent implements OnInit {
         this.configurations = result;
         if (this.pageId) {
           this.sharedService
-            .getDashboardSchema(`/${this.channel}`)
+            .getDashboardSchemaFromLocale(`/${this.pageId}`)
             .subscribe((data: any) => {
               this.skeleton = data;
               console.log(this.skeleton);
@@ -257,7 +258,6 @@ export class ConfigurationsComponent implements OnInit {
                     return attribute;
                   }
                 });
-                this.isDataLoaded = true;
               }
               feature[feature.configurationKey] =
                 this.configurations[feature.configurationKey];
@@ -287,6 +287,7 @@ export class ConfigurationsComponent implements OnInit {
         return configuration;
       });
       skeleton.configurations = finalstructure;
+      this.isDataLoaded = true;
     });
     console.log(skeleton);
   }

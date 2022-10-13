@@ -33,7 +33,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         }
       );
       console.log('came here');
-      this.router.navigate([`${currentUrl}/mfe-dashboard/cx/web`]);
+      this.router.navigate([`${currentUrl}/mfe-dashboard/cx/career-site-bot`]);
     } else {
       this.router.config.push({
         path: `${currentUrl}`,
@@ -68,7 +68,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    localStorage.setItem('channel', 'web');
+    localStorage.setItem('channel', 'career-site-bot');
     console.log('destroyed');
   }
 }
