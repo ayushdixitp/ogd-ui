@@ -1,0 +1,46 @@
+{
+    "pageId": "candidate-sms-bot",
+    "experienceType": "cx",
+    "configurations": [
+        {
+            "id": "feature-activation",
+            "svg": "cdn.com/x.svg",
+            "heading": "CMP_FEATURE_ACTIVATION",
+            "infoText": "CMP_ENABLING_THIS_FEATURE_HELPS_CANDIDATES_TO_ENGAGE_WITH_CHATBOT_IN_EVERY_PAGE",
+            "actions": {
+                "type": "toggle"
+            },
+            "configurationKey": "isChannelEnabled"
+        },
+        {
+            "id": "feature-details",
+            "heading": "CMP_FEATURE_DETAILS",
+            "features": [
+                {
+                    "id": "text-to-refer",
+                    "actions": {
+                        "type": "toggle"
+                    },
+                    "literal": "CMP_TEXT_TO_REFER",
+                    "infoText": "CMP_CONFIGURE_ENABLING_THIS_FEATURE_LET_CANDIDATE_ASK_QUESTION_TO_BOT",
+                    "attributeHeading": "CMP_LIST_OF_ATTRIBUTES",
+                    "configurationKey": "",
+                    "attributeConfigurationKey": "",
+                    "attributes": [
+                        {
+                            "id": "category",
+                            "literal": "CMP_SHOW_ONLY_MANDATORY_QUESTIONS",
+                            "infoText": "CMP_USER_WILL_BE_ABLE_TO_ANSWER_ONLY_MANDATORY_QUESTIONS",
+                            "actions": {
+                                "type": "checkbox",
+                                "disabled": false
+                            },
+                            "configurationKey": "",
+                            "isInternal": true
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

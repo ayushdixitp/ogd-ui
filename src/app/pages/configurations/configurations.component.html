@@ -45,6 +45,21 @@
                                                 {{ feature.infoText }}
                                             </span>
                                         </header>
+                                        <ng-container *ngIf="feature.flows && feature[feature.configurationKey]">
+                                            <div class="features-types">
+                                                <div class="features-types-section" *ngFor="let flow of feature.flows">
+                                                    <div>
+                                                        <radio [data]="flow"></radio>
+                                                    </div>
+                                                    <div>
+                                                        {{ flow.literal }}
+                                                        <br>
+                                                        {{ flow.infoText }}
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </ng-container>
                                         <ng-container *ngIf="feature.attributes">
                                             <div class="attribute">
                                                 <div class="attribute-heading">
@@ -68,7 +83,7 @@
                                                                 </phenom-checkbox>
                                                             </ng-container>
                                                             <ng-container *ngIf="attribute.actions.type=='progress-bar'">
-                                                                <app-progressbar [isDisabled]="!feature[feature.configurationKey] || (attribute.actions.disabled)" [value]="attribute[attribute.configurationKey]">
+                                                                <app-progressbar [id]="attribute.id" [configurationKey]="attribute.configurationKey" [isDisabled]="!feature[feature.configurationKey] || (attribute.actions.disabled)" [value]="attribute[attribute.configurationKey]">
                                                                 </app-progressbar>
                                                             </ng-container>
                                                         </div>

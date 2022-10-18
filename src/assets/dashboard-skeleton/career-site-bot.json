@@ -33,7 +33,26 @@
                     },
                     "literal": "CMP_JOB_SEARCH",
                     "infoText": "CMP_CONFIGURE_ENABLING_THIS_FEATURE_LET_CANDIDATE_SEARCH_FOR_JOBS",
-                    "configurationKey": "isJobSearchEnabled"
+                    "configurationKey": "isJobSearchEnabled",
+                    "flows": [
+                        {
+                            "id": "job-search-optimised",
+                            "literal": "CMP_OPTOMISED_JOB_SEARCH",
+                            "infoText": "CMP_MORE_CONVERSATIONAL_BOT_WITH_ASKING_USER_LEESER_INPUT_TO_ENGAGE",
+                            "type": "radio",
+                            "configurationKey": "chatbotFlowVersion",
+                            "version": "2.0"
+                        },
+                        {
+                            "id": "job-search-input-based-search",
+                            "literal": "CMP_INPUT_BASED_SEARCH_(RECOMMENDED_FOR_NON_ENGLISH_SITE)",
+                            "infoText": "CMP_CHATBOT_IS_MORE_TRANSACTIONAL_USER_ARE_REQUIRED_TO_ANSWER_FEW_QUESTIONS_DURING_THE_SEARCH",
+                            "type": "radio",
+                            "configurationKey": "chatbotFlowVersion",
+                            "version": "3.0"
+                        }
+
+                    ]
                 },
                 {
                     "id": "faq",
@@ -42,7 +61,18 @@
                     "configurationKey": "isFaqEnabled",
                     "actions": {
                         "type": "toggle"
-                    }
+                    },
+                    "attributeHeading": "CMP_LIST_OF_ATTRIBUTES",
+                    "attributes": [{
+                        "id": "confidence-threshold",
+                        "literal": "CMP_CONFIDENCE_THRESHOLD",
+                        "infoText": "CMP_CONFIGURE_CONFIDENCE_THRESHOLD_FOR_MATCHING_FAQS",
+                        "actions": {
+                            "type": "progress-bar"
+                        },
+                        "configurationKey": "faqSuggestionsThreshold",
+                        "isInternal": true
+                    }]
                 },
                 {
                     "id": "is-job-alert-enabled",

@@ -70,12 +70,12 @@ export class SidebarComponent implements OnInit {
           heading: 'CMP_CAREERS_SITE_BOT',
         },
         {
-          pageId: 'facebook-bot',
+          pageId: 'candidate-facebook-bot',
           channel: 'facebook',
           heading: 'CMP_FACEBOOK_BOT',
         },
         {
-          pageId: 'cx-sms-bot',
+          pageId: 'candidate-sms-bot',
           channel: 'sms',
           heading: 'CMP_SMS_BOT',
         },
@@ -91,12 +91,12 @@ export class SidebarComponent implements OnInit {
           pageId: 'employee-site-bot',
         },
         {
-          pageId: 'msteams-bot',
+          pageId: 'employee-msteams-bot',
           channel: 'msteams',
           heading: 'CMP_MS_TEAMS_BOT',
         },
         {
-          pageId: 'ex-sms-bot',
+          pageId: 'employee-sms-bot',
           channel: 'sms',
           heading: 'CMP_SMS_BOT',
         },

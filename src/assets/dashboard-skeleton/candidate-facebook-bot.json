@@ -1,0 +1,202 @@
+{
+    "pageId": "facebook",
+    "experienceType": "cx",
+    "configurationPageId": "configure-facebook-channel",
+    "configurations": [
+        {
+            "id": "feature-activation",
+            "svg": "cdn.com/x.svg",
+            "heading": "CMP_FEATURE_ACTIVATION",
+            "infoText": "CMP_ENABLING_THIS_FEATURE_HELPS_CANDIDATES_TO_ENGAGE_WITH_CHATBOT_THROUGH_FACEBOOK_BASED_ON_THE_FEATURES_ENABLED_BELOW",
+            "actions": {
+                "type": "toggle"
+            },
+            "configurationKey": "isChannelEnabled"
+        },
+        {
+            "id": "feature-details",
+            "heading": "CMP_FEATURE_DETAILS",
+            "features": [
+                {
+                    "id": "find-a-job",
+                    "actions": {
+                        "type": "toggle"
+                    },
+                    "literal": "CMP_FIND_A_JOB",
+                    "infoText": "CMP_ENABLING_THIS_FEATURE_LET_CANDIDATES_FIND_RIGHT_JOB",
+                    "attributeHeading": "CMP_ENABLING_LIST_OF_ATTRIBUTES",
+                    "configurationKey": "isPersonalizationOnDemandEnabled",
+                    "attributeConfigurationKey": "personalizationOnDemandSlots",
+                    "attributes": [
+                        {
+                            "id": "user-preferred-locations",
+                            "literal": "CMP_LOCATION",
+                            "infoText": "CMP_USER_WILL_BE_ABLE_TO_ENTER_PREFERRED_LOCATION",
+                            "actions": {
+                                "type": "checkbox",
+                                "disabled": false
+                            },
+                            "configurationKey": "user_preferred_locations"
+                        },
+                        {
+                            "id": "user-job-title",
+                            "literal": "CMP_JOB_TITLE",
+                            "infoText": "CMP_USER_WILL_BE_ABLE_TO_ENTER_LATEST_JOB_TITLE",
+                            "actions": {
+                                "type": "checkbox",
+                                "disabled": false
+                            },
+                            "configurationKey": "user_job_title"
+                        }
+                    ]
+                },
+                {
+                    "id": "job-search",
+                    "actions": {
+                        "type": "toggle"
+                    },
+                    "literal": "CMP_JOB_SEARCH",
+                    "infoText": "CMP_CONFIGURE_ENABLING_THIS_FEATURE_LET_CANDIDATE_SEARCH_FOR_JOBS",
+                    "attributeHeading": "CMP_LIST_OF_ATTRIBUTES",
+                    "configurationKey": "isJobSearchEnabled",
+                    "attributeConfigurationKey": "jobSearchSlots",
+                    "attributes": [
+                        {
+                            "id": "category",
+                            "literal": "CMP_CATEGORY",
+                            "infoText": "CMP_USER_WILL_BE_ABLE_TO_ENTER_PREFFERED_CATEGORY",
+                            "actions": {
+                                "type": "checkbox",
+                                "disabled": false
+                            },
+                            "configurationKey": "category",
+                            "isInternal": true
+                        },
+                        {
+                            "id": "city_state_country",
+                            "literal": "CMP_LOCATION",
+                            "infoText": "CMP_USER_WILL_BE_ABLE_TO_ENTER_PREFFERED_LOCATION",
+                            "actions": {
+                                "type": "checkbox",
+                                "disabled": false
+                            },
+                            "configurationKey": "city_state_country",
+                            "isInternal": true
+                        }
+                    ]
+                },
+                {
+                    "id": "faq",
+                    "literal": "CMP_FAQ",
+                    "infoText": "CMP_FAQ_ENABLING_THIS_FEATURE_LET_CANDIDATES_ASK_QUESTION_TO_BOT",
+                    "attributeHeading": "CMP_LIST_OF_ATTRIBUTES",
+                    "configurationKey": "isFaqEnabled",
+                    "actions": {
+                        "type": "toggle"
+                    },
+                    "attributes": [
+                        {
+                            "id": "confidence-threshold",
+                            "literal": "CMP_CONFIDENCE_THRESHOLD",
+                            "infoText": "CMP_CONFIGURE_CONFIDENCE_THRESHOLD_FOR_MATCHING_FAQS",
+                            "actions": {
+                                "type": "progress-bar",
+                                "disabled": false
+                            },
+                            "configurationKey": "faqSuggestionsThreshold",
+                            "isInternal": true
+                        }
+                    ]
+                },
+                {
+                    "id": "is-job-alert-enabled",
+                    "literal": "CMP_JOB_ALERTS",
+                    "actions": {
+                        "type": "toggle"
+                    },
+                    "infoText": "CMP_ENABLING_THIS_FEATURE_LET_CANDIDATES_SET_JOB_ALERTS",
+                    "attributeHeading": "CMP_ENABLING_LIST_OF_ATTRIBUTES",
+                    "configurationKey": "isJobAlertsEnabled",
+                    "attributeConfigurationKey": "jobAlertsSlots",
+                    "attributes": [
+                        {
+                            "id": "category",
+                            "literal": "CMP_CATEGORY",
+                            "infoText": "CMP_USER_WILL_BE_ABLE_TO_ENTER_PREFFERED_CATEGORY",
+                            "actions": {
+                                "type": "checkbox",
+                                "disabled": false
+                            },
+                            "configurationKey": "category",
+                            "isInternal": true
+                        },
+                        {
+                            "id": "alert-frequency",
+                            "literal": "CMP_LOCATION",
+                            "infoText": "CMP_USER_WILL_BE_ABLE_TO_ENTER_JOB_FREQUENCY_ALERT",
+                            "actions": {
+                                "type": "checkbox",
+                                "disabled": false
+                            },
+                            "configurationKey": "alert_frequency",
+                            "isInternal": true
+                        },
+                        {
+                            "id": "location",
+                            "literal": "CMP_LOCATION",
+                            "infoText": "CMP_USER_WILL_BE_ABLE_TO_ENTER_PREFFERED_LOCATION",
+                            "actions": {
+                                "type": "checkbox"
+                            },
+                            "configurationKey": "city_state_country",
+                            "isInternal": true
+                        },
+                        {
+                            "id": "user-email",
+                            "literal": "CMP_EMAIL_ADDRESS",
+                            "infoText": "CMP_USER_WILL_BE_ABLE_TO_ENTER_JOB_ALERT_FREQUENCY",
+                            "actions": {
+                                "type": "checkbox"
+                            },
+                            "configurationKey": "user_email",
+                            "isInternal": true
+                        }
+                    ]
+                },
+                {
+                    "id": "is-quick-apply-enabled",
+                    "actions": {
+                        "type": "toggle"
+                    },
+                    "literal": "CMP_QUICK_APPLY",
+                    "infoText": "CMP_ENABLING_THIS_FEATURE_LET_CANDIDATES_QUICK_APPLY",
+                    "attributeHeading": "CMP_ENABLING_LIST_OF_ATTRIBUTES",
+                    "configurationKey": "isQuickApplyEnabled",
+                    "attributeConfigurationKey": "quickApplySlots",
+                    "attributes": [
+                        {
+                            "id": "category",
+                            "literal": "CMP_CATEGORY",
+                            "infoText": "CMP_USER_WILL_BE_ABLE_TO_ENTER_PREFFERED_CATEGORY",
+                            "actions": {
+                                "type": "checkbox"
+                            },
+                            "configurationKey": "user_name",
+                            "isInternal": true
+                        },
+                        {
+                            "id": "user-contact",
+                            "literal": "CMP_CONTACT_DETAILS",
+                            "infoText": "CMP_USER_WILL_BE_ABLE_ENTER_EMAIL_OR_PHONE",
+                            "actions": {
+                                "type": "checkbox"
+                            },
+                            "configurationKey": "user_contact",
+                            "isInternal": true
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

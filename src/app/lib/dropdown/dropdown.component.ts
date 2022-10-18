@@ -134,7 +134,6 @@ export class DropdownComponent implements OnInit, OnChanges {
   onTitleClick() {
     this.isDropdownListVisible = !this.isDropdownListVisible;
     this.testing = true;
-    console.log('I m called', this.isDropdownListVisible);
     // this.broadcastService.dispatch(
     //   new AppEvent(AppEventType.DROPDOWN_EVENT, {
     //     name: AppEventType.DROPDOWN_EVENT,

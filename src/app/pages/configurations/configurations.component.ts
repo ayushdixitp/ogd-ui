@@ -82,6 +82,21 @@ export class ConfigurationsComponent implements OnInit {
         this.updateSkeleton(event?.payload);
         this.updateChatbotConfigurations(event?.payload?.data);
       });
+
+    this.broadcastService
+      .on(AppEventType.RADIO_EMITTER)
+      .subscribe((event: any) => {
+        this.updateSkeleton(event?.payload);
+        this.updateChatbotConfigurations(event?.payload?.data);
+      });
+
+    this.broadcastService
+      .on(AppEventType.RANGE_EMITTER)
+      .subscribe((event: any) => {
+        this.updateSkeleton(event?.payload);
+        this.updateChatbotConfigurations(event?.payload?.data);
+      });
+
     this.broadcastService
       .on(AppEventType.CLICKED_ON_LOCALE_DROPDOWN)
       .subscribe(() => {
@@ -259,6 +274,24 @@ export class ConfigurationsComponent implements OnInit {
                   }
                 });
               }
+
+              if (feature.flows) {
+                feature.flows = feature.flows.map((flow: any) => {
+                  flow.infoText = data[flow.infoText]
+                    ? data[flow.infoText]
+                    : flow.infoText;
+                  flow.literal = data[flow.literal]
+                    ? data[flow.literal]
+                    : flow.literal;
+                  if (
+                    this.configurations[flow.configurationKey] &&
+                    this.configurations[flow.configurationKey] == flow.version
+                  )
+                    flow['isEnabled'] = true;
+                  return flow;
+                });
+              }
+
               feature[feature.configurationKey] =
                 this.configurations[feature.configurationKey];
               feature.infoText = data[feature.infoText]
