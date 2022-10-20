@@ -6,7 +6,7 @@
         <app-dropdown [listOfLocales]="locales" [id]="'drop2'"></app-dropdown>
         <span></span>
         <ng-container *ngFor="let experience of data;index as index">
-            <app-accordion [id]="experience.experienceType" [defaultPageId]="defaultAccordionItem" [experienceType]="experience.heading" [pages]="experience.channels"></app-accordion>
+            <app-accordion [id]="experience.experienceType" [svg]="experience.svg" [defaultPageId]="defaultAccordionItem" [experienceType]="experience.heading" [pages]="experience.channels"></app-accordion>
 
             <!-- <ng-container *ngIf="index == 0;else elseBlock">
                 <app-accordion [id]="experience.experienceType" [defaultPageId]="defaultAccordionItem" [experienceType]="experience.heading" [pages]="experience.channels"></app-accordion>

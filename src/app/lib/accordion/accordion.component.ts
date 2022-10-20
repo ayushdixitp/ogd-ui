@@ -6,11 +6,10 @@ import { AppEventType } from 'src/app/shared/enums/event.enum';
 import { AccordionItem } from 'src/app/shared/interfaces/accordion.interface';
 import { AppEvent } from 'src/app/shared/services/broadcast.event.class';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({
   selector: 'app-accordion',
-  standalone: true,
-  imports: [CommonModule],
   templateUrl: './accordion.component.html',
   styleUrls: ['./accordion.component.scss'],
 })
@@ -24,7 +23,7 @@ export class AccordionComponent implements OnInit, OnChanges {
 
   @Input() experienceType!: string;
   @Input() defaultPageId!: string | undefined;
-  @Input() iconSrc!: string;
+  @Input() svg!: string;
   @Input('isShowPages') public isShowPages: boolean = false;
   @Input('id') public id: string = '';
 

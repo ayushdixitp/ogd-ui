@@ -13,7 +13,11 @@
                     <section class="container-body">
                         <section *ngFor="let section of skeleton?.configurations">
                             <header class="config-heading">
-                                {{ section.heading}}
+                                <span [innerHTML]="section.svg | safe : 'html' ">
+                                </span>
+                                <span>
+                                    {{ section.heading}}
+                                </span>
                             </header>
                             <!-- <div [ngClass]="[section.configurationKey? 'card card-one-item': '',(section[section.configurationKey])? 'disbaled-state':'']"> -->
                             <div [ngClass]="{'card card-one-item' : section.configurationKey,'disabled-state': (section.configurationKey && !section[section.configurationKey])}">
@@ -45,11 +49,11 @@
                                                 {{ feature.infoText }}
                                             </span>
                                         </header>
-                                        <ng-container *ngIf="feature.flows && feature[feature.configurationKey]">
+                                        <ng-container *ngIf="feature.flows">
                                             <div class="features-types">
                                                 <div class="features-types-section" *ngFor="let flow of feature.flows">
                                                     <div>
-                                                        <radio [data]="flow"></radio>
+                                                        <radio [isDisabled]="!feature[feature.configurationKey]" [data]="flow"></radio>
                                                     </div>
                                                     <div>
                                                         {{ flow.literal }}

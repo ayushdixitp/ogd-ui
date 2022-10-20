@@ -1,14 +1,15 @@
 <div class="section" (click)="onClick()">
     <div class="group-1">
-        <svg class="svg1" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- <svg class="svg1" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
                 d="M12.75 0.75H1.25C0.973437 0.75 0.75 0.973437 0.75 1.25V12.75C0.75 13.0266 0.973437 13.25 1.25 13.25H12.75C13.0266 13.25 13.25 13.0266 13.25 12.75V1.25C13.25 0.973437 13.0266 0.75 12.75 0.75ZM1.875 1.875H4V12.125H1.875V1.875ZM12.125 12.125H5V5H12.125V12.125ZM5 4V1.875H12.125V4H5Z"
                 fill="#1C2024" />
-        </svg>
+        </svg> -->
+        <span [innerHTML]="svg | safe: 'html'"></span>
         <span class="title">{{experienceType}}</span>
     </div>
     <!-- <svg class="svg2" width="10" height="6" viewBox="0 0 10 6" -->
-    <svg class="svg2" [ngStyle]="{transform: !isShowPages?'rotate(90deg)':''}" width="10" height="6" viewBox="0 0 10 6"
+    <svg class="svg2" [ngStyle]="{transform: !isShowPages? 'rotate(90deg)':''}" width="10" height="6" viewBox="0 0 10 6"
         fill="none" xmlns="http://www.w3.org/2000/svg">
         <path
             d="M9.43561 5.85117L5.30358 0.154688C5.15358 -0.0515625 4.84655 -0.0515625 4.69772 0.154688L0.564516 5.85117C0.554345 5.86518 0.548252 5.88173 0.546912 5.899C0.545572 5.91626 0.549038 5.93355 0.556926 5.94896C0.564814 5.96438 0.576816 5.9773 0.5916 5.98631C0.606385 5.99532 0.623375 6.00006 0.640688 6H1.51959C1.57936 6 1.63561 5.9707 1.67077 5.92266L5.00006 1.33359L8.32936 5.92266C8.36452 5.9707 8.42077 6 8.48053 6H9.35944C9.43561 6 9.48014 5.91328 9.43561 5.85117Z"

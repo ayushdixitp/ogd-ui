@@ -10,6 +10,7 @@ import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 })
 export class RadioComponent implements OnInit {
   @Input('data') data: any;
+  @Input('isDisabled') isDisabled!: boolean;
   @Output('change') change = new EventEmitter();
   isActive: any;
 

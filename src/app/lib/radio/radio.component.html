@@ -1,3 +1,4 @@
-<label class=label>
-    <input type=radio name='chatbot-flow-version' [checked]="data.isEnabled" (change)="onChange($event)" class='checkbox'>
+<label class=label [ngStyle]="{'border-color': isDisabled? '#93A1AB': '#058EA0' }">
+    <input type=radio name='chatbot-flow-version' [ngClass]="{ 'disabled': isDisabled }" [disabled]="isDisabled"
+        [checked]="data.isEnabled" (change)="onChange($event)" class='checkbox'>
 </label>

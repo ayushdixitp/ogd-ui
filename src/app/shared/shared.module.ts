@@ -17,16 +17,13 @@ import { SearchFilterPipe } from './pipes/search-filter.pipe';
 import { InputBoxComponent } from '../lib/input-box/input-box.component';
 import { ButtonComponent } from '../lib/button/button.component';
 import { RadioComponent } from '../lib/radio/radio.component';
+import { SafePipe } from './pipes/safe.pipe';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    AccordionComponent,
-  ],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, HttpClientModule],
   declarations: [
+    AccordionComponent,
+    SafePipe,
     ProgressbarComponent,
     ToggleComponent,
     CheckboxComponent,
@@ -42,6 +39,8 @@ import { RadioComponent } from '../lib/radio/radio.component';
     RadioComponent,
   ],
   exports: [
+    AccordionComponent,
+    SafePipe,
     ProgressbarComponent,
     ToggleComponent,
     CheckboxComponent,

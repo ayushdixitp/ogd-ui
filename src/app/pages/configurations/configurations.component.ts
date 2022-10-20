@@ -330,7 +330,7 @@ export class ConfigurationsComponent implements OnInit {
     this.locale = localStorage.getItem('locale');
     this.channel = localStorage.getItem('channel');
     this.experienceType = localStorage.getItem('experienceType');
-    this.pageId = `/${localStorage.getItem('channel')}`;
+    // this.pageId = `/${localStorage.getItem('channel')}`;
   }
 
   // checkIfCustomerisProvisioned() {

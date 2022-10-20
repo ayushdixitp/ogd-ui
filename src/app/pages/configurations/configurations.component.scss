@@ -39,8 +39,10 @@
         padding: 32px;
     }
 
-    .config-heading {
-        
+    .config-heading {        
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
         font-style: normal;
         font-weight: 400;
         font-size: 18px;

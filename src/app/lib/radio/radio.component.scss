@@ -1,7 +1,6 @@
 .label {
     display: inline-block;
-    border: #058EA0
- .11em solid;
+    border: #058EA0 .11em solid;
     height: 16px;
     width: 16px;
     border-radius: 50%;
@@ -9,6 +8,7 @@
     transition: all 1s;
     cursor: pointer;
 }
+
 .checkbox {
   appearance: none;
 }
@@ -26,7 +26,17 @@
   left: 3px;
   width: 10px;  
   height: 10px;  
-  background: #058EA0
-;
+  background: #058EA0;
   border-radius: 50%;
+  transition: all 1s;
+}
+.checkbox:checked:disabled::before {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 10px;  
+    height: 10px;  
+    background: #93A1AB;
+    border-radius: 50%;
+    transition: all 1s;
 }
