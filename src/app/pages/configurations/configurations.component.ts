@@ -1,4 +1,12 @@
-import { Component, OnDestroy, OnInit, NgModule } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  NgModule,
+  ComponentRef,
+  ViewChild,
+  ViewContainerRef,
+} from '@angular/core';
 import { AppEventType } from 'src/app/shared/enums/event.enum';
 import { Channels } from 'src/app/shared/enums/channels.enum';
 import { BroadcastService } from 'src/app/shared/services/broadcast.service';
@@ -7,6 +15,8 @@ import { HttpService } from 'src/app/shared/services/http.service';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { map, Subscription } from 'rxjs';
 import { UtilsService } from 'src/app/shared/services/utils.service';
+import { AppEvent } from 'src/app/shared/services/broadcast.event.class';
+import { NotificationCardComponent } from 'src/app/lib/notification-card/notification-card.component';
 
 @Component({
   selector: 'configurations',
@@ -28,6 +38,10 @@ export class ConfigurationsComponent implements OnInit {
   experienceType!: string | null;
   isCustomerIsProvisioned!: boolean;
   configurationPageId!: string | undefined;
+
+  @ViewChild('viewContainerRef', { read: ViewContainerRef })
+  vcr!: ViewContainerRef;
+  ref!: ComponentRef<NotificationCardComponent>;
 
   constructor(
     private broadcastService: BroadcastService,
@@ -236,10 +250,20 @@ export class ConfigurationsComponent implements OnInit {
         },
       };
     }
+    this.ref = this.vcr.createComponent(NotificationCardComponent);
     this.httpService
       .httpPatch(url, 'chatbot_configurations_api', reqObj)
       .subscribe(result => {
-        console.log(result);
+        this.broadcastService.dispatch(
+          new AppEvent(AppEventType.SHOW_NOTIFICATION_EVENT, {
+            type: 'success',
+            msg: 'Configuration Updated Successfully.',
+          })
+        );
+        setTimeout(() => {
+          const index = this.vcr.indexOf(this.ref.hostView);
+          if (index != -1) this.vcr.remove(index);
+        }, 3000);
       });
   }
 

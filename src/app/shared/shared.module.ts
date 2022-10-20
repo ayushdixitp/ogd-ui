@@ -18,6 +18,7 @@ import { InputBoxComponent } from '../lib/input-box/input-box.component';
 import { ButtonComponent } from '../lib/button/button.component';
 import { RadioComponent } from '../lib/radio/radio.component';
 import { SafePipe } from './pipes/safe.pipe';
+import { NotificationCardComponent } from '../lib/notification-card/notification-card.component';
 
 @NgModule({
   imports: [CommonModule, FormsModule, ReactiveFormsModule, HttpClientModule],
@@ -37,6 +38,7 @@ import { SafePipe } from './pipes/safe.pipe';
     InputBoxComponent,
     ButtonComponent,
     RadioComponent,
+    NotificationCardComponent,
   ],
   exports: [
     AccordionComponent,
@@ -55,6 +57,7 @@ import { SafePipe } from './pipes/safe.pipe';
     InputBoxComponent,
     ButtonComponent,
     RadioComponent,
+    NotificationCardComponent,
   ],
 })
 export class SharedModule {}
