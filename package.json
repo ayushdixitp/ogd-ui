@@ -9,6 +9,7 @@
     "build:js": "rm -rf dist && prettier --write \"src/**/*.ts\" && ng build --output-hashing none --named-chunks=true",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "test-coverage": "ng test --no-watch --code-coverage",
     "prettier": "prettier --write \"src/**/*.ts\"",
     "prepare": "husky install",
     "build:module": "rm -rf elements.bundle.js && node moduleScript.js"

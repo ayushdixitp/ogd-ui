@@ -257,6 +257,7 @@ export class ConfigurationsComponent implements OnInit {
         },
       };
     }
+    // TODO: this can be moved to some service (notification service.)
     this.ref = this.vcr.createComponent(NotificationCardComponent);
     this.httpService
       .httpPatch(url, 'chatbot_configurations_api', reqObj)
@@ -364,29 +365,29 @@ export class ConfigurationsComponent implements OnInit {
     // this.pageId = `/${localStorage.getItem('channel')}`;
   }
 
-  // checkIfCustomerisProvisioned() {
-  //   this.refreshLocalStorageValue();
-  //   const url = this.utilsService.getChatbotConfigurationsPath(
-  //     this.refNum,
-  //     this.locale,
-  //     this.experienceType,
-  //     this.channel
-  //   );
-  //   this.utilsService
-  //     .checkIfCustomerIsProvisioned(url, this.pageId)
-  //     .then(data => {
-  //       if (data.status !== 404) {
-  //         console.log('Provisioned');
-  //         this.isCustomerIsProvisioned = true;
-  //       } else {
-  //         this.sharedService.getDashboardSchema(this.pageId).subscribe(data => {
-  //           this.configurationPageId = data?.configurationPageId;
-  //         });
-  //         console.log('Not Provisioned', this.configurationPageId);
-  //         this.isCustomerIsProvisioned = false;
-  //       }
-  //     });
-  // }
+  checkIfCustomerisProvisioned() {
+    this.refreshLocalStorageValue();
+    const url = this.utilsService.getChatbotConfigurationsPath(
+      this.refNum,
+      this.locale,
+      this.experienceType,
+      this.channel
+    );
+    this.utilsService
+      .checkIfCustomerIsProvisioned(url, this.pageId)
+      .then(data => {
+        if (data.status !== 404) {
+          console.log('Provisioned');
+          this.isCustomerIsProvisioned = true;
+        } else {
+          this.sharedService.getDashboardSchema(this.pageId).subscribe(data => {
+            this.configurationPageId = data?.configurationPageId;
+          });
+          console.log('Not Provisioned', this.configurationPageId);
+          this.isCustomerIsProvisioned = false;
+        }
+      });
+  }
 
   ngOnDestroy(): void {
     this.routeSubscription.unsubscribe();

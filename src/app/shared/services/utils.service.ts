@@ -14,7 +14,7 @@ export class UtilsService {
 
   checkIfCustomerIsProvisioned(
     url: string | undefined,
-    pageId: string | undefined
+    pageId: string | null
   ): Promise<any> {
     return new Promise((resolve, reject) => {
       if (url && pageId) {

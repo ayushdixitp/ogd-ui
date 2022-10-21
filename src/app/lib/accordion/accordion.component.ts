@@ -83,13 +83,6 @@ export class AccordionComponent implements OnInit, OnChanges {
         );
       }
     }
-    // if (
-    //   this.id === this.currentOpenAccordion &&
-    //   this.defaultPageId === this.selectedPageId
-    // ){
-    //   this.isShowPages = true;
-    // }
-
     this.broadcastService.on(AppEventType.ACCORDION_EVENT).subscribe(data => {
       this.accordionData = data.payload;
       if (this.accordionData.accordionId === this.id) {
