@@ -120,6 +120,13 @@ export class ConfigurationsComponent implements OnInit {
       });
 
     this.broadcastService
+      .on(AppEventType.HIDE_NOTIFICATION_EVENT)
+      .subscribe(() => {
+        const index = this.vcr.indexOf(this.ref.hostView);
+        if (index != -1) this.vcr.remove(index);
+      });
+
+    this.broadcastService
       .on(AppEventType.ACCORDION_EVENT)
       .subscribe((event: any) => {
         // if (event.payload.experienceType && event.payload.heading) {

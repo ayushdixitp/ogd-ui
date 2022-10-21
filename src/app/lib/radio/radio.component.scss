@@ -28,7 +28,7 @@
   height: 10px;  
   background: #058EA0;
   border-radius: 50%;
-  transition: all 1s;
+  transition: all 100ms;
 }
 .checkbox:checked:disabled::before {
     position: absolute;

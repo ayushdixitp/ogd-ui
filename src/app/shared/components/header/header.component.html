@@ -1,5 +1,4 @@
-<section class="header">
-    <br>
+<section *ngIf="isLocaleListPage || experienceType" class="header">
     <ng-container *ngIf="isLocaleListPage">
         <span class="only-title">Select a Locale</span>
     </ng-container>
@@ -21,9 +20,14 @@
             </ng-container>
         </div>
     </ng-container>
-    <ng-container *ngIf="meta.reset">
+    <div class="reset-disconnect-buttons">
         <button class="reset-button">
             Reset to default
         </button>
+        <button *ngIf="this.pageId == 'candidate-facebook-bot' || this.pageId == 'employee-msteams-bot'" class="disconnect-button">
+            Disconnect
+        </button>
+    </div>
+    <ng-container *ngIf="meta.reset">
     </ng-container>
 </section>

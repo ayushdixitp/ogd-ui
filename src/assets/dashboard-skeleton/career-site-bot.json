@@ -64,7 +64,8 @@
                         "type": "toggle"
                     },
                     "attributeHeading": "CMP_LIST_OF_ATTRIBUTES",
-                    "attributes": [{
+                    "attributes": [
+                        {
                         "id": "confidence-threshold",
                         "literal": "CMP_CONFIDENCE_THRESHOLD",
                         "infoText": "CMP_CONFIGURE_CONFIDENCE_THRESHOLD_FOR_MATCHING_FAQS",
@@ -73,7 +74,18 @@
                         },
                         "configurationKey": "faqSuggestionsThreshold",
                         "isInternal": true
-                    }]
+                    },
+                    {
+                        "id": "confidence-threshold",
+                        "literal": "CMP_CONFIDENCE_THRESHOLD",
+                        "infoText": "CMP_CONFIGURE_CONFIDENCE_THRESHOLD_FOR_MATCHING_FAQS",
+                        "actions": {
+                            "type": "progress-bar"
+                        },
+                        "configurationKey": "faqSuggestionsThreshold",
+                        "isInternal": true
+                    }
+                ]
                 },
                 {
                     "id": "is-job-alert-enabled",

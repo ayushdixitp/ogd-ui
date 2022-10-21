@@ -16,11 +16,14 @@ export class HeaderComponent implements OnInit {
   @Input('isLocaleListPage') public isLocaleListPage!: boolean;
   @Input('meta') public meta: any = {};
 
+  pageId!: string;
+
   ngOnInit(): void {
     this.broadcastService
       .on(AppEventType.ACCORDION_EVENT_INIT)
       .subscribe((event: any) => {
         console.log('Accordion Init event fired => ', event.payload);
+        this.pageId = event.payload.page;
         if (event.payload.experienceType && event.payload.heading) {
           this.experienceType = event.payload.experienceType;
           this.botType = event.payload.heading;

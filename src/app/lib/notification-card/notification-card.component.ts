@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AppEventType } from 'src/app/shared/enums/event.enum';
 import { NotificationType } from 'src/app/shared/enums/notificationType.enum';
+import { AppEvent } from 'src/app/shared/services/broadcast.event.class';
 import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 
 @Component({
@@ -9,8 +10,8 @@ import { BroadcastService } from 'src/app/shared/services/broadcast.service';
   styleUrls: ['./notification-card.component.scss'],
 })
 export class NotificationCardComponent implements OnInit {
-  notificationText: string = 'Default Notification Text';
-  notificationType!: string;
+  notificationText!: string;
+  notificationType: string = 'success';
   eNotificationType = NotificationType;
 
   constructor(private broadcastService: BroadcastService) {}
@@ -23,5 +24,16 @@ export class NotificationCardComponent implements OnInit {
         this.notificationText = data.msg;
         this.notificationType = data.type;
       });
+  }
+
+  closeNotification() {
+    this.broadcastService.dispatch(
+      new AppEvent(AppEventType.HIDE_NOTIFICATION_EVENT, {
+        id: 'notification',
+        data: {
+          type: 'notification',
+        },
+      })
+    );
   }
 }

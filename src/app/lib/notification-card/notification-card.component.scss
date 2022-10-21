@@ -1,5 +1,7 @@
 .card {
+    position: relative;
         .success, .alert, .info {
+            animation: card-fade-in 100ms 1 forwards;
             padding: 20px 24px;
             background: #FFFFFF;
             box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.15);
@@ -30,4 +32,17 @@
             gap: 18px;
             justify-content: flex-start;
         }
+        .cross-button {
+            position: absolute;
+            cursor: pointer;
+            right: 29px;
+        }
+    @keyframes card-fade-in {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
 }
