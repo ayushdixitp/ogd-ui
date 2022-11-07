@@ -54,3 +54,44 @@ export interface Skeleton {
   experience: string;
   configurations: Configuration[];
 }
+
+export interface Provision {
+  heading: string;
+  subHeading: string;
+  infoText: string;
+  buttonText: string;
+  svg: string;
+  infoSvg: string;
+}
+
+export interface Actions {
+  type: string;
+}
+
+export interface Input {
+  required: boolean;
+  label: string;
+  key: string;
+  placeholder: string;
+  actions: Actions;
+  configurationKey: string;
+  isCopyEnabled: boolean;
+}
+
+export interface SubmitButton {
+  label: string;
+}
+
+export interface Configurations {
+  heading: string;
+  icon: string;
+  inputs: Input[];
+  submitButton: SubmitButton;
+}
+
+export interface Setup {
+  pageId: string;
+  experienceType: string;
+  setupGuideUrl: string;
+  configurations: Configurations;
+}

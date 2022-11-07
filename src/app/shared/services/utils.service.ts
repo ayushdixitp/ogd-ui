@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { CommonConstant } from '../constants/common-constants';
 import { HttpService } from './http.service';
 
 @Injectable({
@@ -43,6 +44,7 @@ export class UtilsService {
     channel: string | null
   ): string {
     return `v1/configurations/${refNum}/${locale}/${experienceType}/${channel}`;
+    // return `v1/customers/${refNum}/${locale}/${experienceType}/${channel}/configurations`;
   }
 
   getDropdownFormatList(list: [], keyToBeDisplay: string) {

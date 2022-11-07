@@ -12,7 +12,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   constructor(private router: Router, private activatedRoute: ActivatedRoute) {
     let currentUrl = location.pathname;
     currentUrl = currentUrl[0] == '/' ? currentUrl.slice(1) : currentUrl;
-    console.log(currentUrl);
+    console.log(`currentUrl => ${currentUrl}`);
     if (!currentUrl.includes('mfe-dashboard')) {
       this.router.config.push(
         {
@@ -32,9 +32,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
           ],
         }
       );
-      console.log('came here');
+      // for the first time it comes here so setting up default channels
+      // here we will call the api to check for the available channels for that specfic clients
+      //  the first channel will be kept here
+      localStorage.setItem('channel', 'web');
+      localStorage.setItem('experienceType', 'cx');
       this.router.navigate([`${currentUrl}/mfe-dashboard/cx/career-site-bot`]);
     } else {
+      debugger;
       this.router.config.push({
         path: `${currentUrl}`,
         children: [
@@ -45,14 +50,52 @@ export class DashboardComponent implements OnInit, OnDestroy {
       });
       this.router.navigate([`${currentUrl}`]);
     }
-
-    console.log(this.router.config);
   }
 
   ngOnInit(): void {
     // if (!localStorage.getItem('refNum')) {
     if (this.refNum) {
       localStorage.setItem('refNum', this.refNum);
+    }
+    let currentUrl = location.pathname;
+    currentUrl = currentUrl[0] == '/' ? currentUrl.slice(1) : currentUrl;
+    console.log(`currentUrl => ${currentUrl}`);
+    if (!currentUrl.includes('mfe-dashboard')) {
+      this.router.config.push(
+        {
+          path: `${currentUrl}mfe-dashboard`,
+          children: [
+            {
+              path: '**',
+            },
+          ],
+        },
+        {
+          path: `${currentUrl}/mfe-dashboard`,
+          children: [
+            {
+              path: '**',
+            },
+          ],
+        }
+      );
+      // for the first time it comes here so setting up default channels
+      // here we will call the api to check for the available channels for that specfic clients
+      //  the first channel will be kept here
+      localStorage.setItem('channel', 'web');
+      localStorage.setItem('experienceType', 'cx');
+      this.router.navigate([`${currentUrl}/mfe-dashboard/cx/career-site-bot`]);
+    } else {
+      debugger;
+      this.router.config.push({
+        path: `${currentUrl}`,
+        children: [
+          {
+            path: '**',
+          },
+        ],
+      });
+      this.router.navigate([`${currentUrl}`]);
     }
     // }
     // console.log("dashboard comp.");
@@ -68,7 +111,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    localStorage.setItem('channel', 'career-site-bot');
+    localStorage.setItem('channel', 'web');
+    localStorage.setItem('experienceType', 'cx');
     console.log('destroyed');
   }
 }

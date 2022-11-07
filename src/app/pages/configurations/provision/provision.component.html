@@ -1,24 +1,29 @@
-<!-- USE AS to avoid long names of variables -->
-<main class="provision-container" *ngIf="isDataLoaded">
-    <div class="container-body">
-        <p class="heading-block">
-            {{ skeleton?.configurations?.heading }}
-        </p>
-        <form FormGroup="provisioningForm" (ngSubmit)="submitForm()">
-            <div class="form-block">
-                <ng-container *ngFor="let input of skeleton?.configurations?.inputs; index as index">
-                    <div class="input-block">
-                        <label>
-                            {{ input?.label }}
-                        </label>
-                        <input-box [placeholder]="input?.placeholder" [control]="this.formControlList[index]"
-                            [isCopyEnabled]="input?.isCopyEnabled"></input-box>
-                    </div>
-                </ng-container>
-                <footer class="footer-block">
-                    <app-button (onClick)="submitForm()" [label]="skeleton?.configurations?.submitButton?.label" [buttonClass]="''" [isDisabled]="(this.provisioningForm.status == 'INVALID')"></app-button>
-                </footer>
-            </div>
-        </form>
+<div *ngIf="skeleton" class="provision" >
+    <div class="header-section">
+        <i [innerHtml]="skeleton.svg | safe: 'html'">
+            provisioningIcon
+        </i>
+        <span>
+            {{ skeleton.heading }}
+        </span>
     </div>
-</main>
+    <div class=card>
+            <div class="card-header">
+                <div>
+                    {{ skeleton.subHeading }}
+                </div>
+                <div>
+                    <app-button [label]="skeleton.buttonText" class="custom" [buttonClass]="'btn btn-small'" (onClick)="provisionChannel()" ></app-button>
+                </div>
+            </div>
+            <hr>
+            <div class="card-body">
+                <i [innerHtml]="skeleton.infoSvg | safe: 'html'">
+                    Icon
+                </i>
+                <div>
+                    {{ skeleton.infoText }}
+                </div>
+            </div>
+    </div>
+</div>

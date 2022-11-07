@@ -27,7 +27,8 @@ export class HttpService {
       request_object: requestObject,
     };
     request['request_type'] = HttpType.HTTP_POST;
-    return this.httpClient.post(methodName, serviceName);
+    // return this.httpClient.post(methodName, serviceName);
+    return this.cmpHubPostAPI(environment.testingRestApi, request);
   }
 
   public httpPatch(
@@ -102,7 +103,7 @@ export class HttpService {
           data['productRequestObject'] = paramsObj?.request_object;
           return data;
         } else if (res.error) {
-          return res.error;
+          return res.error.response;
         }
       })
     );

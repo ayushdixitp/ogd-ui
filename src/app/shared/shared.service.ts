@@ -14,12 +14,14 @@ export class SharedService {
   ) {}
 
   getDashboardSchema(pageId?: string | null): Observable<any> {
-    const url = `v1/dashboard-schema${pageId}`;
+    // const url = `v1/dashboard-schema${pageId}`;
+    const url = `${environment.dashboardSchema}${pageId}`;
     return this.httpService.httpGet(url, 'chatbot_management_api');
   }
 
   getDashboardSchemaFromLocale(pageId?: string | null): Observable<any> {
-    const url = `../../assets/dashboard-skeleton${pageId}.json`;
+    // debugger
+    const url = `${environment.dashboardSchema}${pageId}.json`;
     return this.httpClient.get(url);
   }
 

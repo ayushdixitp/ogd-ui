@@ -1,4 +1,7 @@
+@import '../../app.component.scss';
+
 .phenom-button {
+    width: fit-content;
     display: flex;
     cursor: pointer;
     align-items: center;

@@ -22,7 +22,6 @@ export class HeaderComponent implements OnInit {
     this.broadcastService
       .on(AppEventType.ACCORDION_EVENT_INIT)
       .subscribe((event: any) => {
-        console.log('Accordion Init event fired => ', event.payload);
         this.pageId = event.payload.page;
         if (event.payload.experienceType && event.payload.heading) {
           this.experienceType = event.payload.experienceType;

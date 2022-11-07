@@ -13,11 +13,12 @@ import { SharedService } from 'src/app/shared/shared.service';
   styleUrls: ['./locales.component.scss'],
 })
 export class LocalesComponent implements OnInit {
-  @Input('refNum') public refNum!: string | null;
+  // @Input('refNum') public refNum!: string | null;
   data!: any;
   searchText: string = '';
   locales!: any;
   response: any;
+  refNum!: string | null;
 
   constructor(
     private utilsService: UtilsService,
@@ -33,10 +34,12 @@ export class LocalesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (!this.refNum) this.refNum = localStorage.getItem('refNum');
-    this.utilsService
-      .getDistinctLocale(this.refNum, 'cx')
-      .then((data: any) => (this.locales = data.locales));
+    // if (!this.refNum)
+    this.refNum = localStorage.getItem('refNum');
+    this.utilsService.getDistinctLocale(this.refNum, 'cx').then((data: any) => {
+      this.locales = data.locales;
+      localStorage.setItem('customerName', data.customerName);
+    });
   }
 
   getSelectedLocale(localeObj: any) {

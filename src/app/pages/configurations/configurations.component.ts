@@ -66,11 +66,9 @@ export class ConfigurationsComponent implements OnInit {
     this.isDataLoaded = false;
     this.refNum = localStorage.getItem('refNum');
     this.locale = localStorage.getItem('locale');
-    // this.experienceType = localStorage.getItem('ExperienceType');
     this.experienceType = localStorage.getItem('experienceType');
     console.log(this.experienceType, this.locale, this.refNum);
     this.getChatbotConfigurations();
-    this.broadcastService.on(AppEventType.SELECTED_LOCALE_EVENT).subscribe();
 
     this.broadcastService
       .on(AppEventType.SELECTED_LOCALE_EVENT)
@@ -152,16 +150,28 @@ export class ConfigurationsComponent implements OnInit {
     this.httpService
       .httpGet(url, 'chatbot_configurations_api')
       .subscribe(result => {
-        console.log(this.pageId);
-        this.configurations = result;
-        if (this.pageId) {
-          this.sharedService
-            .getDashboardSchemaFromLocale(`/${this.pageId}`)
-            .subscribe((data: any) => {
-              this.skeleton = data;
-              console.log(this.skeleton);
-              this.createFinalStructure(this.skeleton);
-            });
+        if (result.statusCode == 404) {
+          this.isCustomerIsProvisioned = false;
+          this.isDataLoaded = true;
+          if (this.pageId) {
+            this.sharedService
+              .getDashboardSchemaFromLocale(`${this.pageId}`)
+              .subscribe((data: any) => {
+                this.skeleton = data;
+              });
+          }
+        } else {
+          this.isCustomerIsProvisioned = true;
+          this.configurations = result;
+          if (this.pageId) {
+            this.sharedService
+              .getDashboardSchemaFromLocale(`${this.pageId}`)
+              .subscribe((data: any) => {
+                this.skeleton = data;
+                console.log(this.skeleton);
+                this.createFinalStructure(this.skeleton);
+              });
+          }
         }
       });
   }
@@ -387,6 +397,10 @@ export class ConfigurationsComponent implements OnInit {
           this.isCustomerIsProvisioned = false;
         }
       });
+  }
+
+  provision(data: any) {
+    if (data.isProvisioned) this.getChatbotConfigurations();
   }
 
   ngOnDestroy(): void {
