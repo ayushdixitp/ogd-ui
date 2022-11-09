@@ -228,15 +228,6 @@ export class SidebarComponent implements OnInit {
           }
         }
       });
-    // this.utilsService.getDistinctLocale(this.refNum, 'cx').then((data: any) => {
-    //   data.locales = this.utilsService.getDropdownFormatList(
-    //     data.locales,
-    //     'displayText'
-    //   );
-
-    //   this.locales = data.locales;
-    //   debugger
-    // });
   }
 
   loadLocales() {

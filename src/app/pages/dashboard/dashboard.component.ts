@@ -39,7 +39,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
       localStorage.setItem('experienceType', 'cx');
       this.router.navigate([`${currentUrl}/mfe-dashboard/cx/career-site-bot`]);
     } else {
-      debugger;
       this.router.config.push({
         path: `${currentUrl}`,
         children: [
@@ -86,7 +85,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
       localStorage.setItem('experienceType', 'cx');
       this.router.navigate([`${currentUrl}/mfe-dashboard/cx/career-site-bot`]);
     } else {
-      debugger;
       this.router.config.push({
         path: `${currentUrl}`,
         children: [

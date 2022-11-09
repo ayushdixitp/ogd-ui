@@ -1,6 +1,9 @@
+@import '../../variables';
+
 .mfe-main-container {
     // padding: 0px 10px;
     display: flex;
+    background-color: $color-white;    
     justify-content: space-between;
     aside {
         position: fixed;

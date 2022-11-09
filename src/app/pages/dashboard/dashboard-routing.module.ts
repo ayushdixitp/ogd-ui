@@ -32,8 +32,4 @@ const routes: Routes = [
   exports: [RouterModule],
   imports: [RouterModule.forChild(routes)],
 })
-export class DashboardRoutingModule {
-  constructor() {
-    // debugger
-  }
-}
+export class DashboardRoutingModule {}

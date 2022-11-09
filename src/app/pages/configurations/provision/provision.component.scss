@@ -1,17 +1,17 @@
-.provision {
+.mfe-provision {
     padding: 10px 30px;
     margin-top: 20px;
     hr {
         border: 1px solid #DFE3E6;
         margin: 16px 0px;
     }
-    .header-section {
+    .mfe-header-section {
         display: flex;
         align-items: flex-start;
         font-size: 18px;  
         gap: 12px;     
     }
-    .card {
+    .mfe-card {
         margin-top: 16px;
         margin-bottom: 32px;
         padding: 24px;
@@ -21,7 +21,7 @@
         border: 1px solid #DFE3E6;
         border-radius: 6px;
         transition: 1000ms all;
-        .card-header {
+        .mfe-card-header {
             color: #414C54;
             display: flex;
             justify-content: space-between;
@@ -30,7 +30,7 @@
             font-size: 16px;
             line-height: 20px;
         }
-        .card-body {
+        .mfe-card-body {
             font-weight: 400;
             font-size: 14px;
             line-height: 20px;

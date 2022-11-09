@@ -1,5 +1,5 @@
-<div *ngIf="skeleton" class="provision" >
-    <div class="header-section">
+<div *ngIf="skeleton" class="mfe-provision" >
+    <div class="mfe-header-section">
         <i [innerHtml]="skeleton.svg | safe: 'html'">
             provisioningIcon
         </i>
@@ -7,8 +7,8 @@
             {{ skeleton.heading }}
         </span>
     </div>
-    <div class=card>
-            <div class="card-header">
+    <div class=mfe-card>
+            <div class="mfe-card-header">
                 <div>
                     {{ skeleton.subHeading }}
                 </div>
@@ -17,7 +17,7 @@
                 </div>
             </div>
             <hr>
-            <div class="card-body">
+            <div class="mfe-card-body">
                 <i [innerHtml]="skeleton.infoSvg | safe: 'html'">
                     Icon
                 </i>

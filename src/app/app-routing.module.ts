@@ -15,11 +15,11 @@ import { LocalesModule } from './pages/locales/locales.module';
 import { SharedModule } from './shared/shared.module';
 
 const routes: Routes = [
-  {
-    path: '',
-    redirectTo: '/locales',
-    pathMatch: 'full',
-  },
+  // {
+  //   path: '',
+  //   redirectTo: '/locales',
+  //   pathMatch: 'full',
+  // },
   {
     path: 'locales',
     component: LocaleListComponent,
@@ -136,7 +136,7 @@ export class AppRoutingModule {
       });
       this.router.navigate([`${oldRoute}`]);
     } else {
-      oldRoute = (location.pathname + '/locales').slice(1);
+      oldRoute = location.pathname.slice(1);
       oldRoute = oldRoute.replace('//', '/');
       this.router.config.push({
         path: `${oldRoute}`,

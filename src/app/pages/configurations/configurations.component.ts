@@ -146,7 +146,6 @@ export class ConfigurationsComponent implements OnInit {
       this.experienceType,
       this.channel
     );
-    // this.sharedService.getDashboardSchemaFromLocale(`/${this.channel}`).subscribe((data) => { debugger });
     this.httpService
       .httpGet(url, 'chatbot_configurations_api')
       .subscribe(result => {
@@ -159,6 +158,13 @@ export class ConfigurationsComponent implements OnInit {
               .subscribe((data: any) => {
                 this.skeleton = data;
               });
+          } else {
+            this.sharedService
+              .getDashboardSchemaFromLocale(`/career-site-bot`)
+              .subscribe((data: any) => {
+                this.skeleton = data;
+                this.createFinalStructure(this.skeleton);
+              });
           }
         } else {
           this.isCustomerIsProvisioned = true;
@@ -169,6 +175,13 @@ export class ConfigurationsComponent implements OnInit {
               .subscribe((data: any) => {
                 this.skeleton = data;
                 console.log(this.skeleton);
+                this.createFinalStructure(this.skeleton);
+              });
+          } else {
+            this.sharedService
+              .getDashboardSchemaFromLocale(`/career-site-bot`)
+              .subscribe((data: any) => {
+                this.skeleton = data;
                 this.createFinalStructure(this.skeleton);
               });
           }
