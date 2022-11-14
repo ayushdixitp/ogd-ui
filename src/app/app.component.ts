@@ -5,17 +5,9 @@ import {
   OnInit,
   OnDestroy,
   OnChanges,
-  SimpleChanges,
 } from '@angular/core';
 import { SharedService } from 'src/app/shared/shared.service';
-import {
-  LoadChildrenCallback,
-  Route,
-  Router,
-  RouterModule,
-  Routes,
-} from '@angular/router';
-import { BaseComponent } from './layouts/base/base.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'chatbot-management-app',

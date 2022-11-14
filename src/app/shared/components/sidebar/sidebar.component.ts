@@ -76,11 +76,11 @@ export class SidebarComponent implements OnInit {
           channel: 'facebook',
           heading: 'CMP_FACEBOOK_BOT',
         },
-        {
-          pageId: 'candidate-sms-bot',
-          channel: 'sms',
-          heading: 'CMP_SMS_BOT',
-        },
+        // {
+        //   pageId: 'candidate-sms-bot',
+        //   channel: 'sms',
+        //   heading: 'CMP_SMS_BOT',
+        // },
       ],
     },
     {
@@ -98,11 +98,11 @@ export class SidebarComponent implements OnInit {
           channel: 'msteams',
           heading: 'CMP_MS_TEAMS_BOT',
         },
-        {
-          pageId: 'employee-sms-bot',
-          channel: 'sms',
-          heading: 'CMP_SMS_BOT',
-        },
+        // {
+        //   pageId: 'employee-sms-bot',
+        //   channel: 'sms',
+        //   heading: 'CMP_SMS_BOT',
+        // },
       ],
     },
     {
@@ -240,6 +240,7 @@ export class SidebarComponent implements OnInit {
         'displayText'
       );
       this.locales = data.locales;
+      localStorage.setItem('customerName', data.customerName);
       this.areLocalesLoaded = true;
       if (!localStorage.getItem('locale')) {
         localStorage.setItem('locale', this.locales[0].locale);

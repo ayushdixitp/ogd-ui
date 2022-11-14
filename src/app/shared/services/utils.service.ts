@@ -47,6 +47,10 @@ export class UtilsService {
     // return `v1/customers/${refNum}/${locale}/${experienceType}/${channel}/configurations`;
   }
 
+  getResetChatbotConfigurationsPath() {
+    return `v1/configurations`;
+  }
+
   getDropdownFormatList(list: [], keyToBeDisplay: string) {
     list.map((listItem: any) => {
       listItem['item'] = listItem[keyToBeDisplay];

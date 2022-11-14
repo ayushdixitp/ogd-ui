@@ -144,6 +144,12 @@ export class ConfigurationsComponent implements OnInit {
           this.getChatbotConfigurations();
         }
       });
+
+    this.broadcastService
+      .on(AppEventType.RESET_TO_DEFAULT_CONFIGURATIONS)
+      .subscribe(() => {
+        this.resetToDefault();
+      });
   }
 
   getChatbotConfigurations() {
@@ -456,6 +462,15 @@ export class ConfigurationsComponent implements OnInit {
     } else {
       return true;
     }
+  }
+
+  resetToDefault() {
+    let url = this.utilsService.getResetChatbotConfigurationsPath();
+    this.httpService
+      .httpDelete(url, 'chatbot_configurations_api')
+      .subscribe(res => {
+        this.getChatbotConfigurations();
+      });
   }
 
   ngOnDestroy(): void {

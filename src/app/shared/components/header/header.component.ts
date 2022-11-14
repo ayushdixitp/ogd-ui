@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AppEventType } from '../../enums/event.enum';
+import { AppEvent } from '../../services/broadcast.event.class';
 import { BroadcastService } from '../../services/broadcast.service';
 
 @Component({
@@ -28,5 +29,11 @@ export class HeaderComponent implements OnInit {
           this.botType = event.payload.heading;
         }
       });
+  }
+
+  resetToDefault() {
+    this.broadcastService.dispatch(
+      new AppEvent(AppEventType.RESET_TO_DEFAULT_CONFIGURATIONS)
+    );
   }
 }
