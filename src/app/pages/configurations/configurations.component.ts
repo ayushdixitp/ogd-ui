@@ -6,6 +6,7 @@ import {
   ComponentRef,
   ViewChild,
   ViewContainerRef,
+  Input,
 } from '@angular/core';
 import { AppEventType } from 'src/app/shared/enums/event.enum';
 import { Channels } from 'src/app/shared/enums/channels.enum';
@@ -24,6 +25,8 @@ import { NotificationCardComponent } from 'src/app/lib/notification-card/notific
   styleUrls: ['./configurations.component.scss'],
 })
 export class ConfigurationsComponent implements OnInit {
+  @Input() roleAccess!: string | null;
+
   currentRoute: string | undefined;
   channel!: string | null;
   finalstructure: any = {};
@@ -63,12 +66,24 @@ export class ConfigurationsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.roleAccess = localStorage.getItem('roleAccess');
+    this.setupAllEventListener();
     this.isDataLoaded = false;
-    this.refNum = localStorage.getItem('refNum');
-    this.locale = localStorage.getItem('locale');
-    this.experienceType = localStorage.getItem('experienceType');
-    console.log(this.experienceType, this.locale, this.refNum);
-    this.getChatbotConfigurations();
+    this.refreshLocalStorageValue();
+    if (this.experienceType && this.locale && this.refNum && this.channel)
+      this.getChatbotConfigurations();
+  }
+
+  setRole(role: string) {
+    localStorage.setItem('role', role);
+  }
+
+  setupAllEventListener() {
+    this.broadcastService
+      .on(AppEventType.LOCALES_LOADED_EVENT)
+      .subscribe(() => {
+        this.getChatbotConfigurations();
+      });
 
     this.broadcastService
       .on(AppEventType.SELECTED_LOCALE_EVENT)
@@ -112,9 +127,7 @@ export class ConfigurationsComponent implements OnInit {
     this.broadcastService
       .on(AppEventType.CLICKED_ON_LOCALE_DROPDOWN)
       .subscribe(() => {
-        // this.isDataLoaded = false;
         this.getChatbotConfigurations();
-        // this.checkIfCustomerisProvisioned();
       });
 
     this.broadcastService
@@ -127,12 +140,8 @@ export class ConfigurationsComponent implements OnInit {
     this.broadcastService
       .on(AppEventType.ACCORDION_EVENT)
       .subscribe((event: any) => {
-        // if (event.payload.experienceType && event.payload.heading) {
-        //   this.isDataLoaded = false;
-        // }
         if (event.payload.page) {
           this.getChatbotConfigurations();
-          // this.checkIfCustomerisProvisioned();
         }
       });
   }
@@ -281,6 +290,11 @@ export class ConfigurationsComponent implements OnInit {
       };
     }
     // TODO: this can be moved to some service (notification service.)
+    if (this.ref) {
+      const index = this.vcr.indexOf(this.ref.hostView);
+      if (index != -1) this.vcr.remove(index);
+    }
+
     this.ref = this.vcr.createComponent(NotificationCardComponent);
     this.httpService
       .httpPatch(url, 'chatbot_configurations_api', reqObj)
@@ -323,8 +337,12 @@ export class ConfigurationsComponent implements OnInit {
                   } else {
                     attribute[attribute?.configurationKey] =
                       this.configurations[attribute.configurationKey];
-                    attribute.literal = data[attribute.literal];
-                    attribute.infoText = data[attribute.infoText];
+                    attribute.literal = data[attribute.literal]
+                      ? data[attribute.literal]
+                      : attribute.literal;
+                    attribute.infoText = data[attribute.infoText]
+                      ? data[attribute.infoText]
+                      : attribute.infoText;
                     return attribute;
                   }
                 });
@@ -413,7 +431,31 @@ export class ConfigurationsComponent implements OnInit {
   }
 
   provision(data: any) {
-    if (data.isProvisioned) this.getChatbotConfigurations();
+    this.ref = this.vcr.createComponent(NotificationCardComponent);
+    this.broadcastService.dispatch(
+      new AppEvent(AppEventType.SHOW_NOTIFICATION_EVENT, {
+        type: 'failed',
+        msg: 'Something went wrong.',
+      })
+    );
+    // const index = this.vcr.indexOf(this.ref.hostView)
+    setTimeout(() => {
+      const index = this.vcr.indexOf(this.ref.hostView);
+      if (index != -1) this.vcr.remove(index);
+    }, 3000);
+
+    // if (data.isProvisioned) this.getChatbotConfigurations();
+    // else {
+    // }
+  }
+
+  // this function will be responsible for rending blocks based on internal or external role
+  checkRoleAccess(isInternal: boolean | undefined | null): boolean {
+    if (isInternal) {
+      return this.roleAccess == 'internal';
+    } else {
+      return true;
+    }
   }
 
   ngOnDestroy(): void {

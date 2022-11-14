@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import {
   LoadChildrenCallback,
@@ -82,9 +81,9 @@ const routes: Routes = [
       {
         path: '',
         loadChildren: () =>
-          import('./pages/dashboard/dashboard-routing.module').then(m => {
+          import('./pages/dashboard/dashboard.module').then(m => {
             console.log('Normal ROUTE');
-            return m.DashboardRoutingModule;
+            return m.DashboardModule;
           }),
       },
     ],
@@ -92,7 +91,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes), CommonModule],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
 export class AppRoutingModule {

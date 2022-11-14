@@ -26,13 +26,23 @@ export class ProvisionComponent implements OnInit {
       channel: localStorage.getItem('channel'),
       customerName: localStorage.getItem('customerName'),
     };
-    console.log(reqObj);
     this.httpService
       .httpPost('v1/customers/provision', 'chatbot_configurations_api', reqObj)
-      .subscribe((data: any) => {
-        this.provisioned.emit({
-          isProvisioned: true,
-        });
+      .subscribe({
+        next: (data: any) => {
+          if (data.statusCode == 404) {
+            this.provisioned.emit({
+              isProvisioned: false,
+            });
+          } else {
+            this.provisioned.emit({
+              isProvisioned: true,
+            });
+          }
+        },
+        error: error => {
+          console.log(error);
+        },
       });
   }
 }

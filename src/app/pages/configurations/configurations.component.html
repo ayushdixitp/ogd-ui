@@ -36,78 +36,79 @@
                                         {{ section.infoText }}
                                     </span>
                                     <ng-container *ngIf="section.features">
-                                        <div class="card" *ngFor="let feature of section.features"
-                                            [ngClass]="{'disabled-state': (!feature[feature.configurationKey])}"
-                                            >
-                                            <header class="card-one-item">
-                                                <div class="card-one-item-heading">
-                                                    <span class="section-toggle" *ngIf="feature?.actions?.type == 'toggle'">
-                                                        <app-toggle [id]="feature.configurationKey"
-                                                            [isActive]="feature[feature.configurationKey]"></app-toggle>
-                                                    </span>
-                                                    <p [ngClass]="{ 'd-i': feature.literal }">
-                                                        {{ feature.literal }}
-                                                    </p>
-                                                </div>
-                                                <span class="section-infotext">
-                                                    {{ feature.infoText }}
-                                                </span>
-                                            </header>
-                                            <ng-container *ngIf="feature.flows">
-                                                <div class="features-types">
-                                                    <div class="features-types-section" *ngFor="let flow of feature.flows">
-                                                        <div>
-                                                            <radio [isDisabled]="!feature[feature.configurationKey]" [data]="flow"></radio>
-                                                        </div>
-                                                        <div>
-                                                            {{ flow.literal }}
-                                                            <br>
-                                                            {{ flow.infoText }}
-                                                        </div>
-    
-                                                    </div>
-                                                </div>
-                                            </ng-container>
-                                            <ng-container *ngIf="feature.attributes">
-                                                <div class="attribute">
-                                                    <div class="attribute-heading">
-                                                        {{ feature.attributeHeading }}
-                                                        <br>
-                                                        <span>
-                                                            <!-- {{ feature.infoText }} -->
+                                        <ng-container *ngFor="let feature of section.features">
+                                        <div class="card" *ngIf="checkRoleAccess(feature?.isInternal)"
+                                            [ngClass]="{'disabled-state': (!feature[feature.configurationKey])}">
+                                                <header class="card-one-item">
+                                                    <div class="card-one-item-heading">
+                                                        <span class="section-toggle" *ngIf="feature?.actions?.type == 'toggle'">
+                                                            <app-toggle [id]="feature.configurationKey"
+                                                                [isActive]="feature[feature.configurationKey]"></app-toggle>
                                                         </span>
+                                                        <p [ngClass]="{ 'd-i': feature.literal }">
+                                                            {{ feature.literal }}
+                                                        </p>
                                                     </div>
-                                                    <ng-container *ngFor="let attribute of feature.attributes">
-                                                        <div
-                                                            [ngClass]="attribute?.actions?.type=='progress-bar'? 'attribute-items-progress-bar': 'attribute-items'">
-                                                            <div class="attribute-icon">
-                                                                <ng-container *ngIf="attribute.actions.type=='checkbox'">
-                                                                    <phenom-checkbox
-                                                                        [attributeConfigurationKey]="feature.attributeConfigurationKey"
-                                                                        [id]="attribute.configurationKey"
-                                                                        [isDisabled]="!feature[feature.configurationKey] || (attribute.actions.disabled)"
-                                                                        [isActive]="attribute[attribute.configurationKey]"
-                                                                        >
-                                                                    </phenom-checkbox>
-                                                                </ng-container>
-                                                                <ng-container *ngIf="attribute.actions.type=='progress-bar'">
-                                                                    <app-progressbar [id]="attribute.id" [configurationKey]="attribute.configurationKey" [isDisabled]="!feature[feature.configurationKey] || (attribute.actions.disabled)" [value]="attribute[attribute.configurationKey]">
-                                                                    </app-progressbar>
-                                                                </ng-container>
+                                                    <span class="section-infotext">
+                                                        {{ feature.infoText }}
+                                                    </span>
+                                                </header>
+                                                <ng-container *ngIf="feature.flows">
+                                                    <div class="features-types">
+                                                        <div class="features-types-section" *ngFor="let flow of feature.flows">
+                                                            <div>
+                                                                <radio [isDisabled]="!feature[feature.configurationKey]" [data]="flow"></radio>
                                                             </div>
-                                                            <div class="attribute-items-heading">
-                                                                <span class="attribute-items-title">
-                                                                    {{ attribute.literal }}
-                                                                </span>
-                                                                <span class="attribute-items-info-text">
-                                                                    {{ attribute.infoText }}
-                                                                </span>
+                                                            <div>
+                                                                {{ flow.literal }}
+                                                                <br>
+                                                                {{ flow.infoText }}
                                                             </div>
+        
                                                         </div>
-                                                    </ng-container>
-                                                </div>
-                                            </ng-container>
-                                        </div>
+                                                    </div>
+                                                </ng-container>
+                                                <ng-container *ngIf="feature.attributes">
+                                                    <div class="attribute">
+                                                        <div class="attribute-heading">
+                                                            {{ feature.attributeHeading }}
+                                                            <br>
+                                                            <span>
+                                                                <!-- {{ feature.infoText }} -->
+                                                            </span>
+                                                        </div>
+                                                        <ng-container *ngFor="let attribute of feature.attributes">
+                                                            <div
+                                                                [ngClass]="attribute?.actions?.type=='progress-bar'? 'attribute-items-progress-bar': 'attribute-items'">
+                                                                <div class="attribute-icon">
+                                                                    <ng-container *ngIf="attribute.actions.type=='checkbox'">
+                                                                        <phenom-checkbox
+                                                                            [attributeConfigurationKey]="feature.attributeConfigurationKey"
+                                                                            [id]="attribute.configurationKey"
+                                                                            [isDisabled]="!feature[feature.configurationKey] || (attribute.actions.disabled)"
+                                                                            [isActive]="attribute[attribute.configurationKey]"
+                                                                            >
+                                                                        </phenom-checkbox>
+                                                                    </ng-container>
+                                                                    <ng-container *ngIf="attribute.actions.type=='progress-bar'">
+                                                                        <app-progressbar [id]="attribute.id" [configurationKey]="attribute.configurationKey" [isDisabled]="!feature[feature.configurationKey] || (attribute.actions.disabled)" [value]="attribute[attribute.configurationKey]">
+                                                                        </app-progressbar>
+                                                                    </ng-container>
+                                                                </div>
+                                                                <div class="attribute-items-heading">
+                                                                    <span class="attribute-items-title">
+                                                                        {{ attribute.literal }}
+                                                                    </span>
+                                                                    <span class="attribute-items-info-text">
+                                                                        {{ attribute.infoText }}
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </ng-container>
+                                                    </div>
+                                                </ng-container>
+                                            </div>
+                                        </ng-container>
                                     </ng-container>
                                 </div>
                             </section>

@@ -5,12 +5,14 @@
     display: flex;
     background-color: $color-white;    
     justify-content: space-between;
-    aside {
+    .aside {
         position: fixed;
         height: 100vh;
         width: 15%;
         @media screen and (max-width: 1500px) {
             width: 25%;
+            position: fixed;
+            height: 100vh;
         }
     }
     .mfe-base-container {

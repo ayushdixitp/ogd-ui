@@ -62,6 +62,11 @@
   box-shadow: webkit-slider-thumb-shadow();
 }
 
+.range::before {
+  content: 'a';
+  left: webkit-slider-thumb-shadow();
+}
+
 .range-disabled::-webkit-slider-thumb {
   position: relative;
   appearance: none;

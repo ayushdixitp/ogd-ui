@@ -7,6 +7,7 @@ import { UtilsService } from 'src/app/shared/services/utils.service';
 import { SharedService } from '../../shared.service';
 import { map } from 'rxjs';
 import { BaseComponent } from 'src/app/layouts/base/base.component';
+import { AppEvent } from '../../services/broadcast.event.class';
 
 @Component({
   selector: 'app-sidebar',
@@ -240,8 +241,17 @@ export class SidebarComponent implements OnInit {
       );
       this.locales = data.locales;
       this.areLocalesLoaded = true;
-      if (!localStorage.getItem('locale'))
+      if (!localStorage.getItem('locale')) {
         localStorage.setItem('locale', this.locales[0].locale);
+        this.broadcastService.dispatch(
+          new AppEvent(AppEventType.LOCALES_LOADED_EVENT)
+        );
+      } else if (localStorage.getItem('locale') != this.locales[0].locale) {
+        localStorage.setItem('locale', this.locales[0].locale);
+        this.broadcastService.dispatch(
+          new AppEvent(AppEventType.LOCALES_LOADED_EVENT)
+        );
+      }
     });
   }
 

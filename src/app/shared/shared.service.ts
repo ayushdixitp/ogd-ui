@@ -20,7 +20,7 @@ export class SharedService {
   }
 
   getDashboardSchemaFromLocale(pageId?: string | null): Observable<any> {
-    const url = `${environment.dashboardSchema}${pageId}.json`;
+    const url = `${environment.dashboardSchema}${pageId}.json?v=${Date.now()}`;
     return this.httpClient.get(url);
   }
 

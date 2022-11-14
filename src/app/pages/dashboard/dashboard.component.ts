@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class DashboardComponent implements OnInit, OnDestroy {
   @Input() refNum!: string;
+  @Input() roleAccess!: string;
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute) {
     let currentUrl = location.pathname;
@@ -56,6 +57,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
     if (this.refNum) {
       localStorage.setItem('refNum', this.refNum);
     }
+    if (this.roleAccess) {
+      localStorage.setItem('roleAccess', this.roleAccess);
+    }
+
     let currentUrl = location.pathname;
     currentUrl = currentUrl[0] == '/' ? currentUrl.slice(1) : currentUrl;
     console.log(`currentUrl => ${currentUrl}`);
