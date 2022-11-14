@@ -13,6 +13,7 @@ html {
   -webkit-text-size-adjust: 100%; /* 2 */
 }
 
+
 /* Sections
      ========================================================================== */
 
@@ -22,6 +23,7 @@ html {
 
 body {
   margin: 0;
+  font-family: 'Proxima Nova';
 }
 
 /**
@@ -271,6 +273,7 @@ textarea {
 
 [type='checkbox'],
 [type='radio'] {
+  left: 0px;
   box-sizing: border-box; /* 1 */
   padding: 0; /* 2 */
 }

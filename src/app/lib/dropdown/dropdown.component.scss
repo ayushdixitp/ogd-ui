@@ -1,11 +1,12 @@
-@import '../../../styles/styles.scss';
+@import '../../app.component.scss';
 
-.dropdown {    
+.mfe-dropdown {
     cursor: pointer;
-    .dropdown-title {
+    font-family: 'Proxima Nova';
+    .mfe-dropdown-title {
+        margin: 0px;
         border: 1px solid $color-white;
         padding: 12px 16px;
-        font-family: 'Proxima Nova';
         font-style: normal;
         font-weight: 400;
         font-size: 14px;
@@ -16,23 +17,31 @@
         justify-content: space-between;
         align-items: center;
     }
-    .dropdown-menu {
-      width: 98%;
-        overflow-y: scroll;
-        max-height: 224px;
-        padding: 0px;
+    .mfe-dropdown-menu {
+        position: absolute;
+        z-index: 1;
+        left: 10px;
+        z-index: 1;
+        width: 92%;
+        // overflow-y: scroll;
+        // max-height: 224px;
+        padding: 4px;
         margin: -15px auto;
         background: $color-white;
         /* Depth 1 */        
         box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.15);
         border-radius: 2px;
+        max-height: 224px;
         /* width */
         ul {
+          width: 98%;
+          overflow-y: scroll;
+          max-height: 224px;
+          padding: 0px;
           padding: 0px;
           margin: 0px;
             li {
                 list-style: none;
-                font-family: 'Proxima Nova';
                 font-style: normal;
                 font-weight: 400;
                 font-size: 14px;
@@ -42,6 +51,9 @@
             }
             li:hover {
               background: $color-light-white-38;
+              color: $color-pp-darker-blue9;
+            }
+            .selected-item {
               color: $color-pp-darker-blue9;
             }
         }

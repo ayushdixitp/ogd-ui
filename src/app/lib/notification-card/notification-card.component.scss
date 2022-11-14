@@ -1,0 +1,59 @@
+.card {
+    position: relative;
+    z-index: 1000;
+
+    .notification-text {
+        width: 80%;
+    }
+
+    .success,
+    .alert,
+    .info {
+        animation: card-fade-in 100ms 1 forwards;
+        padding: 20px 24px;
+        background: #FFFFFF;
+        box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.15);
+        border-radius: 4px;
+        font-size: 14px;
+        display: flex;
+        width: max-content;
+        align-items: center;
+        gap: 18px;
+        justify-content: flex-start;
+        position: fixed;
+        left: 40px;
+        bottom: 30px;
+    }
+
+    .failed {
+        position: fixed;
+        right: 40px;
+        top: 30px;
+        padding: 20px 24px;
+        background: #FFFFFF;
+        box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.15);
+        border-radius: 4px;
+        font-size: 14px;
+        display: flex;
+        width: 326px;
+        align-items: center;
+        gap: 18px;
+        justify-content: flex-start;
+    }
+
+    .cross-button {
+        position: absolute;
+        cursor: pointer;
+        right: 29px;
+    }
+
+    @keyframes card-fade-in {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+}

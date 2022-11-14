@@ -1,0 +1,101 @@
+@import "../../../app.component.scss";
+
+.mfe-header{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 16px 30px 20px 32px;
+    gap: 10px;
+    background: $color-white;
+    box-shadow: inset 0px -1px 0px $color-light-grey61;
+    position: relative;
+    left: 1%;
+    .only-title{
+        font-family: 'Proxima Nova';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 24px;
+        line-height: 32px;
+        color: $color-dark-grey64;
+        margin-top: 24px;
+        margin-bottom: 10px;
+    }
+
+    .experience-type{
+        font-family: 'Proxima Nova';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 20px;
+        color: $pp-ds-color-neutral-main;
+        margin-bottom: 20px;
+    }
+
+    .sms-bound{
+        display:flex;
+        align-items: center;
+        gap: 20px;
+
+        .bot-type{
+            font-family: 'Proxima Nova';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 24px;
+            line-height: 32px;
+            color: $color-dark-grey64;
+        }
+
+        .sms-pad{
+            padding: 1px 8px;
+            background: $color-pp-lighter-blue61;
+            border-radius: 4px;
+
+            .sms{
+                font-family: 'Proxima Nova';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 12px;
+                line-height: 20px;
+                color: $color-pp-darker-blue10;
+            }
+        }
+    }
+
+    .reset-disconnect-buttons {
+        display: flex;
+        gap: 10px;
+        position: absolute;
+        bottom: 30%;
+        right: 5%;
+        .reset-button{
+            cursor: pointer;
+            padding: 4px 14px;
+            border: $color-pp-darker-blue9 1px solid;
+            background-color: $color-white;
+            border-radius: 4px;
+            font-family: 'Proxima Nova';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 22px;
+            color: $color-pp-darker-blue9;
+        }
+        .disconnect-button {
+            cursor: pointer;
+            padding: 4px 14px;
+            border: $color-pp-darker-blue9 1px solid;
+            background-color: $color-pp-darker-blue9;
+            border-radius: 4px;
+            font-family: 'Proxima Nova';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 22px;
+            color: $color-white;
+        }
+    }
+
+}
+
+
+

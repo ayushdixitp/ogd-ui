@@ -1,0 +1,24 @@
+<!-- USE AS to avoid long names of variables -->
+<main class="provision-container" *ngIf="isDataLoaded">
+    <div class="container-body">
+        <p class="heading-block">
+            {{ skeleton?.configurations?.heading }}
+        </p>
+        <form FormGroup="provisioningForm" (ngSubmit)="submitForm()">
+            <div class="form-block">
+                <ng-container *ngFor="let input of skeleton?.configurations?.inputs; index as index">
+                    <div class="input-block">
+                        <label>
+                            {{ input?.label }}
+                        </label>
+                        <input-box [placeholder]="input?.placeholder" [control]="this.formControlList[index]"
+                            [isCopyEnabled]="input?.isCopyEnabled"></input-box>
+                    </div>
+                </ng-container>
+                <footer class="footer-block">
+                    <app-button [label]="skeleton?.configurations?.submitButton?.label" [buttonClass]="''" [isDisabled]="(this.provisioningForm.status == 'INVALID')"></app-button>
+                </footer>
+            </div>
+        </form>
+    </div>
+</main>

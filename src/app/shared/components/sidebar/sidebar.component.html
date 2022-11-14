@@ -1,0 +1,23 @@
+<section *ngIf="isDataLoaded && areLocalesLoaded" class="sidebar-container">
+    <ng-container *ngIf="isLocaleListPage; else others">
+        <div class="button"></div>
+    </ng-container>
+    <ng-template #others>
+        <app-dropdown [listOfLocales]="locales" [id]="'drop2'"></app-dropdown>
+        <span></span>
+        <ng-container *ngFor="let experience of data;index as index">
+            <app-accordion [id]="experience.experienceType" [svg]="experience.svg" [defaultPageId]="defaultAccordionItem" [experienceType]="experience.heading" [pages]="experience.channels"></app-accordion>
+
+            <!-- <ng-container *ngIf="index == 0;else elseBlock">
+                <app-accordion [id]="experience.experienceType" [defaultPageId]="defaultAccordionItem" [experienceType]="experience.heading" [pages]="experience.channels"></app-accordion>
+            </ng-container>
+            
+            <ng-template #elseBlock>
+                <app-accordion [id]="experience.experienceType" [defaultPageId]="defaultAccordionItem" [experienceType]="experience.heading" [pages]="experience.channels"></app-accordion>
+            </ng-template> -->
+        </ng-container>
+        <!-- <app-accordion [defaultPageId]="'career-site-bot'" [pages]="accord1" experienceType="Candidate Experience" id="cx"></app-accordion>
+        <app-accordion [pages]="accord2" experienceType="Employee Experience" id="ex"></app-accordion>
+        <app-accordion experienceType="Recruiter Experience" id="rx"></app-accordion> -->
+    </ng-template>
+</section>

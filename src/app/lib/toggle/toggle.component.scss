@@ -1,4 +1,7 @@
-@import "./../../../styles/styles.scss";
+@import "../../app.component.scss";
+form {
+  display: inherit;
+}
 
 .form {
     position: relative;
@@ -18,9 +21,10 @@
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: $color-spanish-gray;
+    background-color: $color-light-grey58;
     border-radius: 16px;
-    transition: 0.4s;
+    transition: all 0.4s;
+    -webkit-transition:  all 0.4s;
     cursor: pointer;
   }
   .slide::before{
@@ -32,11 +36,12 @@
     width: 18px;
     background-color: $color-white;
     border-radius: 16px;
-    transition: 0.4s;
+    transition: all 0.4s;
+    -webkit-transition:  all 0.4s;
   }
   input:checked + .slide{
-    background-color: $color-brand-blue;
+    background-color: $color-pp-dark-light-blue3;
   }
   input:checked + .slide:before{
-    transform: translatex(20px);
+    transform: translatex(22px);
   }

@@ -1,0 +1,30 @@
+@import "../../../app.component.scss" ;
+
+.sidebar-container{
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
+    @media screen and (max-width: 1500px) {
+        // width: 25%;
+      }
+    height: 100vh;
+    left: 0px;
+    background: $color-white;
+    box-shadow: inset -1px 0px 0px $color-light-grey60;
+}
+app-accordion, app-dropdown{
+    position: relative;
+    right: 1px;
+}
+
+.button{
+    position: relative;
+    right: 1px;
+    height: 60px;
+    background-color: lightcyan;
+}
+
+span{
+    height: 8px;
+}

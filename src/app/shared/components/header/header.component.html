@@ -1,0 +1,33 @@
+<section *ngIf="isLocaleListPage || experienceType" class="mfe-header">
+    <ng-container *ngIf="isLocaleListPage">
+        <span class="only-title">Select a Locale</span>
+    </ng-container>
+    <ng-container *ngIf="!isLocaleListPage">
+        <span id="experience-type" class="experience-type">{{experienceType}}</span>
+        <div class="sms-bound">
+            <span id="bot-type" class="bot-type">{{botType}}</span>
+            <ng-container *ngIf='experienceType==="Employee Experience" && botType==="SMS Bot"'>
+                <div class="sms-pad">
+                    <span class="sms">SID
+                    </span>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="botType==='SMS Bot'">
+                <div class="sms-pad">
+                    <span class="sms">Phone Number: {{phnNumber}}
+                    </span>
+                </div>
+            </ng-container>
+        </div>
+    </ng-container>
+    <div class="reset-disconnect-buttons">
+        <button class="reset-button">
+            Reset to default
+        </button>
+        <button *ngIf="this.pageId == 'candidate-facebook-bot' || this.pageId == 'employee-msteams-bot'" class="disconnect-button">
+            Disconnect
+        </button>
+    </div>
+    <ng-container *ngIf="meta.reset">
+    </ng-container>
+</section>

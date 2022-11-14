@@ -1,0 +1,43 @@
+.mfe-provision {
+    padding: 10px 30px;
+    margin-top: 20px;
+    hr {
+        border: 1px solid #DFE3E6;
+        margin: 16px 0px;
+    }
+    .mfe-header-section {
+        display: flex;
+        align-items: flex-start;
+        font-size: 18px;  
+        gap: 12px;     
+    }
+    .mfe-card {
+        margin-top: 16px;
+        margin-bottom: 32px;
+        padding: 24px;
+        box-sizing: border-box;
+        width: 100%;
+        background: #FFFFFF;
+        border: 1px solid #DFE3E6;
+        border-radius: 6px;
+        transition: 1000ms all;
+        .mfe-card-header {
+            color: #414C54;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 20px;
+        }
+        .mfe-card-body {
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 20px;
+            color: #54616C;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+    }
+}

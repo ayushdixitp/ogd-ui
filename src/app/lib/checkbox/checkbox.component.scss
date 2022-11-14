@@ -1,13 +1,13 @@
-@import "../../../styles/styles.scss";
+@import "../../app.component.scss";
 
  /* Customize the label (the container) */
-  .container {
+  .check-container {
     box-sizing: border-box;
     cursor: pointer;
   }
   
   /* Hide the browser's default checkbox */
-  .container input {
+  .check-container input {
     display: none;
   }
   
@@ -17,35 +17,29 @@
     justify-content: center;
     align-items: center;
     box-sizing: border-box;
-    position: absolute;
-    left: 0%;
-    right: 0%;
-    top: 0%;
-    bottom: 0%;
     height: 16px;
     width: 16px;
     border-radius: 2px;
     background-color: $color-white;
   }
   
-  .container input ~ .checkmark {
+  .check-container input ~ .checkmark {
     background-color: $color-white;
-    border: 1px solid $color_spanish_gray;
+    border: 1px solid $color_spanish_gray-5;
   }
   
-  .container input:checked ~ .checkmark {
-    background-color: $color-brand-blue;
-    border: 1px solid $color-brand-blue;
+  .check-container input:checked ~ .checkmark {
+    background-color: $color-pp-dark-light-blue3;
+    border: 1px solid $color-pp-dark-light-blue3;
   }
   
-  .container input:disabled ~ .checkmark {
+  .check-container input:disabled ~ .checkmark {
     background-color: $color-white;   
-    border: 1px solid $color_spanish_gray;         
+    border: 1px solid $color_spanish_gray-5;
+    cursor: not-allowed;
   }
   
   /* Show the checkmark when checked */
-  .container input:checked ~ .checkmark:after {
+  .check-container input:checked ~ .checkmark:after {
     display: block;
   }
-  
-  

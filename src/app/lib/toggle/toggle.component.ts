@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 import { AppEventType } from 'src/app/shared/enums/event.enum';
+import { AppEvent } from 'src/app/shared/services/broadcast.event.class';
 
 @Component({
   selector: 'app-toggle',
@@ -13,8 +14,9 @@ export class ToggleComponent implements OnInit {
 
   toggleBtn!: FormGroup;
 
-  @Input('isActive') public isActive!: boolean;
+  @Input('isActive') public isActive!: string;
   @Input('meta') public meta!: any;
+  @Input('id') public id!: string;
 
   ngOnInit() {
     this.toggleBtn = new FormGroup({
@@ -24,9 +26,15 @@ export class ToggleComponent implements OnInit {
 
   onChange(event: any) {
     this.isActive = event.target.checked;
-    this.broadcastService.broadcast({
-      name: AppEventType.TOGGLE_EVENT,
-      data: { isActive: this.isActive },
-    });
+    this.broadcastService.dispatch(
+      new AppEvent(AppEventType.TOGGLE_EVENT, {
+        data: {
+          configurationKey: this.id,
+          type: 'toggle',
+          isActive: this.isActive,
+        },
+        id: this.id,
+      })
+    );
   }
 }
