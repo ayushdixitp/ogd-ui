@@ -1,6 +1,14 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  OnChanges,
+} from '@angular/core';
 import { HttpService } from 'src/app/shared/services/http.service';
 import { Provision } from 'src/app/shared/interfaces/web-chatbot.interface';
+import { SharedService } from 'src/app/shared/shared.service';
 
 @Component({
   selector: 'provision',
@@ -13,21 +21,30 @@ export class ProvisionComponent implements OnInit {
   pageId!: string;
   experienceType!: string;
   botType!: string;
+  isDataLoaded!: boolean;
 
-  constructor(private httpService: HttpService) {}
+  constructor(
+    private httpService: HttpService,
+    private sharedService: SharedService
+  ) {}
 
   ngOnInit(): void {}
+
+  ngOnChanges() {
+    this.addTransalations();
+  }
 
   provisionChannel() {
     let reqObj = {
       refNum: localStorage.getItem('refNum'),
-      locale: localStorage.getItem('locale'),
+      locale: localStorage.getItem('LOCALE'),
       experienceType: localStorage.getItem('experienceType'),
       channel: localStorage.getItem('channel'),
       customerName: localStorage.getItem('customerName'),
     };
+
     this.httpService
-      .httpPost('v1/customers/provision', 'chatbot_configurations_api', reqObj)
+      .httpPost('v1/provision/webhook', 'chatbot_configurations_api', reqObj)
       .subscribe({
         next: (data: any) => {
           if (data.statusCode == 404) {
@@ -40,9 +57,32 @@ export class ProvisionComponent implements OnInit {
             });
           }
         },
-        error: error => {
-          console.log(error);
+        error: () => {
+          this.provisioned.emit({
+            isProvisioned: false,
+          });
         },
       });
+  }
+
+  addTransalations() {
+    this.isDataLoaded = false;
+    if (this.skeleton) {
+      this.sharedService.getI18nValues().subscribe((i18n: any) => {
+        this.skeleton.heading = i18n[this.skeleton.heading]
+          ? i18n[this.skeleton.heading]
+          : this.skeleton.heading;
+        this.skeleton.buttonText = i18n[this.skeleton.buttonText]
+          ? i18n[this.skeleton.buttonText]
+          : this.skeleton.buttonText;
+        this.skeleton.infoText = i18n[this.skeleton.infoText]
+          ? i18n[this.skeleton.infoText]
+          : this.skeleton.infoText;
+        this.skeleton.subHeading = i18n[this.skeleton.subHeading]
+          ? i18n[this.skeleton.subHeading]
+          : this.skeleton.subHeading;
+        this.isDataLoaded = true;
+      });
+    }
   }
 }

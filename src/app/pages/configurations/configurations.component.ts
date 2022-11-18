@@ -406,7 +406,7 @@ export class ConfigurationsComponent implements OnInit {
 
   refreshLocalStorageValue() {
     this.refNum = localStorage.getItem('refNum');
-    this.locale = localStorage.getItem('locale');
+    this.locale = localStorage.getItem('LOCALE');
     this.channel = localStorage.getItem('channel');
     this.experienceType = localStorage.getItem('experienceType');
     // this.pageId = `/${localStorage.getItem('channel')}`;
@@ -438,21 +438,23 @@ export class ConfigurationsComponent implements OnInit {
 
   provision(data: any) {
     this.ref = this.vcr.createComponent(NotificationCardComponent);
-    this.broadcastService.dispatch(
-      new AppEvent(AppEventType.SHOW_NOTIFICATION_EVENT, {
-        type: 'failed',
-        msg: 'Something went wrong.',
-      })
-    );
-    // const index = this.vcr.indexOf(this.ref.hostView)
-    setTimeout(() => {
+    if (data.isProvisioned) {
       const index = this.vcr.indexOf(this.ref.hostView);
-      if (index != -1) this.vcr.remove(index);
-    }, 3000);
-
-    // if (data.isProvisioned) this.getChatbotConfigurations();
-    // else {
-    // }
+      this.ref.instance.notificationText = 'Customer has been provisioned.';
+      this.ref.instance.notificationType = 'success';
+      setTimeout(() => {
+        const index = this.vcr.indexOf(this.ref.hostView);
+        if (index != -1) this.vcr.remove(index);
+      }, 3000);
+      this.getChatbotConfigurations();
+    } else {
+      this.ref.instance.notificationText = 'Something went wrong.';
+      this.ref.instance.notificationType = 'failed';
+      setTimeout(() => {
+        const index = this.vcr.indexOf(this.ref.hostView);
+        if (index != -1) this.vcr.remove(index);
+      }, 3000);
+    }
   }
 
   // this function will be responsible for rending blocks based on internal or external role
@@ -469,6 +471,16 @@ export class ConfigurationsComponent implements OnInit {
     this.httpService
       .httpDelete(url, 'chatbot_configurations_api')
       .subscribe(res => {
+        this.ref = this.vcr.createComponent(NotificationCardComponent);
+        this.ref.instance.notificationText =
+          'Career Site Bot configs reset to default.';
+        this.ref.instance.notificationType = 'success';
+
+        const index = this.vcr.indexOf(this.ref.hostView);
+        setTimeout(() => {
+          const index = this.vcr.indexOf(this.ref.hostView);
+          if (index != -1) this.vcr.remove(index);
+        }, 3000);
         this.getChatbotConfigurations();
       });
   }

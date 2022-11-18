@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { CommonConstant } from '../constants/common-constants';
 import { HttpService } from './http.service';
 
 @Injectable({
@@ -34,7 +32,7 @@ export class UtilsService {
     refNum: string | null,
     experienceType: string | null
   ): string {
-    return `v1/customers/${refNum}/${experienceType}/distinct-locales`;
+    return `v1/customers/${refNum}/${experienceType}/locales`;
   }
 
   getChatbotConfigurationsPath(

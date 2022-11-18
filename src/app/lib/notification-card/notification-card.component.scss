@@ -3,7 +3,7 @@
     z-index: 1000;
 
     .notification-text {
-        width: 80%;
+        width: 75%
     }
 
     .success,
@@ -16,7 +16,7 @@
         border-radius: 4px;
         font-size: 14px;
         display: flex;
-        width: max-content;
+        width: 250px;
         align-items: center;
         gap: 18px;
         justify-content: flex-start;
@@ -35,7 +35,7 @@
         border-radius: 4px;
         font-size: 14px;
         display: flex;
-        width: 326px;
+        width: 250px;
         align-items: center;
         gap: 18px;
         justify-content: flex-start;

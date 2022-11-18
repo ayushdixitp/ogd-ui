@@ -47,6 +47,6 @@ export class LocalesComponent implements OnInit {
       new AppEvent(AppEventType.SELECTED_LOCALE_EVENT, localeObj)
     );
 
-    localStorage.setItem('locale', localeObj.locale);
+    localStorage.setItem('LOCALE', localeObj.locale);
   }
 }

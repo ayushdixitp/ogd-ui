@@ -232,28 +232,37 @@ export class SidebarComponent implements OnInit {
   }
 
   loadLocales() {
-    this.areLocalesLoaded = false;
+    // for using orignal cdn
+    this.areLocalesLoaded = true;
     this.refNum = localStorage.getItem('refNum');
-    this.utilsService.getDistinctLocale(this.refNum, 'cx').then((data: any) => {
-      data.locales = this.utilsService.getDropdownFormatList(
-        data.locales,
-        'displayText'
-      );
-      this.locales = data.locales;
-      localStorage.setItem('customerName', data.customerName);
-      this.areLocalesLoaded = true;
-      if (!localStorage.getItem('locale')) {
-        localStorage.setItem('locale', this.locales[0].locale);
-        this.broadcastService.dispatch(
-          new AppEvent(AppEventType.LOCALES_LOADED_EVENT)
-        );
-      } else if (localStorage.getItem('locale') != this.locales[0].locale) {
-        localStorage.setItem('locale', this.locales[0].locale);
-        this.broadcastService.dispatch(
-          new AppEvent(AppEventType.LOCALES_LOADED_EVENT)
-        );
-      }
-    });
+
+    // commented can be used for running using local cdn files
+    // this.areLocalesLoaded = false;
+    // this.refNum = localStorage.getItem('refNum');
+    // this.utilsService.getDistinctLocale(this.refNum, 'cx').then((data: any) => {
+    //   data.locales = this.utilsService.getDropdownFormatList(
+    //     data.locales,
+    //     'displayText'
+    //   );
+    //   this.locales = data.locales;
+    //   localStorage.setItem('customerName', data.customerName);
+    //   this.areLocalesLoaded = true;
+    //   if (!localStorage.getItem('LOCALE')) {
+    //     localStorage.setItem('LOCALE', this.locales[0].locale);
+    //     this.broadcastService.dispatch(
+    //       new AppEvent(AppEventType.LOCALES_LOADED_EVENT)
+    //     );
+    //   }
+    //   // else if (localStorage.getItem('LOCALE') != this.locales[0].locale) {
+    //   else if (
+    //     this.locales.some(
+    //       (locale: { locale: string }) =>
+    //         locale.locale == localStorage.getItem('LOCALE')
+    //     )
+    //   ) {
+    //     localStorage.setItem('LOCALE', this.locales[0].locale);
+    //   }
+    // });
   }
 
   addTranslation() {

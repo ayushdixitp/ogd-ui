@@ -1,4 +1,4 @@
-<div *ngIf="skeleton" class="mfe-provision" >
+<div *ngIf="skeleton && isDataLoaded" class="mfe-provision" >
     <div class="mfe-header-section">
         <i [innerHtml]="skeleton.svg | safe: 'html'">
             provisioningIcon

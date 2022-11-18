@@ -1,47 +1,107 @@
 @import "../../app.component.scss";
+
 form {
   display: inherit;
 }
 
-.form {
-    position: relative;
-    display: inline-block;
-    width: 44px;
-    height: 22px;
-    cursor: pointer;
-  }
-  .form input{
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-  .slide{
+.form-big {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 22px;
+  cursor: pointer;
+}
+
+.form-big input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slide {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: $color-light-grey58;
+  border-radius: 16px;
+  transition: all 0.4s;
+  -webkit-transition: all 0.4s;
+  cursor: pointer;
+}
+
+.slide::before {
+  content: '';
+  position: absolute;
+  top: calc(50% - 18px/2);
+  left: 2px;
+  height: 18px;
+  width: 18px;
+  background-color: $color-white;
+  border-radius: 16px;
+  transition: all 0.4s;
+  -webkit-transition: all 0.4s;
+}
+
+input:checked+.slide {
+  background-color: $color-pp-dark-light-blue3;
+}
+
+input:checked+.slide:before {
+  transform: translatex(22px);
+}
+
+
+.form-small input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.form-small {
+  position: relative;
+  display: inline-block;
+  width: 28px;
+  height: 16px;
+  cursor: pointer;
+  .slide {
     position: absolute;
-    top:0;
+    top: 0;
     bottom: 0;
     left: 0;
     right: 0;
     background-color: $color-light-grey58;
     border-radius: 16px;
     transition: all 0.4s;
-    -webkit-transition:  all 0.4s;
+    -webkit-transition: all 0.4s;
     cursor: pointer;
   }
-  .slide::before{
-    content:'';
+  
+  .slide::before {
+    content: '';
     position: absolute;
-    top: calc(50% - 18px/2);
+    top: calc(50% - 12px/2);
     left: 2px;
-    height: 18px;
-    width: 18px;
+    height: 12px;
+    width: 12px;
     background-color: $color-white;
     border-radius: 16px;
     transition: all 0.4s;
-    -webkit-transition:  all 0.4s;
+    -webkit-transition: all 0.4s;
   }
-  input:checked + .slide{
+  
+  input:checked+.slide {
     background-color: $color-pp-dark-light-blue3;
   }
-  input:checked + .slide:before{
-    transform: translatex(22px);
+  
+  input:checked+.slide:before {
+    transform: translatex(13px);
   }
+}
+
+.form--small input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
