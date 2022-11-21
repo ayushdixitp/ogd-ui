@@ -27,6 +27,16 @@ export class SharedService {
     // return this.httpClient.get(url);
   }
 
+  getSidebarData() {
+    let url: string = 'v1/customers/experiences';
+    // change service name
+    this.httpService
+      .httpGet(url, 'chatbot_configurations_api')
+      .subscribe(data => {
+        console.log(data);
+      });
+  }
+
   getI18nValues() {
     console.log(localStorage.getItem('LOCALE')?.split('_')[0]);
     let locale = localStorage.getItem('LOCALE')?.split('_')[0];

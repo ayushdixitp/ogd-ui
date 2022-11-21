@@ -120,13 +120,13 @@ export class SidebarComponent implements OnInit {
   ];
 
   ngOnInit(): void {
+    this.sharedService.getSidebarData();
     this.loadLocales();
     if (!localStorage.getItem('channel')) {
       if (this.data[0]?.channels[0]?.channel)
         localStorage.setItem('channel', this.data[0]?.channels[0]?.channel);
     }
     console.log(this.data[0].channels[0].channel);
-    this.addTranslation();
     this.refNum = localStorage.getItem('refNum') as string;
     this.broadcastService
       .on(AppEventType.SELECTED_LOCALE_EVENT)
@@ -233,37 +233,41 @@ export class SidebarComponent implements OnInit {
 
   loadLocales() {
     // for using orignal cdn
-    this.areLocalesLoaded = true;
-    this.refNum = localStorage.getItem('refNum');
+    // this.areLocalesLoaded = true;
+    // this.refNum = localStorage.getItem('refNum');
 
     // commented can be used for running using local cdn files
-    // this.areLocalesLoaded = false;
-    // this.refNum = localStorage.getItem('refNum');
-    // this.utilsService.getDistinctLocale(this.refNum, 'cx').then((data: any) => {
-    //   data.locales = this.utilsService.getDropdownFormatList(
-    //     data.locales,
-    //     'displayText'
-    //   );
-    //   this.locales = data.locales;
-    //   localStorage.setItem('customerName', data.customerName);
-    //   this.areLocalesLoaded = true;
-    //   if (!localStorage.getItem('LOCALE')) {
-    //     localStorage.setItem('LOCALE', this.locales[0].locale);
-    //     this.broadcastService.dispatch(
-    //       new AppEvent(AppEventType.LOCALES_LOADED_EVENT)
-    //     );
-    //   }
-    //   // else if (localStorage.getItem('LOCALE') != this.locales[0].locale) {
-    //   else if (
-    //     this.locales.some(
-    //       (locale: { locale: string }) =>
-    //         locale.locale == localStorage.getItem('LOCALE')
-    //     )
-    //   ) {
-    //     localStorage.setItem('LOCALE', this.locales[0].locale);
-    //   }
-    // });
+    this.areLocalesLoaded = false;
+    this.refNum = localStorage.getItem('refNum');
+    this.utilsService.getDistinctLocale(this.refNum, 'cx').then((data: any) => {
+      data.locales = this.utilsService.getDropdownFormatList(
+        data.locales,
+        'displayText'
+      );
+      this.locales = data.locales;
+      localStorage.setItem('customerName', data.customerName);
+      this.areLocalesLoaded = true;
+      if (!localStorage.getItem('LOCALE')) {
+        localStorage.setItem('LOCALE', this.locales[0].locale);
+        this.broadcastService.dispatch(
+          new AppEvent(AppEventType.LOCALES_LOADED_EVENT)
+        );
+        this.addTranslation();
+      }
+      // else if (localStorage.getItem('LOCALE') != this.locales[0].locale) {
+      else if (
+        this.locales.some(
+          (locale: { locale: string }) =>
+            locale.locale == localStorage.getItem('LOCALE')
+        )
+      ) {
+        localStorage.setItem('LOCALE', this.locales[0].locale);
+        this.addTranslation();
+      }
+    });
   }
+
+  loadSidebar() {}
 
   addTranslation() {
     this.sharedService

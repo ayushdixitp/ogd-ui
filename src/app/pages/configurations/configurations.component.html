@@ -47,11 +47,11 @@
                                                         </span>
                                                         <p [ngClass]="{ 'd-i': feature.literal }">
                                                             {{ feature.literal }}
+                                                            <span class="section-infotext">
+                                                                {{ feature.infoText }}
+                                                            </span>
                                                         </p>
                                                     </div>
-                                                    <span class="section-infotext">
-                                                        {{ feature.infoText }}
-                                                    </span>
                                                 </header>
                                                 <ng-container *ngIf="feature.flows">
                                                     <div class="features-types">

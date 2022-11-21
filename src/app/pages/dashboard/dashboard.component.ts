@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'dashboard',
@@ -9,8 +9,18 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class DashboardComponent implements OnInit, OnDestroy {
   @Input() refNum!: string;
   @Input() roleAccess!: string;
+  input: any;
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) {
+  @Input()
+  get mfeInput(): any {
+    return this.input;
+  }
+  set mfeInput(item: any) {
+    if (typeof item == 'string') this.input = JSON.parse(item);
+    else this.input = item;
+  }
+
+  constructor(private router: Router) {
     let currentUrl = location.pathname;
     currentUrl = currentUrl[0] == '/' ? currentUrl.slice(1) : currentUrl;
     console.log(`currentUrl => ${currentUrl}`);
@@ -53,14 +63,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // if (!localStorage.getItem('refNum')) {
-    if (this.refNum) {
-      localStorage.setItem('refNum', this.refNum);
-    }
-    if (this.roleAccess) {
-      localStorage.setItem('roleAccess', this.roleAccess);
-    }
-
+    console.log(this.input);
+    this.initialization();
     let currentUrl = location.pathname;
     currentUrl = currentUrl[0] == '/' ? currentUrl.slice(1) : currentUrl;
     console.log(`currentUrl => ${currentUrl}`);
@@ -111,6 +115,23 @@ export class DashboardComponent implements OnInit, OnDestroy {
     //   this.router.config.push({})
     // }
     // console.log(this.router.config);
+  }
+
+  initialization() {
+    if (this.input.refNum) {
+      localStorage.setItem('refNum', this.input.refNum);
+    }
+    if (this.input.roleAccess) {
+      localStorage.setItem('roleAccess', this.input.roleAccess);
+    }
+
+    if (this.input.updatedBy) {
+      localStorage.setItem('updatedBy', JSON.stringify(this.input.updatedBy));
+    }
+
+    if (this.input.authConfig) {
+      localStorage.setItem('authConfig', JSON.stringify(this.input.authConfig));
+    }
   }
 
   ngOnDestroy(): void {
