@@ -12,7 +12,8 @@
     "test-coverage": "ng test --no-watch --code-coverage",
     "prettier": "prettier --write \"src/**/*.ts\"",
     "prepare": "husky install",
-    "build:module": "rm -rf elements.bundle.js && node moduleScript.js"
+    "build:module": "rm -rf elements.bundle.js && node moduleScript.js",
+    "push:aws":"aws s3 cp elements.bundle.js  s3://chatbot-qa/dev/self-service/elements.bundle.js"
   },
   "private": true,
   "dependencies": {

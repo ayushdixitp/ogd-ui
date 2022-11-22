@@ -72,6 +72,10 @@ export class SidebarBase<T> {
       heading: 'CMP_RECRUITER_EXPERIENCE',
       experienceType: 'rx',
     },
+    {
+      heading: 'CMP_RECRUITER_EXPERIENCE',
+      experienceType: 'mx',
+    },
   ];
 
   channels: any = {
@@ -81,16 +85,16 @@ export class SidebarBase<T> {
         channel: 'web',
         heading: 'CMP_CAREERS_SITE_BOT',
       },
-      {
-        pageId: 'candidate-facebook-bot',
-        channel: 'facebook',
-        heading: 'CMP_FACEBOOK_BOT',
-      },
-      {
-        pageId: 'candidate-sms-bot',
-        channel: 'sms',
-        heading: 'CMP_SMS_BOT',
-      },
+      // {
+      //   pageId: 'candidate-facebook-bot',
+      //   channel: 'facebook',
+      //   heading: 'CMP_FACEBOOK_BOT',
+      // },
+      // {
+      //   pageId: 'candidate-sms-bot',
+      //   channel: 'sms',
+      //   heading: 'CMP_SMS_BOT',
+      // },
     ],
     ex: [
       {
@@ -98,24 +102,24 @@ export class SidebarBase<T> {
         heading: 'CMP_EMPLOYEE_SITE',
         pageId: 'employee-site-bot',
       },
-      {
-        pageId: 'employee-msteams-bot',
-        channel: 'msteams',
-        heading: 'CMP_MS_TEAMS_BOT',
-      },
-      {
-        pageId: 'employee-sms-bot',
-        channel: 'sms',
-        heading: 'CMP_SMS_BOT',
-      },
+      // {
+      //   pageId: 'employee-msteams-bot',
+      //   channel: 'msteams',
+      //   heading: 'CMP_MS_TEAMS_BOT',
+      // },
+      // {
+      //   pageId: 'employee-sms-bot',
+      //   channel: 'sms',
+      //   heading: 'CMP_SMS_BOT',
+      // },
     ],
-    rx: [
-      {
-        pageId: 'rx-msteams-bot',
-        channel: 'msteams',
-        heading: 'CMP_MS_TEAMS_BOT',
-      },
-    ],
+    // rx: [
+    //   {
+    //     pageId: 'rx-msteams-bot',
+    //     channel: 'msteams',
+    //     heading: 'CMP_MS_TEAMS_BOT',
+    //   },
+    // ],
   };
 
   headerSvgs: any[] = [
@@ -136,41 +140,32 @@ export class SidebarBase<T> {
   finalArray: any[] = [];
 
   constructor(list: []) {
-    let i = [
-      {
-        experienceType: 'ex',
-        channels: [
-          {
-            channel: 'msteams',
-          },
-        ],
-      },
-      {
-        experienceType: 'cx',
-        channels: [
-          {
-            channel: 'web',
-          },
-        ],
-      },
-    ];
+    this.finalArray = list
+      .map((exp: any) => {
+        let headingAdded = this.headers.filter(
+          heading => heading.experienceType == exp.experienceType
+        )[0];
+        headingAdded.channels = exp.channels.map(
+          (ichannel: { channel: string }) => {
+            let filteredChannels = this.channels[exp.experienceType]?.filter(
+              (channel: any) => ichannel.channel == channel.channel
+            );
+            if (filteredChannels && filteredChannels.length)
+              return filteredChannels[0];
+            else return;
+          }
+        );
+        headingAdded['svg'] = this.headerSvgs.filter(
+          header => header.experienceType == exp.experienceType
+        )[0]?.svg;
 
-    this.finalArray = list.map((exp: any) => {
-      let headingAdded = this.headers.filter(
-        heading => heading.experienceType == exp.experienceType
-      )[0];
-      headingAdded.channels = exp.channels.map(
-        (ichannel: { channel: string }) => {
-          return this.channels[exp.experienceType].filter(
-            (channel: any) => ichannel.channel == channel.channel
-          )[0];
-        }
-      );
-      headingAdded.svg = this.headerSvgs.filter(
-        header => header.experienceType == exp.experienceType
-      )[0].svg;
-      return headingAdded;
-    });
+        // for removing undefined values from array
+        headingAdded.channels = headingAdded.channels.filter((element: any) => {
+          return element !== undefined;
+        });
+        return headingAdded;
+      })
+      .filter(experience => experience.channels.length);
   }
 }
 

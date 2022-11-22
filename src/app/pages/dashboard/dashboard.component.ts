@@ -1,5 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { SharedService } from 'src/app/shared/shared.service';
 
 @Component({
   selector: 'dashboard',
@@ -23,7 +24,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   isDataLoaded: boolean = false;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private sharedService: SharedService) {
     let currentUrl = location.pathname;
     currentUrl = currentUrl[0] == '/' ? currentUrl.slice(1) : currentUrl;
     console.log(`currentUrl => ${currentUrl}`);
@@ -127,8 +128,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    localStorage.setItem('channel', 'web');
-    localStorage.setItem('experienceType', 'cx');
+    this.sharedService.setDefaultValues();
     console.log('destroyed');
   }
 }

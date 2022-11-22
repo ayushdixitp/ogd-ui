@@ -36,10 +36,15 @@ export class LocalesComponent implements OnInit {
   ngOnInit(): void {
     // if (!this.refNum)
     this.refNum = localStorage.getItem('refNum');
-    this.utilsService.getDistinctLocale(this.refNum, 'cx').then((data: any) => {
-      this.locales = data.locales;
-      localStorage.setItem('customerName', data.customerName);
-    });
+    this.utilsService
+      .getDistinctLocale(
+        this.refNum,
+        localStorage.getItem('experienceType') as string
+      )
+      .then((data: any) => {
+        this.locales = data.locales;
+        localStorage.setItem('customerName', data.customerName);
+      });
   }
 
   getSelectedLocale(localeObj: any) {

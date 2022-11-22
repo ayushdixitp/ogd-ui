@@ -18,6 +18,7 @@ import { map, Subscription } from 'rxjs';
 import { UtilsService } from 'src/app/shared/services/utils.service';
 import { AppEvent } from 'src/app/shared/services/broadcast.event.class';
 import { NotificationCardComponent } from 'src/app/lib/notification-card/notification-card.component';
+import { CommonConstant } from 'src/app/shared/constants/common-constants';
 
 @Component({
   selector: 'configurations',
@@ -70,8 +71,8 @@ export class ConfigurationsComponent implements OnInit {
     this.setupAllEventListener();
     this.isDataLoaded = false;
     this.refreshLocalStorageValue();
-    if (this.experienceType && this.locale && this.refNum && this.channel)
-      this.getChatbotConfigurations();
+    // if (this.experienceType && this.locale && this.refNum && this.channel && (this.pageId as string)?.length > 1)
+    //   this.getChatbotConfigurations();
   }
 
   setRole(role: string) {
@@ -82,6 +83,7 @@ export class ConfigurationsComponent implements OnInit {
     this.broadcastService
       .on(AppEventType.LOCALES_LOADED_EVENT)
       .subscribe(() => {
+        this.isDataLoaded = false;
         this.getChatbotConfigurations();
       });
 
@@ -141,6 +143,7 @@ export class ConfigurationsComponent implements OnInit {
       .on(AppEventType.ACCORDION_EVENT)
       .subscribe((event: any) => {
         if (event.payload.page) {
+          this.refreshLocalStorageValue();
           this.getChatbotConfigurations();
         }
       });
@@ -460,7 +463,7 @@ export class ConfigurationsComponent implements OnInit {
   // this function will be responsible for rending blocks based on internal or external role
   checkRoleAccess(isInternal: boolean | undefined | null): boolean {
     if (isInternal) {
-      return this.roleAccess == 'internal';
+      return this.roleAccess == CommonConstant.INTERNAL;
     } else {
       return true;
     }

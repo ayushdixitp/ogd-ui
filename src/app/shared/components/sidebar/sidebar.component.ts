@@ -9,6 +9,7 @@ import { map } from 'rxjs';
 import { BaseComponent } from 'src/app/layouts/base/base.component';
 import { AppEvent } from '../../services/broadcast.event.class';
 import { SidebarBase } from './sidebar-base';
+import { CommonConstant } from '../../constants/common-constants';
 
 @Component({
   selector: 'app-sidebar',
@@ -49,12 +50,12 @@ export class SidebarComponent implements OnInit {
         }
       }
     });
-    this.defaultAccordionItem = 'career-site-bot';
+    // this.defaultAccordionItem = 'career-site-bot';
     this.currentExperienceType = 'cx';
     if (localStorage.getItem('channel')) {
       let currentChannel = localStorage.getItem('channel');
       if (Object.keys(Channels).includes(`${currentChannel}`))
-        localStorage.setItem('channel', this.defaultAccordionItem);
+        localStorage.setItem('channel', this.defaultAccordionItem as string);
     }
   }
 
@@ -62,11 +63,63 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit(): void {
     this.sharedService.getSidebarData().subscribe(data => {
-      this.checking = new SidebarBase(data.customerPipeline).finalArray;
-      console.log(this.checking);
-
-      this.data = [];
+      // this.checking = new SidebarBase(data.customerPipeline).finalArray;
+      if (
+        (localStorage.getItem('roleAccess') as string) ==
+        CommonConstant.INTERNAL
+      ) {
+        this.checking = new SidebarBase(data.masterPipeline).finalArray;
+      } else {
+        this.checking = new SidebarBase(data?.customerPipeline).finalArray;
+      }
       this.data = this.checking;
+      this.defaultAccordionItem = localStorage.getItem('pageId') as string;
+      this.currentExperienceType = this.data[0].experienceType;
+      if (!localStorage.getItem('pageId'))
+        localStorage.setItem('pageId', this.data[0]?.channels[0]?.pageId);
+      if (!localStorage.getItem('experienceType'))
+        localStorage.setItem('experienceType', this.data[0]?.experienceType);
+      if (!localStorage.getItem('channel'))
+        localStorage.setItem('channel', this.data[0]?.channels[0]?.channel);
+      let currentUrl = location.pathname;
+      currentUrl = currentUrl[0] == '/' ? currentUrl.slice(1) : currentUrl;
+      if (!currentUrl.includes('mfe-dashboard')) {
+        this.router.config.push(
+          {
+            path: `${currentUrl}mfe-dashboard`,
+            children: [
+              {
+                path: '**',
+              },
+            ],
+          },
+          {
+            path: `${currentUrl}/mfe-dashboard`,
+            children: [
+              {
+                path: '**',
+              },
+            ],
+          }
+        );
+        this.router.navigate([
+          `${currentUrl}/mfe-dashboard/${this.data[0]?.experienceType}/${this.data[0]?.channels[0]?.pageId}`,
+        ]);
+      } else {
+        this.router.config.push({
+          path: `${currentUrl}`,
+          children: [
+            {
+              path: '**',
+            },
+          ],
+        });
+        this.router.navigate([`${currentUrl}`]);
+      }
+
+      this.broadcastService.dispatch(
+        new AppEvent(AppEventType.LOCALES_LOADED_EVENT)
+      );
       if (!localStorage.getItem('channel')) {
         if (this.data[0]?.channels[0]?.channel)
           localStorage.setItem('channel', this.data[0]?.channels[0]?.channel);
@@ -153,7 +206,6 @@ export class SidebarComponent implements OnInit {
                     return m.ConfigurationsModule;
                   }),
               });
-              console.log(this.router.config);
               this.router.navigate(
                 [
                   `../../${event.payload.accordionId}/${event?.payload?.selectedPageId}`,
