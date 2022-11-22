@@ -27,14 +27,10 @@ export class SharedService {
     // return this.httpClient.get(url);
   }
 
-  getSidebarData() {
+  getSidebarData(): Observable<any> {
     let url: string = 'v1/customers/experiences';
     // change service name
-    this.httpService
-      .httpGet(url, 'chatbot_configurations_api')
-      .subscribe(data => {
-        console.log(data);
-      });
+    return this.httpService.httpGet(url, 'chatbot_configurations_api');
   }
 
   getI18nValues() {

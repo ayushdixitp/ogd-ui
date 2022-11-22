@@ -1,9 +1,9 @@
 <!-- <div>
     DashBoard!!
 </div> -->
-<div class="mfe-main-container">
+<div class="mfe-main-container" *ngIf="isDataLoaded">
     <aside class="aside">
-        <app-sidebar [parentMfe]="'dashboard'" [refNum]="input.refNum" ></app-sidebar>
+        <app-sidebar [parentMfe]="'dashboard'" [refNum]="refNum" ></app-sidebar>
     </aside>
     <div class="mfe-base-container">
         <configurations></configurations>

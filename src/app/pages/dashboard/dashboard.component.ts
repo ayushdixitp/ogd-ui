@@ -18,7 +18,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
   set mfeInput(item: any) {
     if (typeof item == 'string') this.input = JSON.parse(item);
     else this.input = item;
+    if (this.input) this.initialization();
   }
+
+  isDataLoaded: boolean = false;
 
   constructor(private router: Router) {
     let currentUrl = location.pathname;
@@ -63,8 +66,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log(this.input);
-    this.initialization();
     let currentUrl = location.pathname;
     currentUrl = currentUrl[0] == '/' ? currentUrl.slice(1) : currentUrl;
     console.log(`currentUrl => ${currentUrl}`);
@@ -104,22 +105,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
       });
       this.router.navigate([`${currentUrl}`]);
     }
-    // }
-    // console.log("dashboard comp.");
-    // localStorage.setItem('refNum', this.refNum);
-    // console.log(location.pathname);
-    // let currentUrl = location.pathname.slice(1);
-    // if(currentUrl[currentUrl.length] == '/')
-    //   currentUrl = currentUrl.slice(0,currentUrl.length-1);
-    // if(!currentUrl.includes('dashboard-configurations')){
-    //   this.router.config.push({})
-    // }
-    // console.log(this.router.config);
   }
 
   initialization() {
     if (this.input.refNum) {
       localStorage.setItem('refNum', this.input.refNum);
+      this.refNum = this.input.refNum;
     }
     if (this.input.roleAccess) {
       localStorage.setItem('roleAccess', this.input.roleAccess);
@@ -132,6 +123,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     if (this.input.authConfig) {
       localStorage.setItem('authConfig', JSON.stringify(this.input.authConfig));
     }
+    this.isDataLoaded = true;
   }
 
   ngOnDestroy(): void {
