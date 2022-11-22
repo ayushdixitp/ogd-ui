@@ -81,7 +81,7 @@ export class DropdownComponent implements OnInit, OnChanges {
   constructor(private broadcastService: BroadcastService) {}
 
   ngOnInit(): void {
-    this.locale = localStorage.getItem('locale');
+    this.locale = localStorage.getItem('LOCALE');
     this.listOfLocales?.forEach(localeItem => {
       if (localeItem.locale == this.locale) {
         this.title = localeItem.item;
@@ -121,14 +121,14 @@ export class DropdownComponent implements OnInit, OnChanges {
     this.isDropdownListVisible = !this.isDropdownListVisible;
     this.title = selectedItem.item;
     this.selectedItem.patchValue({ name: selectedItem.item });
-    localStorage.setItem('locale', selectedItem?.locale);
+    localStorage.setItem('LOCALE', selectedItem?.locale);
     this.broadcastService.dispatch(
       new AppEvent(AppEventType.CLICKED_ON_LOCALE_DROPDOWN, {
         name: AppEventType.CLICKED_ON_LOCALE_DROPDOWN,
         data: { selectedItem },
       })
     );
-    localStorage.setItem('locale', selectedItem?.locale);
+    localStorage.setItem('LOCALE', selectedItem?.locale);
   }
 
   onTitleClick() {

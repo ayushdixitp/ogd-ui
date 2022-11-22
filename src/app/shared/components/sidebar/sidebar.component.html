@@ -3,7 +3,7 @@
         <div class="button"></div>
     </ng-container>
     <ng-template #others>
-        <app-dropdown [listOfLocales]="locales" [id]="'drop2'"></app-dropdown>
+        <!-- <app-dropdown [listOfLocales]="locales" [id]="'drop2'"></app-dropdown> -->
         <span></span>
         <ng-container *ngFor="let experience of data;index as index">
             <app-accordion [id]="experience.experienceType" [svg]="experience.svg" [defaultPageId]="defaultAccordionItem" [experienceType]="experience.heading" [pages]="experience.channels"></app-accordion>

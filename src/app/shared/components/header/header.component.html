@@ -7,7 +7,7 @@
         <div class="sms-bound">
             <span id="bot-type" class="bot-type">{{botType}}</span>
             <ng-container *ngIf='experienceType==="Employee Experience" && botType==="SMS Bot"'>
-                <div class="sms-pad">
+                <div class="sms-pad">                    
                     <span class="sms">SID
                     </span>
                 </div>
@@ -21,11 +21,11 @@
         </div>
     </ng-container>
     <div class="reset-disconnect-buttons">
-        <button class="reset-button">
-            Reset to default
+        <button class="reset-button" (click)="resetToDefault()">
+            {{ resetButtonText }}
         </button>
         <button *ngIf="this.pageId == 'candidate-facebook-bot' || this.pageId == 'employee-msteams-bot'" class="disconnect-button">
-            Disconnect
+            {{ disconnectButtonText }}
         </button>
     </div>
     <ng-container *ngIf="meta.reset">

@@ -18,6 +18,7 @@ import { map, Subscription } from 'rxjs';
 import { UtilsService } from 'src/app/shared/services/utils.service';
 import { AppEvent } from 'src/app/shared/services/broadcast.event.class';
 import { NotificationCardComponent } from 'src/app/lib/notification-card/notification-card.component';
+import { CommonConstant } from 'src/app/shared/constants/common-constants';
 
 @Component({
   selector: 'configurations',
@@ -70,8 +71,8 @@ export class ConfigurationsComponent implements OnInit {
     this.setupAllEventListener();
     this.isDataLoaded = false;
     this.refreshLocalStorageValue();
-    if (this.experienceType && this.locale && this.refNum && this.channel)
-      this.getChatbotConfigurations();
+    // if (this.experienceType && this.locale && this.refNum && this.channel && (this.pageId as string)?.length > 1)
+    //   this.getChatbotConfigurations();
   }
 
   setRole(role: string) {
@@ -82,6 +83,7 @@ export class ConfigurationsComponent implements OnInit {
     this.broadcastService
       .on(AppEventType.LOCALES_LOADED_EVENT)
       .subscribe(() => {
+        this.isDataLoaded = false;
         this.getChatbotConfigurations();
       });
 
@@ -141,8 +143,15 @@ export class ConfigurationsComponent implements OnInit {
       .on(AppEventType.ACCORDION_EVENT)
       .subscribe((event: any) => {
         if (event.payload.page) {
+          this.refreshLocalStorageValue();
           this.getChatbotConfigurations();
         }
+      });
+
+    this.broadcastService
+      .on(AppEventType.RESET_TO_DEFAULT_CONFIGURATIONS)
+      .subscribe(() => {
+        this.resetToDefault();
       });
   }
 
@@ -400,7 +409,7 @@ export class ConfigurationsComponent implements OnInit {
 
   refreshLocalStorageValue() {
     this.refNum = localStorage.getItem('refNum');
-    this.locale = localStorage.getItem('locale');
+    this.locale = localStorage.getItem('LOCALE');
     this.channel = localStorage.getItem('channel');
     this.experienceType = localStorage.getItem('experienceType');
     // this.pageId = `/${localStorage.getItem('channel')}`;
@@ -432,30 +441,51 @@ export class ConfigurationsComponent implements OnInit {
 
   provision(data: any) {
     this.ref = this.vcr.createComponent(NotificationCardComponent);
-    this.broadcastService.dispatch(
-      new AppEvent(AppEventType.SHOW_NOTIFICATION_EVENT, {
-        type: 'failed',
-        msg: 'Something went wrong.',
-      })
-    );
-    // const index = this.vcr.indexOf(this.ref.hostView)
-    setTimeout(() => {
+    if (data.isProvisioned) {
       const index = this.vcr.indexOf(this.ref.hostView);
-      if (index != -1) this.vcr.remove(index);
-    }, 3000);
-
-    // if (data.isProvisioned) this.getChatbotConfigurations();
-    // else {
-    // }
+      this.ref.instance.notificationText = 'Customer has been provisioned.';
+      this.ref.instance.notificationType = 'success';
+      setTimeout(() => {
+        const index = this.vcr.indexOf(this.ref.hostView);
+        if (index != -1) this.vcr.remove(index);
+      }, 3000);
+      this.getChatbotConfigurations();
+    } else {
+      this.ref.instance.notificationText = 'Something went wrong.';
+      this.ref.instance.notificationType = 'failed';
+      setTimeout(() => {
+        const index = this.vcr.indexOf(this.ref.hostView);
+        if (index != -1) this.vcr.remove(index);
+      }, 3000);
+    }
   }
 
   // this function will be responsible for rending blocks based on internal or external role
   checkRoleAccess(isInternal: boolean | undefined | null): boolean {
     if (isInternal) {
-      return this.roleAccess == 'internal';
+      return this.roleAccess == CommonConstant.INTERNAL;
     } else {
       return true;
     }
+  }
+
+  resetToDefault() {
+    let url = this.utilsService.getResetChatbotConfigurationsPath();
+    this.httpService
+      .httpDelete(url, 'chatbot_configurations_api')
+      .subscribe(res => {
+        this.ref = this.vcr.createComponent(NotificationCardComponent);
+        this.ref.instance.notificationText =
+          'Career Site Bot configs reset to default.';
+        this.ref.instance.notificationType = 'success';
+
+        const index = this.vcr.indexOf(this.ref.hostView);
+        setTimeout(() => {
+          const index = this.vcr.indexOf(this.ref.hostView);
+          if (index != -1) this.vcr.remove(index);
+        }, 3000);
+        this.getChatbotConfigurations();
+      });
   }
 
   ngOnDestroy(): void {

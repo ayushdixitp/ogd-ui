@@ -37,7 +37,7 @@
                                     </span>
                                     <ng-container *ngIf="section.features">
                                         <ng-container *ngFor="let feature of section.features">
-                                        <div class="card" *ngIf="checkRoleAccess(feature?.isInternal)"
+                                        <div class="card"
                                             [ngClass]="{'disabled-state': (!feature[feature.configurationKey])}">
                                                 <header class="card-one-item">
                                                     <div class="card-one-item-heading">
@@ -47,17 +47,22 @@
                                                         </span>
                                                         <p [ngClass]="{ 'd-i': feature.literal }">
                                                             {{ feature.literal }}
+                                                            <span class="section-infotext">
+                                                                {{ feature.infoText }}
+                                                            </span>
                                                         </p>
                                                     </div>
-                                                    <span class="section-infotext">
-                                                        {{ feature.infoText }}
-                                                    </span>
                                                 </header>
                                                 <ng-container *ngIf="feature.flows">
                                                     <div class="features-types">
                                                         <div class="features-types-section" *ngFor="let flow of feature.flows">
                                                             <div>
-                                                                <radio [isDisabled]="!feature[feature.configurationKey]" [data]="flow"></radio>
+                                                                <ng-container *ngIf="flow?.type == 'toggle'; else radio">
+                                                                    <app-toggle [id]="flow.configurationKey" [isActive]="feature[flow.configurationKey]"></app-toggle>
+                                                                </ng-container>
+                                                                <ng-template #radio>
+                                                                    <radio [isDisabled]="!feature[feature.configurationKey]" [data]="flow"></radio>
+                                                                </ng-template>
                                                             </div>
                                                             <div>
                                                                 {{ flow.literal }}
@@ -69,7 +74,7 @@
                                                     </div>
                                                 </ng-container>
                                                 <ng-container *ngIf="feature.attributes">
-                                                    <div class="attribute">
+                                                    <div *ngIf="checkRoleAccess(feature?.isInternal)" class="attribute">
                                                         <div class="attribute-heading">
                                                             {{ feature.attributeHeading }}
                                                             <br>

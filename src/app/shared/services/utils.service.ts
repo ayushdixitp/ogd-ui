@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { CommonConstant } from '../constants/common-constants';
 import { HttpService } from './http.service';
 
 @Injectable({
@@ -34,7 +32,7 @@ export class UtilsService {
     refNum: string | null,
     experienceType: string | null
   ): string {
-    return `v1/customers/${refNum}/${experienceType}/distinct-locales`;
+    return `v1/customers/${refNum}/${experienceType}/locales`;
   }
 
   getChatbotConfigurationsPath(
@@ -45,6 +43,10 @@ export class UtilsService {
   ): string {
     return `v1/configurations/${refNum}/${locale}/${experienceType}/${channel}`;
     // return `v1/customers/${refNum}/${locale}/${experienceType}/${channel}/configurations`;
+  }
+
+  getResetChatbotConfigurationsPath() {
+    return `v1/configurations`;
   }
 
   getDropdownFormatList(list: [], keyToBeDisplay: string) {
@@ -60,7 +62,6 @@ export class UtilsService {
   }
 
   getDistinctLocale(refNum: string | null, experienceType: string) {
-    // const url = `v1/configurations/PHENA0059/en_us/cx/career-site-bot`
     let methodName = this.getDistinctLocalesPath(refNum, experienceType);
     return new Promise((resolve, reject) => {
       this.httpService

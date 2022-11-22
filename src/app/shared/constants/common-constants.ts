@@ -5,4 +5,5 @@ export const CommonConstant = {
   sms: 'sms',
   ex: 'ex',
   cx: 'cx',
+  INTERNAL: 'Phenom Internal',
 };

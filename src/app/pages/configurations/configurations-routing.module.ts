@@ -7,13 +7,6 @@ import { BroadcastService } from 'src/app/shared/services/broadcast.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ConfigurationsComponent } from './configurations.component';
 
-// const routes: Routes = [
-//   { path: 'career-site-bot', component: ConfigurationsComponent },
-//   { path: 'employee-site-bot', component: ConfigurationsComponent },
-//   { path: 'facebook-bot', component: ConfigurationsComponent },
-//   { path: 'msteams-bot',component: ConfigurationsComponent }
-// ];
-
 export const routes: Routes = [
   {
     path: '',

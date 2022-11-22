@@ -1,5 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { SharedService } from 'src/app/shared/shared.service';
 
 @Component({
   selector: 'dashboard',
@@ -9,8 +10,21 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class DashboardComponent implements OnInit, OnDestroy {
   @Input() refNum!: string;
   @Input() roleAccess!: string;
+  input: any;
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) {
+  @Input()
+  get mfeInput(): any {
+    return this.input;
+  }
+  set mfeInput(item: any) {
+    if (typeof item == 'string') this.input = JSON.parse(item);
+    else this.input = item;
+    if (this.input) this.initialization();
+  }
+
+  isDataLoaded: boolean = false;
+
+  constructor(private router: Router, private sharedService: SharedService) {
     let currentUrl = location.pathname;
     currentUrl = currentUrl[0] == '/' ? currentUrl.slice(1) : currentUrl;
     console.log(`currentUrl => ${currentUrl}`);
@@ -53,14 +67,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // if (!localStorage.getItem('refNum')) {
-    if (this.refNum) {
-      localStorage.setItem('refNum', this.refNum);
-    }
-    if (this.roleAccess) {
-      localStorage.setItem('roleAccess', this.roleAccess);
-    }
-
     let currentUrl = location.pathname;
     currentUrl = currentUrl[0] == '/' ? currentUrl.slice(1) : currentUrl;
     console.log(`currentUrl => ${currentUrl}`);
@@ -100,22 +106,29 @@ export class DashboardComponent implements OnInit, OnDestroy {
       });
       this.router.navigate([`${currentUrl}`]);
     }
-    // }
-    // console.log("dashboard comp.");
-    // localStorage.setItem('refNum', this.refNum);
-    // console.log(location.pathname);
-    // let currentUrl = location.pathname.slice(1);
-    // if(currentUrl[currentUrl.length] == '/')
-    //   currentUrl = currentUrl.slice(0,currentUrl.length-1);
-    // if(!currentUrl.includes('dashboard-configurations')){
-    //   this.router.config.push({})
-    // }
-    // console.log(this.router.config);
+  }
+
+  initialization() {
+    if (this.input.refNum) {
+      localStorage.setItem('refNum', this.input.refNum);
+      this.refNum = this.input.refNum;
+    }
+    if (this.input.roleAccess) {
+      localStorage.setItem('roleAccess', this.input.roleAccess);
+    }
+
+    if (this.input.updatedBy) {
+      localStorage.setItem('updatedBy', JSON.stringify(this.input.updatedBy));
+    }
+
+    if (this.input.authConfig) {
+      localStorage.setItem('authConfig', JSON.stringify(this.input.authConfig));
+    }
+    this.isDataLoaded = true;
   }
 
   ngOnDestroy(): void {
-    localStorage.setItem('channel', 'web');
-    localStorage.setItem('experienceType', 'cx');
+    this.sharedService.setDefaultValues();
     console.log('destroyed');
   }
 }

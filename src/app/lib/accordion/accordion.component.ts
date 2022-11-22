@@ -107,6 +107,9 @@ export class AccordionComponent implements OnInit, OnChanges {
     this.isShowPages = !this.isShowPages;
     this.selectedPageId = event.pageId;
     this.currentOpenAccordion = this.id;
+    localStorage.setItem('experienceType', this.id);
+    localStorage.setItem('channel', event.channel);
+    localStorage.setItem('pageId', this.selectedPageId as string);
     this.broadcastService.dispatch(
       new AppEvent(AppEventType.ACCORDION_EVENT, {
         selectedPageId: this.selectedPageId,
