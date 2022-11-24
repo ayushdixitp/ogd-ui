@@ -41,7 +41,7 @@ export class HttpService {
     };
     request['request_type'] = HttpType.HTTP_POST;
     // return this.httpClient.post(methodName, serviceName);
-    return this.cmpHubPostAPI(environment.testingRestApi, request);
+    return this.cmpHubPostAPI(environment.authenticationProxy, request);
   }
 
   public httpPatch(
@@ -73,7 +73,7 @@ export class HttpService {
       request_object: requestObject,
     };
     request['request_type'] = HttpType.HTTP_PATCH;
-    return this.cmpHubPostAPI(environment.testingRestApi, request);
+    return this.cmpHubPostAPI(environment.authenticationProxy, request);
   }
 
   public httpGet(
@@ -103,7 +103,7 @@ export class HttpService {
       request_object: requestObject,
     };
     request['request_type'] = HttpType.HTTP_GET;
-    return this.cmpHubPostAPI(environment.testingRestApi, request);
+    return this.cmpHubPostAPI(environment.authenticationProxy, request);
   }
 
   public httpDelete(
@@ -135,7 +135,7 @@ export class HttpService {
       request_object: requestObject,
     };
     request['request_type'] = HttpType.HTTP_DELETE;
-    return this.cmpHubPostAPI(environment.testingRestApi, request);
+    return this.cmpHubPostAPI(environment.authenticationProxy, request);
   }
 
   public cmpHubPostAPI(methodName: any, params?: any): Observable<Response> {

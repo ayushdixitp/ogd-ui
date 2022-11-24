@@ -73,10 +73,13 @@ export class SidebarComponent implements OnInit {
         this.checking = new SidebarBase(data?.customerPipeline).finalArray;
       }
       this.data = this.checking;
-      this.defaultAccordionItem = localStorage.getItem('pageId') as string;
       this.currentExperienceType = this.data[0].experienceType;
-      if (!localStorage.getItem('pageId'))
+      if (!localStorage.getItem('pageId')) {
+        this.defaultAccordionItem = this.data[0]?.channels[0]?.pageId;
         localStorage.setItem('pageId', this.data[0]?.channels[0]?.pageId);
+      } else {
+        this.defaultAccordionItem = localStorage.getItem('pageId') as string;
+      }
       if (!localStorage.getItem('experienceType'))
         localStorage.setItem('experienceType', this.data[0]?.experienceType);
       if (!localStorage.getItem('channel'))
@@ -116,10 +119,6 @@ export class SidebarComponent implements OnInit {
         });
         this.router.navigate([`${currentUrl}`]);
       }
-
-      this.broadcastService.dispatch(
-        new AppEvent(AppEventType.LOCALES_LOADED_EVENT)
-      );
       if (!localStorage.getItem('channel')) {
         if (this.data[0]?.channels[0]?.channel)
           localStorage.setItem('channel', this.data[0]?.channels[0]?.channel);
@@ -193,10 +192,8 @@ export class SidebarComponent implements OnInit {
                   `${location.pathname}/mfe-dashboard/${currentUrl}`,
                 ]);
               }
-              // { relativeTo: this.route }
             } else {
               this.router.config.push({
-                // path: `configuration/${event.payload.accordionId}/${event?.payload?.selectedPageId}`,
                 path: `${currentUrl}`,
                 component: BaseComponent,
                 loadChildren: () =>
@@ -220,38 +217,41 @@ export class SidebarComponent implements OnInit {
 
   loadLocales() {
     // for using orignal cdn
-    // this.areLocalesLoaded = true;
-    // this.refNum = localStorage.getItem('refNum');
-
-    // commented can be used for running using local cdn files
-    this.areLocalesLoaded = false;
+    this.areLocalesLoaded = true;
     this.refNum = localStorage.getItem('refNum');
-    this.utilsService.getDistinctLocale(this.refNum, 'cx').then((data: any) => {
-      data.locales = this.utilsService.getDropdownFormatList(
-        data.locales,
-        'displayText'
-      );
-      this.locales = data.locales;
-      localStorage.setItem('customerName', data.customerName);
-      this.areLocalesLoaded = true;
-      if (!localStorage.getItem('LOCALE')) {
-        localStorage.setItem('LOCALE', this.locales[0].locale);
-        this.broadcastService.dispatch(
-          new AppEvent(AppEventType.LOCALES_LOADED_EVENT)
-        );
-        this.addTranslation();
-      }
-      // else if (localStorage.getItem('LOCALE') != this.locales[0].locale) {
-      else if (
-        this.locales.some(
-          (locale: { locale: string }) =>
-            locale.locale == localStorage.getItem('LOCALE')
-        )
-      ) {
-        localStorage.setItem('LOCALE', this.locales[0].locale);
-        this.addTranslation();
-      }
-    });
+    this.addTranslation();
+    this.broadcastService.dispatch(
+      new AppEvent(AppEventType.LOCALES_LOADED_EVENT)
+    );
+    // // commented can be used for running using local cdn files
+    // this.areLocalesLoaded = false;
+    // this.refNum = localStorage.getItem('refNum');
+    // this.utilsService.getDistinctLocale(this.refNum, 'cx').then((data: any) => {
+    //   data.locales = this.utilsService.getDropdownFormatList(
+    //     data.locales,
+    //     'displayText'
+    //   );
+    //   this.locales = data.locales;
+    //   localStorage.setItem('customerName', data.customerName);
+    //   this.areLocalesLoaded = true;
+    //   if (!localStorage.getItem('LOCALE')) {
+    //     localStorage.setItem('LOCALE', this.locales[0].locale);
+    //     this.broadcastService.dispatch(
+    //       new AppEvent(AppEventType.LOCALES_LOADED_EVENT)
+    //     );
+    //     this.addTranslation();
+    //   }
+    //   // else if (localStorage.getItem('LOCALE') != this.locales[0].locale) {
+    //   else if (
+    //     this.locales.some(
+    //       (locale: { locale: string }) =>
+    //         locale.locale == localStorage.getItem('LOCALE')
+    //     )
+    //   ) {
+    //     localStorage.setItem('LOCALE', this.locales[0].locale);
+    //     this.addTranslation();
+    //   }
+    // });
   }
 
   addTranslation() {

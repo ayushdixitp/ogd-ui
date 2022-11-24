@@ -23,7 +23,9 @@ export class SharedService {
   }
 
   getDashboardSchemaFromLocale(pageId?: string | null): Observable<any> {
-    const url = `${environment.dashboardSchema}${pageId}.json?v=${Date.now()}`;
+    const url = `${
+      environment.dashboardSchema
+    }/json${pageId}.json?v=${Date.now()}`;
     return this.httpClient.get(url);
     // for running local cdn
     // const url = `../../assets/dashboard-skeleton${pageId}.json`;

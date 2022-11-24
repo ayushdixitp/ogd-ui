@@ -15,7 +15,7 @@
       chatScript.src = bundleName;
       document.body.appendChild(chatScript);
     }
-    document.body.appendChild(chatScript);
+    // document.body.appendChild(chatScript);
   }
 })();
 

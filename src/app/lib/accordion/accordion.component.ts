@@ -43,6 +43,7 @@ export class AccordionComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     this.isShowPages = this.isShowPages;
+    console.log('from ngchanges');
     this.broadcastService.dispatch(
       new AppEvent(AppEventType.ACCORDION_EVENT_INIT, {
         accordionId: this.id,
@@ -69,6 +70,7 @@ export class AccordionComponent implements OnInit, OnChanges {
     ) {
       this.isShowPages = true;
       if (this.isShowPages) {
+        console.log('from ngInit');
         this.broadcastService.dispatch(
           new AppEvent(AppEventType.ACCORDION_EVENT_INIT, {
             accordionId: this.id,

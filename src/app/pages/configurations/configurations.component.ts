@@ -36,6 +36,8 @@ export class ConfigurationsComponent implements OnInit {
   isDataLoaded: boolean = false;
   disableAllChannels: boolean = false;
   routeSubscription!: Subscription;
+  localesLoadedSubscription!: Subscription;
+
   pageId!: string | null;
   refNum!: string | null;
   locale!: string | null;
@@ -80,7 +82,7 @@ export class ConfigurationsComponent implements OnInit {
   }
 
   setupAllEventListener() {
-    this.broadcastService
+    this.localesLoadedSubscription = this.broadcastService
       .on(AppEventType.LOCALES_LOADED_EVENT)
       .subscribe(() => {
         this.isDataLoaded = false;
@@ -490,5 +492,6 @@ export class ConfigurationsComponent implements OnInit {
 
   ngOnDestroy(): void {
     this.routeSubscription.unsubscribe();
+    this.localesLoadedSubscription.unsubscribe();
   }
 }
