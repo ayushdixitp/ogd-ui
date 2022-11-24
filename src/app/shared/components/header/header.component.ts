@@ -33,9 +33,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
   disconnectButtonText: string = 'CMP_DISCONNECT';
   selectALocale: string = 'CMP_SELECT_A_LOCALE';
   pageId!: string;
+  isProvisioned!: boolean;
   accordionSubscriber!: Subscription;
 
   ngOnInit(): void {
+    this.isProvisioned = this.sharedService.getCustomerProvisionedStatus();
     this.addTranslation();
     this.accordionSubscriber = this.broadcastService
       .on(AppEventType.ACCORDION_EVENT_INIT)

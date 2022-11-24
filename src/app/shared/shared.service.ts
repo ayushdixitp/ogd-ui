@@ -46,6 +46,14 @@ export class SharedService {
     );
   }
 
+  updateCustomerProvisionedStatus(provisionedStatus: boolean) {
+    localStorage.setItem('provisionStatus', `${provisionedStatus}`);
+  }
+
+  getCustomerProvisionedStatus(): boolean {
+    return localStorage.getItem('provisionStatus') as unknown as boolean;
+  }
+
   setDefaultValues() {
     this.getSidebarData().subscribe(data => {
       if (

@@ -172,6 +172,9 @@ export class ConfigurationsComponent implements OnInit {
         if (result.statusCode == 404) {
           this.isCustomerIsProvisioned = false;
           this.isDataLoaded = true;
+          this.sharedService.updateCustomerProvisionedStatus(
+            this.isCustomerIsProvisioned
+          );
           if (this.pageId) {
             this.sharedService
               .getDashboardSchemaFromLocale(`${this.pageId}`)
