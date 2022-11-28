@@ -27,7 +27,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
   constructor(private router: Router, private sharedService: SharedService) {
     let currentUrl = location.pathname;
     currentUrl = currentUrl[0] == '/' ? currentUrl.slice(1) : currentUrl;
-    console.log(`currentUrl => ${currentUrl}`);
     if (!currentUrl.includes('mfe-dashboard')) {
       this.router.config.push(
         {
@@ -50,9 +49,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
       // for the first time it comes here so setting up default channels
       // here we will call the api to check for the available channels for that specfic clients
       //  the first channel will be kept here
-      localStorage.setItem('channel', 'web');
-      localStorage.setItem('experienceType', 'cx');
-      this.router.navigate([`${currentUrl}/mfe-dashboard/cx/career-site-bot`]);
+      // localStorage.setItem('channel', 'web');
+      // localStorage.setItem('experienceType', 'cx');
+      // this.router.navigate([`${currentUrl}/mfe-dashboard/cx/career-site-bot`]);
     } else {
       this.router.config.push({
         path: `${currentUrl}`,
@@ -69,7 +68,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     let currentUrl = location.pathname;
     currentUrl = currentUrl[0] == '/' ? currentUrl.slice(1) : currentUrl;
-    console.log(`currentUrl => ${currentUrl}`);
     if (!currentUrl.includes('mfe-dashboard')) {
       this.router.config.push(
         {
@@ -92,9 +90,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
       // for the first time it comes here so setting up default channels
       // here we will call the api to check for the available channels for that specfic clients
       //  the first channel will be kept here
-      localStorage.setItem('channel', 'web');
-      localStorage.setItem('experienceType', 'cx');
-      this.router.navigate([`${currentUrl}/mfe-dashboard/cx/career-site-bot`]);
+      // localStorage.setItem('channel', 'web');
+      // localStorage.setItem('experienceType', 'cx');
+      // this.router.navigate([`${currentUrl}/mfe-dashboard/cx/career-site-bot`]);
     } else {
       this.router.config.push({
         path: `${currentUrl}`,
@@ -129,6 +127,5 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.sharedService.setDefaultValues();
-    console.log('destroyed');
   }
 }

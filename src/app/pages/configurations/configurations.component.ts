@@ -36,12 +36,15 @@ export class ConfigurationsComponent implements OnInit {
   isDataLoaded: boolean = false;
   disableAllChannels: boolean = false;
   routeSubscription!: Subscription;
+  localesLoadedSubscription!: Subscription;
+
   pageId!: string | null;
   refNum!: string | null;
   locale!: string | null;
   experienceType!: string | null;
   isCustomerIsProvisioned!: boolean;
   configurationPageId!: string | undefined;
+  listOfCOnfigurations: string[] = [];
 
   @ViewChild('viewContainerRef', { read: ViewContainerRef })
   vcr!: ViewContainerRef;
@@ -60,8 +63,6 @@ export class ConfigurationsComponent implements OnInit {
         const len = event.url.split('?')[0].split('/').length;
         const paramsList = event.url.split('?')[0].split('/');
         this.pageId = `/${paramsList[len - 1]}`;
-        this.experienceType = paramsList[len - 2];
-        localStorage.setItem('experienceType', this.experienceType);
       }
     });
   }
@@ -80,7 +81,7 @@ export class ConfigurationsComponent implements OnInit {
   }
 
   setupAllEventListener() {
-    this.broadcastService
+    this.localesLoadedSubscription = this.broadcastService
       .on(AppEventType.LOCALES_LOADED_EVENT)
       .subscribe(() => {
         this.isDataLoaded = false;
@@ -170,6 +171,11 @@ export class ConfigurationsComponent implements OnInit {
         if (result.statusCode == 404) {
           this.isCustomerIsProvisioned = false;
           this.isDataLoaded = true;
+          this.broadcastService.dispatch(
+            new AppEvent(AppEventType.CONFIGURATIONS_AVAILABLE_EVENT, {
+              isCustomerIsProvisioned: this.isCustomerIsProvisioned,
+            })
+          );
           if (this.pageId) {
             this.sharedService
               .getDashboardSchemaFromLocale(`${this.pageId}`)
@@ -186,13 +192,17 @@ export class ConfigurationsComponent implements OnInit {
           }
         } else {
           this.isCustomerIsProvisioned = true;
+          this.broadcastService.dispatch(
+            new AppEvent(AppEventType.CONFIGURATIONS_AVAILABLE_EVENT, {
+              isCustomerIsProvisioned: this.isCustomerIsProvisioned,
+            })
+          );
           this.configurations = result;
           if (this.pageId) {
             this.sharedService
               .getDashboardSchemaFromLocale(`${this.pageId}`)
               .subscribe((data: any) => {
                 this.skeleton = data;
-                console.log(this.skeleton);
                 this.createFinalStructure(this.skeleton);
               });
           } else {
@@ -238,15 +248,6 @@ export class ConfigurationsComponent implements OnInit {
               this.skeleton.configurations[index].features[featureIndex][
                 data.configurationKey
               ] = data.isActive;
-              console.log(
-                this.skeleton.configurations[index].features[featureIndex]
-                  .attributes
-              );
-              console.log(
-                this.skeleton.configurations[index].features[featureIndex][
-                  data.configurationKey
-                ]
-              );
             }
           });
         }
@@ -322,6 +323,7 @@ export class ConfigurationsComponent implements OnInit {
   }
 
   createFinalStructure(skeleton: any) {
+    this.listOfCOnfigurations = [];
     this.sharedService.getI18nValues().subscribe((data: any) => {
       // data = data.record;
       let finalstructure = skeleton.configurations.map((configuration: any) => {
@@ -352,6 +354,7 @@ export class ConfigurationsComponent implements OnInit {
                     attribute.infoText = data[attribute.infoText]
                       ? data[attribute.infoText]
                       : attribute.infoText;
+                    this.listOfCOnfigurations.push(attribute.configurationKey);
                     return attribute;
                   }
                 });
@@ -370,12 +373,14 @@ export class ConfigurationsComponent implements OnInit {
                     this.configurations[flow.configurationKey] == flow.version
                   )
                     flow['isEnabled'] = true;
+                  this.listOfCOnfigurations.push(flow.configurationKey);
                   return flow;
                 });
               }
 
               feature[feature.configurationKey] =
                 this.configurations[feature.configurationKey];
+              this.listOfCOnfigurations.push(feature.configurationKey);
               feature.infoText = data[feature.infoText]
                 ? data[feature.infoText]
                 : feature.infoText;
@@ -398,13 +403,14 @@ export class ConfigurationsComponent implements OnInit {
         if (configuration.configurationKey) {
           configuration[configuration.configurationKey] =
             this.configurations[configuration.configurationKey];
+          this.listOfCOnfigurations.push(configuration.configurationKey);
         }
         return configuration;
       });
       skeleton.configurations = finalstructure;
+      console.log(this.listOfCOnfigurations);
       this.isDataLoaded = true;
     });
-    console.log(skeleton);
   }
 
   refreshLocalStorageValue() {
@@ -427,13 +433,11 @@ export class ConfigurationsComponent implements OnInit {
       .checkIfCustomerIsProvisioned(url, this.pageId)
       .then(data => {
         if (data.status !== 404) {
-          console.log('Provisioned');
           this.isCustomerIsProvisioned = true;
         } else {
           this.sharedService.getDashboardSchema(this.pageId).subscribe(data => {
             this.configurationPageId = data?.configurationPageId;
           });
-          console.log('Not Provisioned', this.configurationPageId);
           this.isCustomerIsProvisioned = false;
         }
       });
@@ -469,10 +473,17 @@ export class ConfigurationsComponent implements OnInit {
     }
   }
 
+  isInternal() {
+    return this.roleAccess == CommonConstant.INTERNAL;
+  }
+
   resetToDefault() {
     let url = this.utilsService.getResetChatbotConfigurationsPath();
+    const reqObj = {
+      configurations: this.listOfCOnfigurations,
+    };
     this.httpService
-      .httpDelete(url, 'chatbot_configurations_api')
+      .httpPatch(url, 'chatbot_configurations_api', reqObj)
       .subscribe(res => {
         this.ref = this.vcr.createComponent(NotificationCardComponent);
         this.ref.instance.notificationText =
@@ -490,5 +501,6 @@ export class ConfigurationsComponent implements OnInit {
 
   ngOnDestroy(): void {
     this.routeSubscription.unsubscribe();
+    this.localesLoadedSubscription.unsubscribe();
   }
 }

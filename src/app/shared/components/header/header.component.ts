@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  OnDestroy,
+} from '@angular/core';
+import { Subscription } from 'rxjs';
 import { AppEventType } from '../../enums/event.enum';
 import { AppEvent } from '../../services/broadcast.event.class';
 import { BroadcastService } from '../../services/broadcast.service';
@@ -9,7 +17,7 @@ import { SharedService } from '../../shared.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   constructor(
     private broadcastService: BroadcastService,
     private sharedService: SharedService
@@ -25,10 +33,18 @@ export class HeaderComponent implements OnInit {
   disconnectButtonText: string = 'CMP_DISCONNECT';
   selectALocale: string = 'CMP_SELECT_A_LOCALE';
   pageId!: string;
+  isProvisioned!: boolean;
+  accordionSubscriber!: Subscription;
 
   ngOnInit(): void {
     this.addTranslation();
     this.broadcastService
+      .on(AppEventType.CONFIGURATIONS_AVAILABLE_EVENT)
+      .subscribe((data: any) => {
+        data = data?.payload;
+        this.isProvisioned = data.isCustomerIsProvisioned;
+      });
+    this.accordionSubscriber = this.broadcastService
       .on(AppEventType.ACCORDION_EVENT_INIT)
       .subscribe((event: any) => {
         this.pageId = event.payload.page;
@@ -57,5 +73,9 @@ export class HeaderComponent implements OnInit {
         ? i18n[this.selectALocale]
         : this.selectALocale;
     });
+  }
+
+  ngOnDestroy() {
+    this.accordionSubscriber.unsubscribe();
   }
 }

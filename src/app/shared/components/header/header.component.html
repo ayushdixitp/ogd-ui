@@ -21,7 +21,7 @@
         </div>
     </ng-container>
     <div class="reset-disconnect-buttons">
-        <button class="reset-button" (click)="resetToDefault()">
+        <button class="reset-button" *ngIf="isProvisioned" (click)="resetToDefault()">
             {{ resetButtonText }}
         </button>
         <button *ngIf="this.pageId == 'candidate-facebook-bot' || this.pageId == 'employee-msteams-bot'" class="disconnect-button">

@@ -46,7 +46,7 @@ export class UtilsService {
   }
 
   getResetChatbotConfigurationsPath() {
-    return `v1/configurations`;
+    return `v1/configurations/reset`;
   }
 
   getDropdownFormatList(list: [], keyToBeDisplay: string) {

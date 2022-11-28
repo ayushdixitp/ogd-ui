@@ -40,7 +40,6 @@ const routes: Routes = [
         path: '',
         loadChildren: () =>
           import('./pages/configurations/configurations.module').then(m => {
-            console.log('MFE ROUTE');
             return m.ConfigurationsModule;
           }),
       },
@@ -54,7 +53,6 @@ const routes: Routes = [
         path: '',
         loadChildren: () =>
           import('./pages/configurations/configurations.module').then(m => {
-            console.log('Normal ROUTE');
             return m.ConfigurationsModule;
           }),
       },
@@ -68,7 +66,6 @@ const routes: Routes = [
         path: '',
         loadChildren: () =>
           import('./pages/locale-list/locale-list.module').then(m => {
-            console.log('Normal ROUTE');
             return m.LocaleListModule;
           }),
       },
@@ -82,7 +79,6 @@ const routes: Routes = [
         path: '',
         loadChildren: () =>
           import('./pages/dashboard/dashboard.module').then(m => {
-            console.log('Normal ROUTE');
             return m.DashboardModule;
           }),
       },
@@ -97,56 +93,56 @@ const routes: Routes = [
 export class AppRoutingModule {
   constructor(private router: Router) {
     // logic for refresh handling
-    let oldRoute: string = location.pathname;
-    if (oldRoute.includes('/locale')) {
-      if (oldRoute[0] == '/') {
-        oldRoute = oldRoute.slice(1);
-      }
-      this.router.config.push({
-        path: `${oldRoute}`,
-        component: LocaleListComponent,
-        loadChildren: () =>
-          import('./pages/configurations/configurations.module').then(m => {
-            console.log('Normal ROUTE');
-            return m.ConfigurationsModule;
-          }),
-      });
-      this.router.navigate([
-        `/${this.router.config[this.router.config.length - 1]?.path}`,
-      ]);
-    } else if (oldRoute.includes('/configuration')) {
-      if (oldRoute[0] == '/') {
-        oldRoute = oldRoute.slice(1);
-      }
-      let channel: string | undefined = oldRoute?.split('/')?.pop();
-      if (channel) localStorage.setItem('channel', channel);
-      let currentUrlArray = oldRoute.split('/');
-      currentUrlArray = currentUrlArray.slice(0, currentUrlArray.length - 2);
-      let currentUrl = currentUrlArray.join('/');
-      console.log(oldRoute);
-      this.router.config.push({
-        path: `${currentUrl}/:exp/:pageId`,
-        component: BaseComponent,
-        loadChildren: () =>
-          import('./pages/configurations/configurations.module').then(m => {
-            console.log('Normal ROUTE');
-            return m.ConfigurationsModule;
-          }),
-      });
-      this.router.navigate([`${oldRoute}`]);
-    } else {
-      oldRoute = location.pathname.slice(1);
-      oldRoute = oldRoute.replace('//', '/');
-      this.router.config.push({
-        path: `${oldRoute}`,
-        component: LocaleListComponent,
-        loadChildren: () =>
-          import('./pages/configurations/configurations.module').then(m => {
-            console.log('Normal ROUTE');
-            return m.ConfigurationsModule;
-          }),
-      });
-      this.router.navigate([`${oldRoute}`]);
-    }
+    // let oldRoute: string = location.pathname;
+    // if (oldRoute.includes('/locale')) {
+    //   if (oldRoute[0] == '/') {
+    //     oldRoute = oldRoute.slice(1);
+    //   }
+    //   this.router.config.push({
+    //     path: `${oldRoute}`,
+    //     component: LocaleListComponent,
+    //     loadChildren: () =>
+    //       import('./pages/configurations/configurations.module').then(m => {
+    //         console.log('Normal ROUTE');
+    //         return m.ConfigurationsModule;
+    //       }),
+    //   });
+    //   this.router.navigate([
+    //     `/${this.router.config[this.router.config.length - 1]?.path}`,
+    //   ]);
+    // } else if (oldRoute.includes('/configuration')) {
+    //   if (oldRoute[0] == '/') {
+    //     oldRoute = oldRoute.slice(1);
+    //   }
+    //   let channel: string | undefined = oldRoute?.split('/')?.pop();
+    //   if (channel) localStorage.setItem('channel', channel);
+    //   let currentUrlArray = oldRoute.split('/');
+    //   currentUrlArray = currentUrlArray.slice(0, currentUrlArray.length - 2);
+    //   let currentUrl = currentUrlArray.join('/');
+    //   console.log(oldRoute);
+    //   this.router.config.push({
+    //     path: `${currentUrl}/:exp/:pageId`,
+    //     component: BaseComponent,
+    //     loadChildren: () =>
+    //       import('./pages/configurations/configurations.module').then(m => {
+    //         console.log('Normal ROUTE');
+    //         return m.ConfigurationsModule;
+    //       }),
+    //   });
+    //   this.router.navigate([`${oldRoute}`]);
+    // } else {
+    //   oldRoute = location.pathname.slice(1);
+    //   oldRoute = oldRoute.replace('//', '/');
+    //   this.router.config.push({
+    //     path: `${oldRoute}`,
+    //     component: LocaleListComponent,
+    //     loadChildren: () =>
+    //       import('./pages/configurations/configurations.module').then(m => {
+    //         console.log('Normal ROUTE');
+    //         return m.ConfigurationsModule;
+    //       }),
+    //   });
+    //   this.router.navigate([`${oldRoute}`]);
+    // }
   }
 }

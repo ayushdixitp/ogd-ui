@@ -48,13 +48,11 @@ export class Provisioning implements OnInit, OnDestroy {
         this.skeleton?.configurations?.inputs as QuestionBase<string>[]
       );
       this.controlList = Object.keys(this.provisioningForm.controls);
-      console.log(this.controlList);
       this.controlList.forEach((control, index) => {
         this.formControlList[index] = this.provisioningForm.get(
           control
         ) as FormControl;
       });
-      console.log(this.skeleton.configurations);
     });
   }
 
@@ -84,14 +82,10 @@ export class Provisioning implements OnInit, OnDestroy {
             return input;
           });
       });
-    console.log(this.skeleton.configurations);
   }
 
   // here we will be caliing api
-  submitForm() {
-    console.log(this.provisioningForm.value);
-    console.log(this.provisioningForm?.status);
-  }
+  submitForm() {}
 
   ngOnDestroy(): void {
     this.routeSubscription.unsubscribe();

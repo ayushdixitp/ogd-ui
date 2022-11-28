@@ -1,8 +1,9 @@
 const fs = require('fs-extra');
 const path = require('path');
-const baseRoute = path.join(__dirname, '/dist/chatbot-management-app');
 var finalElemenBundle = 'elements.bundle.js';
-var modules = process.argv.slice(2);
+var modules = process.argv.slice(3);
+var env = process.argv[2];
+const baseRoute = path.join(__dirname, `/dist/${env}`);
 let isFilePresent = false;
 
 let initialFiles = [
@@ -43,7 +44,7 @@ async function writeAllmodulesInOne(moduleList) {
 
 function checkIfBundleExists(bundleNames) {
   return new Promise((resolve, reject) => {
-    fs.readdir(baseRoute, (err, files) => {
+    fs.readdir(`${baseRoute}`, (err, files) => {
       if (err) {
         throwError(err);
       } else {

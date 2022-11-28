@@ -21,7 +21,5 @@ import { ProvisionComponent } from './provision/provision.component';
   exports: [ConfigurationsComponent],
 })
 export class ConfigurationsModule {
-  constructor() {
-    console.log('config module');
-  }
+  constructor() {}
 }
