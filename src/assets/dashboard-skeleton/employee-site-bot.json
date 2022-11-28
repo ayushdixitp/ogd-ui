@@ -44,7 +44,29 @@
                     "actions": {
                         "type": "toggle"
                     },
-                    "configurationKey": "isFaqEnabled"
+                    "configurationKey": "isFaqEnabled",
+                    "attributeHeading": "CMP_LIST_OF_ATTRIBUTES",
+                    "attributes": [
+                        {
+                        "id": "confidence-threshold",
+                        "literal": "CMP_CONFIDENCE_THRESHOLD",
+                        "infoText": "CMP_CONFIGURE_CONFIDENCE_THRESHOLD_FOR_MATCHING_FAQS",
+                        "actions": {
+                            "type": "progress-bar"
+                        },
+                        "configurationKey": "faqSuggestionsThreshold"
+
+                    },
+                    {
+                        "id": "confidence-similarity",
+                        "literal": "CMP_SUGGESTIONS_SIMILARITY_THRESHOLD",
+                        "infoText": "CMP_SUGGESTIONS_THRESHOLD_FOR_FAQS",
+                        "actions": {
+                            "type": "progress-bar"
+                        },
+                        "configurationKey": "chatbotSentenceSimilarityThreshold"
+                    }
+                ]
                 },
                 {
                     "id": "gig-flow",

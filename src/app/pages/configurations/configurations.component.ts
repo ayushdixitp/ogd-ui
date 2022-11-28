@@ -25,7 +25,7 @@ import { CommonConstant } from 'src/app/shared/constants/common-constants';
   templateUrl: './configurations.component.html',
   styleUrls: ['./configurations.component.scss'],
 })
-export class ConfigurationsComponent implements OnInit {
+export class ConfigurationsComponent implements OnInit, OnDestroy {
   @Input() roleAccess!: string | null;
 
   currentRoute: string | undefined;
