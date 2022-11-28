@@ -1,0 +1,18 @@
+<ng-container *ngIf="isDataLoaded" id="mfe-modal">
+    <div class="backdrop">
+    </div>
+    <div class="mfe-modal">
+        <div class="modal-header">
+            <i class="icon" [innerHTML]="defaultIcon | safe: 'html'"></i>
+            <span>Are you sure you want to reset ?</span>
+        </div>
+        <div class="modal-body">
+            Disconnecting this feature will remove chatbot 
+from facebook.
+        </div>
+        <div class="modal-buttons">
+            <app-button (click)="closeModal(false)" [label]="negativeButton" [buttonClass]="'btn btn-small-outline'"></app-button>
+            <app-button (click)="closeModal(true)" [label]="positiveButton" [buttonClass]="''"></app-button>
+        </div>
+    </div>
+</ng-container>

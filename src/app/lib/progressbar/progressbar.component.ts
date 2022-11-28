@@ -20,7 +20,6 @@ export class ProgressbarComponent implements OnInit {
   ngOnInit(): void {}
 
   changeValue(data: any) {
-    console.log(data.target.value);
     this.isActive = data.target.checked;
     this.broadcastService.dispatch(
       new AppEvent(AppEventType.RANGE_EMITTER, {

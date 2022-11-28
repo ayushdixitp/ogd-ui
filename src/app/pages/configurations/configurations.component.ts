@@ -19,6 +19,7 @@ import { UtilsService } from 'src/app/shared/services/utils.service';
 import { AppEvent } from 'src/app/shared/services/broadcast.event.class';
 import { NotificationCardComponent } from 'src/app/lib/notification-card/notification-card.component';
 import { CommonConstant } from 'src/app/shared/constants/common-constants';
+import { ModalComponent } from 'src/app/lib/modal/modal.component';
 
 @Component({
   selector: 'configurations',
@@ -49,6 +50,7 @@ export class ConfigurationsComponent implements OnInit, OnDestroy {
   @ViewChild('viewContainerRef', { read: ViewContainerRef })
   vcr!: ViewContainerRef;
   ref!: ComponentRef<NotificationCardComponent>;
+  modalRef!: ComponentRef<ModalComponent>;
 
   constructor(
     private broadcastService: BroadcastService,
@@ -152,8 +154,19 @@ export class ConfigurationsComponent implements OnInit, OnDestroy {
     this.broadcastService
       .on(AppEventType.RESET_TO_DEFAULT_CONFIGURATIONS)
       .subscribe(() => {
-        this.resetToDefault();
+        this.modalRef = this.vcr.createComponent(ModalComponent);
+        this.modalRef.instance.positiveButton = 'CMP_YES_RESET';
+        this.modalRef.instance.negativeButton = 'CMP_CANCEL';
+        this.sharedService.removeScroll();
       });
+
+    this.broadcastService.on(AppEventType.CLOSE_MODAL_EVENT).subscribe(data => {
+      this.sharedService.addSCroll();
+      this.vcr.clear();
+      if (data?.payload?.close == true) {
+        this.resetToDefault();
+      }
+    });
   }
 
   getChatbotConfigurations() {
@@ -408,7 +421,6 @@ export class ConfigurationsComponent implements OnInit, OnDestroy {
         return configuration;
       });
       skeleton.configurations = finalstructure;
-      console.log(this.listOfCOnfigurations);
       this.isDataLoaded = true;
     });
   }

@@ -19,6 +19,7 @@ import { ButtonComponent } from '../lib/button/button.component';
 import { RadioComponent } from '../lib/radio/radio.component';
 import { SafePipe } from './pipes/safe.pipe';
 import { NotificationCardComponent } from '../lib/notification-card/notification-card.component';
+import { ModalComponent } from '../lib/modal/modal.component';
 
 @NgModule({
   imports: [CommonModule, FormsModule, ReactiveFormsModule, HttpClientModule],
@@ -39,6 +40,7 @@ import { NotificationCardComponent } from '../lib/notification-card/notification
     ButtonComponent,
     RadioComponent,
     NotificationCardComponent,
+    ModalComponent,
   ],
   exports: [
     AccordionComponent,

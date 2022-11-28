@@ -72,4 +72,16 @@ export class SharedService {
       );
     });
   }
+
+  removeScroll() {
+    let body = document.body;
+    body.style.height = '100vh';
+    body.style.overflow = 'hidden';
+  }
+
+  addSCroll() {
+    let body = document.body;
+    body.style.height = 'initial';
+    body.style.overflow = 'initial';
+  }
 }
