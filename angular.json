@@ -55,13 +55,13 @@
               "outputHashing": "none"
             },
             "development": {
-              "buildOptimizer": true,
-              "optimization": true,
-              "vendorChunk": true,
-              "extractLicenses": true,
-              "sourceMap": false,
-              "namedChunks": true
-            },
+            "buildOptimizer": false,
+            "optimization": false,
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "sourceMap": true,
+            "namedChunks": true
+          },
             "dev": {
               "budgets": [
                 {

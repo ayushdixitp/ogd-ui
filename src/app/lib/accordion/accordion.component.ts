@@ -36,14 +36,11 @@ export class AccordionComponent implements OnInit, OnChanges {
     router: Router,
     route: ActivatedRoute
   ) {
-    console.log('accordion comp loaded');
-    console.log(this.defaultPageId);
     this.currentOpenAccordion = router?.url?.split('/')[1];
   }
 
   ngOnChanges() {
     this.isShowPages = this.isShowPages;
-    console.log('from ngchanges');
     this.broadcastService.dispatch(
       new AppEvent(AppEventType.ACCORDION_EVENT_INIT, {
         accordionId: this.id,
@@ -70,7 +67,6 @@ export class AccordionComponent implements OnInit, OnChanges {
     ) {
       this.isShowPages = true;
       if (this.isShowPages) {
-        console.log('from ngInit');
         this.broadcastService.dispatch(
           new AppEvent(AppEventType.ACCORDION_EVENT_INIT, {
             accordionId: this.id,

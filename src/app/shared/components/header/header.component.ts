@@ -37,12 +37,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
   accordionSubscriber!: Subscription;
 
   ngOnInit(): void {
-    this.isProvisioned = this.sharedService.getCustomerProvisionedStatus();
     this.addTranslation();
+    this.broadcastService
+      .on(AppEventType.CONFIGURATIONS_AVAILABLE_EVENT)
+      .subscribe((data: any) => {
+        data = data?.payload;
+        this.isProvisioned = data.isCustomerIsProvisioned;
+      });
     this.accordionSubscriber = this.broadcastService
       .on(AppEventType.ACCORDION_EVENT_INIT)
       .subscribe((event: any) => {
-        console.log(event);
         this.pageId = event.payload.page;
         if (event.payload.experienceType && event.payload.heading) {
           this.experienceType = event.payload.experienceType;

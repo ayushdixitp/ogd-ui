@@ -22,7 +22,6 @@ export class AppComponent implements OnInit, OnChanges, OnDestroy {
   title = 'chatbot-management-app';
 
   ngOnInit() {
-    debugger;
     let oldRoute: string = location.pathname;
     if (this.refNum) this.setRefNum(this.refNum);
     if (this.roleAccess) this.setRole(this.roleAccess);
@@ -85,9 +84,7 @@ export class AppComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges(): void {
-    console.log('inside changes');
     let oldRoute: string = location.pathname;
-    console.log('I am inside app comp.', oldRoute);
     if (this.refNum) this.setRefNum(this.refNum);
   }
 

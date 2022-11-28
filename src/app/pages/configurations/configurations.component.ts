@@ -62,8 +62,6 @@ export class ConfigurationsComponent implements OnInit {
         const len = event.url.split('?')[0].split('/').length;
         const paramsList = event.url.split('?')[0].split('/');
         this.pageId = `/${paramsList[len - 1]}`;
-        this.experienceType = paramsList[len - 2];
-        localStorage.setItem('experienceType', this.experienceType);
       }
     });
   }
@@ -172,8 +170,10 @@ export class ConfigurationsComponent implements OnInit {
         if (result.statusCode == 404) {
           this.isCustomerIsProvisioned = false;
           this.isDataLoaded = true;
-          this.sharedService.updateCustomerProvisionedStatus(
-            this.isCustomerIsProvisioned
+          this.broadcastService.dispatch(
+            new AppEvent(AppEventType.CONFIGURATIONS_AVAILABLE_EVENT, {
+              isCustomerIsProvisioned: this.isCustomerIsProvisioned,
+            })
           );
           if (this.pageId) {
             this.sharedService
@@ -191,13 +191,17 @@ export class ConfigurationsComponent implements OnInit {
           }
         } else {
           this.isCustomerIsProvisioned = true;
+          this.broadcastService.dispatch(
+            new AppEvent(AppEventType.CONFIGURATIONS_AVAILABLE_EVENT, {
+              isCustomerIsProvisioned: this.isCustomerIsProvisioned,
+            })
+          );
           this.configurations = result;
           if (this.pageId) {
             this.sharedService
               .getDashboardSchemaFromLocale(`${this.pageId}`)
               .subscribe((data: any) => {
                 this.skeleton = data;
-                console.log(this.skeleton);
                 this.createFinalStructure(this.skeleton);
               });
           } else {
@@ -243,15 +247,6 @@ export class ConfigurationsComponent implements OnInit {
               this.skeleton.configurations[index].features[featureIndex][
                 data.configurationKey
               ] = data.isActive;
-              console.log(
-                this.skeleton.configurations[index].features[featureIndex]
-                  .attributes
-              );
-              console.log(
-                this.skeleton.configurations[index].features[featureIndex][
-                  data.configurationKey
-                ]
-              );
             }
           });
         }
@@ -409,7 +404,6 @@ export class ConfigurationsComponent implements OnInit {
       skeleton.configurations = finalstructure;
       this.isDataLoaded = true;
     });
-    console.log(skeleton);
   }
 
   refreshLocalStorageValue() {
@@ -432,13 +426,11 @@ export class ConfigurationsComponent implements OnInit {
       .checkIfCustomerIsProvisioned(url, this.pageId)
       .then(data => {
         if (data.status !== 404) {
-          console.log('Provisioned');
           this.isCustomerIsProvisioned = true;
         } else {
           this.sharedService.getDashboardSchema(this.pageId).subscribe(data => {
             this.configurationPageId = data?.configurationPageId;
           });
-          console.log('Not Provisioned', this.configurationPageId);
           this.isCustomerIsProvisioned = false;
         }
       });
@@ -472,6 +464,10 @@ export class ConfigurationsComponent implements OnInit {
     } else {
       return true;
     }
+  }
+
+  isInternal() {
+    return this.roleAccess == CommonConstant.INTERNAL;
   }
 
   resetToDefault() {

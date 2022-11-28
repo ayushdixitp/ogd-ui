@@ -39,19 +39,10 @@ export class SharedService {
   }
 
   getI18nValues() {
-    console.log(localStorage.getItem('LOCALE')?.split('_')[0]);
     let locale = localStorage.getItem('LOCALE')?.split('_')[0];
     return this.httpClient.get(
       `https://cdn-bot.phenompeople.com/translations/cmp-translations-${locale}.json?v=${Date.now()}`
     );
-  }
-
-  updateCustomerProvisionedStatus(provisionedStatus: boolean) {
-    localStorage.setItem('provisionStatus', `${provisionedStatus}`);
-  }
-
-  getCustomerProvisionedStatus(): boolean {
-    return localStorage.getItem('provisionStatus') as unknown as boolean;
   }
 
   setDefaultValues() {

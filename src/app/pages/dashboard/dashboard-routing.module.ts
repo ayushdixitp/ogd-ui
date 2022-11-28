@@ -13,7 +13,6 @@ const routes: Routes = [
     // component:DashboardComponent,
     loadChildren: () =>
       import('./dashboard.module').then(m => {
-        console.log('Normal ROUTE');
         return m.DashboardModule;
       }),
   },
@@ -22,7 +21,6 @@ const routes: Routes = [
     // component:DashboardComponent,
     loadChildren: () =>
       import('./dashboard.module').then(m => {
-        console.log('Normal ROUTE');
         return m.DashboardModule;
       }),
   },

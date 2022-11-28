@@ -105,6 +105,7 @@ export class SidebarComponent implements OnInit {
             ],
           }
         );
+        localStorage.setItem('pageId', this.data[0]?.channels[0]?.pageId);
         this.router.navigate([
           `${currentUrl}/mfe-dashboard/${this.data[0]?.experienceType}/${this.data[0]?.channels[0]?.pageId}`,
         ]);
@@ -124,7 +125,6 @@ export class SidebarComponent implements OnInit {
           localStorage.setItem('channel', this.data[0]?.channels[0]?.channel);
       }
       this.loadLocales();
-      console.log(this.data[0].channels[0].channel);
       this.refNum = localStorage.getItem('refNum') as string;
       this.broadcastService
         .on(AppEventType.SELECTED_LOCALE_EVENT)
@@ -153,7 +153,6 @@ export class SidebarComponent implements OnInit {
           if (event.payload.channel)
             localStorage.setItem('channel', event.payload.channel);
           if (event?.payload?.selectedPageId) {
-            console.log(event.payload);
             localStorage.setItem('experienceType', event.payload.accordionId);
             if (event.payload.channel)
               localStorage.setItem('channel', event.payload.channel);
@@ -171,7 +170,6 @@ export class SidebarComponent implements OnInit {
             currentUrlArray.push(event.payload.accordionId);
             currentUrlArray.push(event.payload.selectedPageId);
             currentUrl = currentUrlArray.join('/');
-            console.log(currentUrl);
             if ((this.parentMfe = 'dashboard')) {
               this.router.config.push(
                 {
@@ -184,7 +182,6 @@ export class SidebarComponent implements OnInit {
                   path: `${location.pathname}/mfe-dashboard/${currentUrl}`,
                 }
               );
-              console.log(this.router.config);
               if (currentUrl.includes('mfe-dashboard')) {
                 this.router.navigate([`${currentUrl}`]);
               } else {
