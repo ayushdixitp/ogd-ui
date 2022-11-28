@@ -29,6 +29,15 @@
                     "configurationKey": "isPersonalizationOnDemandEnabled"
                 },
                 {
+                    "id": "job-search",
+                    "actions": {
+                        "type": "toggle"
+                    },
+                    "literal": "CMP_JOB_SEARCH",
+                    "infoText": "CMP_CONFIGURE_ENABLING_THIS_FEATURE_LET_CANDIDATE_SEARCH_FOR_JOBS",
+                    "configurationKey": "isJobSearchEnabled"
+                },
+                {
                     "id": "faq",
                     "literal": "CMP_FAQ",
                     "infoText": "CMP_FAQ_ENABLING_THIS_FEATURE_LET_CANDIDATES_ASK_QUESTION_TO_BOT",
