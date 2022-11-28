@@ -44,6 +44,7 @@ export class ConfigurationsComponent implements OnInit {
   experienceType!: string | null;
   isCustomerIsProvisioned!: boolean;
   configurationPageId!: string | undefined;
+  listOfCOnfigurations: string[] = [];
 
   @ViewChild('viewContainerRef', { read: ViewContainerRef })
   vcr!: ViewContainerRef;
@@ -322,6 +323,7 @@ export class ConfigurationsComponent implements OnInit {
   }
 
   createFinalStructure(skeleton: any) {
+    this.listOfCOnfigurations = [];
     this.sharedService.getI18nValues().subscribe((data: any) => {
       // data = data.record;
       let finalstructure = skeleton.configurations.map((configuration: any) => {
@@ -352,6 +354,7 @@ export class ConfigurationsComponent implements OnInit {
                     attribute.infoText = data[attribute.infoText]
                       ? data[attribute.infoText]
                       : attribute.infoText;
+                    this.listOfCOnfigurations.push(attribute.configurationKey);
                     return attribute;
                   }
                 });
@@ -370,12 +373,14 @@ export class ConfigurationsComponent implements OnInit {
                     this.configurations[flow.configurationKey] == flow.version
                   )
                     flow['isEnabled'] = true;
+                  this.listOfCOnfigurations.push(flow.configurationKey);
                   return flow;
                 });
               }
 
               feature[feature.configurationKey] =
                 this.configurations[feature.configurationKey];
+              this.listOfCOnfigurations.push(feature.configurationKey);
               feature.infoText = data[feature.infoText]
                 ? data[feature.infoText]
                 : feature.infoText;
@@ -398,10 +403,12 @@ export class ConfigurationsComponent implements OnInit {
         if (configuration.configurationKey) {
           configuration[configuration.configurationKey] =
             this.configurations[configuration.configurationKey];
+          this.listOfCOnfigurations.push(configuration.configurationKey);
         }
         return configuration;
       });
       skeleton.configurations = finalstructure;
+      console.log(this.listOfCOnfigurations);
       this.isDataLoaded = true;
     });
   }
@@ -472,8 +479,11 @@ export class ConfigurationsComponent implements OnInit {
 
   resetToDefault() {
     let url = this.utilsService.getResetChatbotConfigurationsPath();
+    const reqObj = {
+      configurations: this.listOfCOnfigurations,
+    };
     this.httpService
-      .httpDelete(url, 'chatbot_configurations_api')
+      .httpPatch(url, 'chatbot_configurations_api', reqObj)
       .subscribe(res => {
         this.ref = this.vcr.createComponent(NotificationCardComponent);
         this.ref.instance.notificationText =
