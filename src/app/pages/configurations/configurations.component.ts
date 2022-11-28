@@ -138,8 +138,7 @@ export class ConfigurationsComponent implements OnInit, OnDestroy {
     this.broadcastService
       .on(AppEventType.HIDE_NOTIFICATION_EVENT)
       .subscribe(() => {
-        const index = this.vcr.indexOf(this.ref.hostView);
-        if (index != -1) this.vcr.remove(index);
+        this.ref.instance.closeNotification();
       });
 
     this.broadcastService
@@ -314,6 +313,7 @@ export class ConfigurationsComponent implements OnInit, OnDestroy {
     }
     // TODO: this can be moved to some service (notification service.)
     if (this.ref) {
+      this.ref.instance.closeNotification();
       const index = this.vcr.indexOf(this.ref.hostView);
       if (index != -1) this.vcr.remove(index);
     }
@@ -328,10 +328,6 @@ export class ConfigurationsComponent implements OnInit, OnDestroy {
             msg: 'Configuration Updated Successfully.',
           })
         );
-        setTimeout(() => {
-          const index = this.vcr.indexOf(this.ref.hostView);
-          if (index != -1) this.vcr.remove(index);
-        }, 3000);
       });
   }
 
@@ -458,21 +454,12 @@ export class ConfigurationsComponent implements OnInit, OnDestroy {
   provision(data: any) {
     this.ref = this.vcr.createComponent(NotificationCardComponent);
     if (data.isProvisioned) {
-      const index = this.vcr.indexOf(this.ref.hostView);
-      this.ref.instance.notificationText = 'Customer has been provisioned.';
+      this.ref.instance.notificationText = 'CMP_CUSTOMER_HAS_BEEN_PROVISIONED';
       this.ref.instance.notificationType = 'success';
-      setTimeout(() => {
-        const index = this.vcr.indexOf(this.ref.hostView);
-        if (index != -1) this.vcr.remove(index);
-      }, 3000);
       this.getChatbotConfigurations();
     } else {
-      this.ref.instance.notificationText = 'Something went wrong.';
+      this.ref.instance.notificationText = 'CMP_SOMETHING_WENT_WRONG';
       this.ref.instance.notificationType = 'failed';
-      setTimeout(() => {
-        const index = this.vcr.indexOf(this.ref.hostView);
-        if (index != -1) this.vcr.remove(index);
-      }, 3000);
     }
   }
 

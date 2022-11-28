@@ -17,6 +17,9 @@ export class NotificationCardComponent implements OnInit {
   constructor(private broadcastService: BroadcastService) {}
 
   ngOnInit(): void {
+    setTimeout(() => {
+      this.closeNotification();
+    }, 3000);
     this.broadcastService
       .on(AppEventType.SHOW_NOTIFICATION_EVENT)
       .subscribe((event: any) => {
