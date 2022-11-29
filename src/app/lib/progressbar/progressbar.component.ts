@@ -31,6 +31,24 @@ export class ProgressbarComponent implements OnInit {
         },
       })
     );
+    let progressValue: HTMLElement | null | any = document.getElementById(
+      `progress-value-${this.id}`
+    );
+    if (progressValue) {
+      progressValue.style.display = 'none';
+    }
     this.changedValue.emit({});
+  }
+
+  progress(data: any) {
+    let progressValue: HTMLElement | null | any = document.getElementById(
+      `progress-value-${this.id}`
+    );
+    if (progressValue) {
+      progressValue.style.display = 'flex';
+      progressValue.innerHTML = data.target.value;
+      let progress = parseFloat(data.target.value) * 100;
+      progressValue.style.left = Math.floor(progress) - 4 + '%';
+    }
   }
 }

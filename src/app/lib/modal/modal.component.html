@@ -2,14 +2,14 @@
     <div class="backdrop">
     </div>
     <div class="mfe-modal">
-        <div class="modal-header">
+        <div class="mfe-modal-header">
             <i class="icon" [innerHTML]="defaultIcon | safe: 'html'"></i>
             <span>{{ headerText}}</span>
         </div>
-        <div class="modal-body">
+        <div class="mfe-modal-body">
             {{ bodyText}}
         </div>
-        <div class="modal-buttons">
+        <div class="mfe-modal-buttons">
             <app-button (click)="closeModal(false)" [label]="negativeButton" [buttonClass]="'btn btn-small-outline'"></app-button>
             <app-button (click)="closeModal(true)" [label]="positiveButton" [buttonClass]="''"></app-button>
         </div>

@@ -19,8 +19,7 @@ export class ModalComponent implements OnInit {
   isDataLoaded: boolean = false;
 
   @HostListener('window:click', ['$event.target']) onWindowClick(e: any) {
-    // if condition to if check if click is happened outside or not
-    if (e.id != 'mfe-modal' && this.isDataLoaded) {
+    if (e.id && e.id != 'mfe-modal' && this.isDataLoaded) {
       this.closeModal(false);
     }
   }
