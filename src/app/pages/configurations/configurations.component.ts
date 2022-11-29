@@ -20,6 +20,7 @@ import { AppEvent } from 'src/app/shared/services/broadcast.event.class';
 import { NotificationCardComponent } from 'src/app/lib/notification-card/notification-card.component';
 import { CommonConstant } from 'src/app/shared/constants/common-constants';
 import { ModalComponent } from 'src/app/lib/modal/modal.component';
+import { Configurations } from './configurations';
 
 @Component({
   selector: 'configurations',
@@ -38,6 +39,7 @@ export class ConfigurationsComponent implements OnInit, OnDestroy {
   disableAllChannels: boolean = false;
   routeSubscription!: Subscription;
   localesLoadedSubscription!: Subscription;
+  i18n: any;
 
   pageId!: string | null;
   refNum!: string | null;
@@ -138,7 +140,7 @@ export class ConfigurationsComponent implements OnInit, OnDestroy {
     this.broadcastService
       .on(AppEventType.HIDE_NOTIFICATION_EVENT)
       .subscribe(() => {
-        this.ref.instance.closeNotification();
+        this.vcr.clear();
       });
 
     this.broadcastService
@@ -156,6 +158,10 @@ export class ConfigurationsComponent implements OnInit, OnDestroy {
         this.modalRef = this.vcr.createComponent(ModalComponent);
         this.modalRef.instance.positiveButton = 'CMP_YES_RESET';
         this.modalRef.instance.negativeButton = 'CMP_CANCEL';
+        this.modalRef.instance.headerText =
+          'CMP_ARE_YOU_SURE_YOU_WANT_TO_RESET';
+        this.modalRef.instance.bodyText =
+          'CMP_ON_RESET_ALL_CUSTOM_CONFIGURATIONS_WILL_BE_LOST_AND_RESET_TO_DEFAULT';
         this.sharedService.removeScroll();
       });
 
@@ -312,20 +318,20 @@ export class ConfigurationsComponent implements OnInit, OnDestroy {
       };
     }
     // TODO: this can be moved to some service (notification service.)
-    if (this.ref) {
-      this.ref.instance.closeNotification();
-      const index = this.vcr.indexOf(this.ref.hostView);
-      if (index != -1) this.vcr.remove(index);
-    }
-
+    this.vcr.remove();
     this.ref = this.vcr.createComponent(NotificationCardComponent);
     this.httpService
       .httpPatch(url, 'chatbot_configurations_api', reqObj)
       .subscribe(result => {
+        let notificationText = new Configurations(
+          'updateConfigurations'
+        ).getNotificationText();
         this.broadcastService.dispatch(
           new AppEvent(AppEventType.SHOW_NOTIFICATION_EVENT, {
             type: 'success',
-            msg: 'Configuration Updated Successfully.',
+            msg: this.i18n[notificationText.msg]
+              ? this.i18n[notificationText.msg]
+              : notificationText.msg,
           })
         );
       });
@@ -334,6 +340,7 @@ export class ConfigurationsComponent implements OnInit, OnDestroy {
   createFinalStructure(skeleton: any) {
     this.listOfCOnfigurations = [];
     this.sharedService.getI18nValues().subscribe((data: any) => {
+      this.i18n = data;
       // data = data.record;
       let finalstructure = skeleton.configurations.map((configuration: any) => {
         if (configuration.features?.length) {
@@ -484,16 +491,18 @@ export class ConfigurationsComponent implements OnInit, OnDestroy {
     this.httpService
       .httpPatch(url, 'chatbot_configurations_api', reqObj)
       .subscribe(res => {
+        let notificationText = new Configurations(
+          'reset'
+        ).getNotificationText();
         this.ref = this.vcr.createComponent(NotificationCardComponent);
-        this.ref.instance.notificationText =
-          'Career Site Bot configs reset to default.';
-        this.ref.instance.notificationType = 'success';
+        (this.ref.instance.notificationText = this.i18n[notificationText.msg]),
+          (this.ref.instance.notificationType = 'success');
 
-        const index = this.vcr.indexOf(this.ref.hostView);
-        setTimeout(() => {
-          const index = this.vcr.indexOf(this.ref.hostView);
-          if (index != -1) this.vcr.remove(index);
-        }, 3000);
+        // const index = this.vcr.indexOf(this.ref.hostView);
+        // setTimeout(() => {
+        //   const index = this.vcr.indexOf(this.ref.hostView);
+        //   if (index != -1) this.vcr.remove(index);
+        // }, 3000);
         this.getChatbotConfigurations();
       });
   }

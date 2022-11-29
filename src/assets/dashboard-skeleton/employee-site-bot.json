@@ -39,6 +39,7 @@
                 },
                 {
                     "id": "faq",
+                    "isInternal": true,
                     "literal": "CMP_FAQ",
                     "infoText": "CMP_FAQ_ENABLING_THIS_FEATURE_LET_CANDIDATES_ASK_QUESTION_TO_BOT",
                     "actions": {
@@ -78,15 +79,6 @@
                     "configurationKey": "isGigSearchEnabled"
                 },
                 {
-                    "id": "quick-apply",
-                    "literal": "CMP_QUICK_APPLY",
-                    "infoText": "CMP_ENABLING_THIS_FEATURE_LET_EMPLOYEES_QUICK_APPLY",
-                    "actions": {
-                        "type": "toggle"
-                    },
-                    "configurationKey": "isQuickApplyEnabled"
-                },
-                {
                     "id": "refer-a-friend",
                     "literal": "CMP_REFER_A_FRIEND",
                     "infoText": "CMP_ENABLING_THIS_FEATURE_LET_EMPLOYEES_REFER_JOB",
@@ -94,15 +86,6 @@
                         "type": "toggle"
                     },
                     "configurationKey": "isReferralEnabled"
-                },
-                {
-                    "id": "quick-referral",
-                    "literal": "CMP_QUICK_REFERRAL",
-                    "infoText": "CMP_ENABLING_THIS_FEATURE_LET_EMPLOYEES_REFER_JOB",
-                    "configurationKey": "isQuickReferralEnabled",
-                    "actions": {
-                        "type": "toggle"
-                    }
                 },
                 {
                     "id": "covid-menu",

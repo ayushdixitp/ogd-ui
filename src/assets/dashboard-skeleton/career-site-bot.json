@@ -77,15 +77,6 @@
                     },
                     "infoText": "CMP_ENABLING_THIS_FEATURE_LET_CANDIDATES_SET_JOB_ALERTS",
                     "configurationKey": "isJobAlertsEnabled"
-                }, 
-                {
-                    "id": "is-quick-apply-enabled",
-                    "actions": {
-                        "type": "toggle"
-                    },
-                    "literal": "CMP_QUICK_APPLY",
-                    "infoText": "CMP_ENABLING_THIS_FEATURE_LET_CANDIDATES_QUICK_APPLY",
-                    "configurationKey": "isQuickApplyEnabled"
                 },
                 {
                     "id": "is-covid-menu-enabled",
