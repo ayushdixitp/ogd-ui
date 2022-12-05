@@ -140,7 +140,12 @@ export class ConfigurationsComponent implements OnInit, OnDestroy {
     this.broadcastService
       .on(AppEventType.HIDE_NOTIFICATION_EVENT)
       .subscribe(() => {
-        this.vcr.clear();
+        let timer = 3000;
+        const index = this.vcr.indexOf(this.ref.hostView);
+        setTimeout(() => {
+          const index = this.vcr.indexOf(this.ref.hostView);
+          if (index != -1) this.vcr.remove(index);
+        }, timer);
       });
 
     this.broadcastService
@@ -318,7 +323,7 @@ export class ConfigurationsComponent implements OnInit, OnDestroy {
       };
     }
     // TODO: this can be moved to some service (notification service.)
-    this.vcr.remove();
+    this.vcr.clear();
     this.ref = this.vcr.createComponent(NotificationCardComponent);
     this.httpService
       .httpPatch(url, 'chatbot_configurations_api', reqObj)
@@ -334,6 +339,12 @@ export class ConfigurationsComponent implements OnInit, OnDestroy {
               : notificationText.msg,
           })
         );
+        let timer = 3000;
+        const index = this.vcr.indexOf(this.ref.hostView);
+        setTimeout(() => {
+          const index = this.vcr.indexOf(this.ref.hostView);
+          if (index != -1) this.vcr.remove(index);
+        }, timer);
       });
   }
 
@@ -447,7 +458,7 @@ export class ConfigurationsComponent implements OnInit, OnDestroy {
     this.utilsService
       .checkIfCustomerIsProvisioned(url, this.pageId)
       .then(data => {
-        if (data.status !== 404) {
+        if (data.status == 200) {
           this.isCustomerIsProvisioned = true;
         } else {
           this.sharedService.getDashboardSchema(this.pageId).subscribe(data => {
@@ -461,13 +472,19 @@ export class ConfigurationsComponent implements OnInit, OnDestroy {
   provision(data: any) {
     this.ref = this.vcr.createComponent(NotificationCardComponent);
     if (data.isProvisioned) {
-      this.ref.instance.notificationText = 'CMP_CUSTOMER_HAS_BEEN_PROVISIONED';
+      this.ref.instance.notificationText =
+        this.i18n['CMP_CUSTOMER_HAS_BEEN_PROVISIONED'];
       this.ref.instance.notificationType = 'success';
       this.getChatbotConfigurations();
     } else {
-      this.ref.instance.notificationText = 'CMP_SOMETHING_WENT_WRONG';
+      this.ref.instance.notificationText =
+        this.i18n['CMP_SOMETHING_WENT_WRONG'];
       this.ref.instance.notificationType = 'failed';
     }
+    setTimeout(() => {
+      const index = this.vcr.indexOf(this.ref.hostView);
+      if (index != -1) this.vcr.remove(index);
+    }, 3000);
   }
 
   // this function will be responsible for rending blocks based on internal or external role
@@ -498,11 +515,11 @@ export class ConfigurationsComponent implements OnInit, OnDestroy {
         (this.ref.instance.notificationText = this.i18n[notificationText.msg]),
           (this.ref.instance.notificationType = 'success');
 
-        // const index = this.vcr.indexOf(this.ref.hostView);
-        // setTimeout(() => {
-        //   const index = this.vcr.indexOf(this.ref.hostView);
-        //   if (index != -1) this.vcr.remove(index);
-        // }, 3000);
+        const index = this.vcr.indexOf(this.ref.hostView);
+        setTimeout(() => {
+          const index = this.vcr.indexOf(this.ref.hostView);
+          if (index != -1) this.vcr.remove(index);
+        }, 3000);
         this.getChatbotConfigurations();
       });
   }

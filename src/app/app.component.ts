@@ -13,7 +13,6 @@ import { Router } from '@angular/router';
   selector: 'chatbot-management-app',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent implements OnInit, OnChanges, OnDestroy {
   constructor(private sharedService: SharedService, private router: Router) {}

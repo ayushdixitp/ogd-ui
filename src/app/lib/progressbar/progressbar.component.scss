@@ -12,6 +12,18 @@
 
 .progress-container {
   position: relative;
+  &:hover, &:focus {
+    .progress-value {
+      display: flex;    
+    }
+  }
+
+  &:not(:hover) {
+    .progress-value {
+      display: none !important;
+    }
+  }
+
   .progress-value {
     z-index: 1;
     display: none;

@@ -47,6 +47,15 @@
                     },
                     "configurationKey": "isFaqEnabled",
                     "attributeHeading": "CMP_LIST_OF_ATTRIBUTES",
+                    "flows": [
+                        {
+                            "id": "is-popular-faq-enabled",
+                            "literal": "CMP_POPULAR_QUESTIONS",
+                            "infoText": "CMP_USER_WILL_GET_PREPOPULATED_SUGGESTIONS_ON_CLICK_TO_ASK_A_QUESTION",
+                            "type": "toggle",
+                            "configurationKey":  "isPopularFaqsEnabled"                            
+                        }
+                    ],
                     "attributes": [
                         {
                         "id": "confidence-threshold",
@@ -55,8 +64,7 @@
                         "actions": {
                             "type": "progress-bar"
                         },
-                        "configurationKey": "faqSuggestionsThreshold"
-
+                        "configurationKey": "chatbotSentenceSimilarityThreshold"
                     },
                     {
                         "id": "confidence-similarity",
@@ -65,7 +73,7 @@
                         "actions": {
                             "type": "progress-bar"
                         },
-                        "configurationKey": "chatbotSentenceSimilarityThreshold"
+                        "configurationKey": "faqSuggestionsThreshold"
                     }
                 ]
                 },

@@ -1,4 +1,10 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { SharedService } from 'src/app/shared/shared.service';
 
@@ -87,12 +93,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
           ],
         }
       );
-      // for the first time it comes here so setting up default channels
-      // here we will call the api to check for the available channels for that specfic clients
-      //  the first channel will be kept here
-      // localStorage.setItem('channel', 'web');
-      // localStorage.setItem('experienceType', 'cx');
-      // this.router.navigate([`${currentUrl}/mfe-dashboard/cx/career-site-bot`]);
     } else {
       this.router.config.push({
         path: `${currentUrl}`,

@@ -10,11 +10,14 @@
     "build-prod:js": "rm -rf dist && prettier --write \"src/**/*.ts\" && ng build --configuration=production --output-hashing none --named-chunks=true --output-path=dist/production && npm run build:module production",
     "build-dev:js": "rm -rf dist && prettier --write \"src/**/*.ts\" && ng build --configuration=dev --output-hashing none --named-chunks=true --output-path=dist/dev && npm run build:module dev",
     "build-qa:js": "rm -rf dist && prettier --write \"src/**/*.ts\" && ng build --configuration=qa --output-hashing none --named-chunks=true --output-path=dist/qa && npm run build:module qa",
+    "build-stgin:js": "rm -rf dist && prettier --write \"src/**/*.ts\" && ng build --configuration=stgin --output-hashing none --named-chunks=true --output-path=dist/stgin && npm run build:module stgin",
+    
     "build-produs:js": "rm -rf dist && prettier --write \"src/**/*.ts\" && ng build --configuration=produs --output-hashing none --named-chunks=true --output-path=dist/produs && npm run build:module produs",
     "build:module": "rm -rf elements.bundle.js && node moduleScript.js",
  
     "push-dev:aws":"aws s3 cp elements.bundle.js  s3://chatbot-qa/dev/dashboard/dev/micro-frontends/configurations/configurations.js",
     "push-qa:aws":"aws s3 cp elements.bundle.js  s3://chatbot-qa/dev/dashboard/qa/micro-frontends/configurations/configurations.js",
+    "push-stgin:aws":"aws s3 cp elements.bundle.js  s3://chatbot-qa/dev/dashboard/stgin/micro-frontends/configurations/configurations.js",
     "push-produs:aws":"aws s3 cp elements.bundle.js  s3://chatbot-qa/dev/dashboard/produs/micro-frontends/configurations/configurations.js",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",

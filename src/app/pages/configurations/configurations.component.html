@@ -58,7 +58,9 @@
                                                         <div class="features-types-section" *ngFor="let flow of feature.flows">
                                                             <div>
                                                                 <ng-container *ngIf="flow?.type == 'toggle'; else radio">
-                                                                    <app-toggle [id]="flow.configurationKey" [isActive]="feature[flow.configurationKey]"></app-toggle>
+                                                                    <app-toggle [id]="flow.configurationKey"  
+                                                                    [isDisabled]="!feature[feature.configurationKey]"
+                                                                    [isActive]="feature[flow.configurationKey]"></app-toggle>
                                                                 </ng-container>
                                                                 <ng-template #radio>
                                                                     <radio [isDisabled]="!feature[feature.configurationKey]" [data]="flow"></radio>

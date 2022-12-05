@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  AfterViewInit,
+} from '@angular/core';
 import { AppEventType } from 'src/app/shared/enums/event.enum';
 import { AppEvent } from 'src/app/shared/services/broadcast.event.class';
 import { BroadcastService } from 'src/app/shared/services/broadcast.service';
@@ -31,13 +38,16 @@ export class ProgressbarComponent implements OnInit {
         },
       })
     );
+    this.changedValue.emit({});
+  }
+
+  ngAfterViewInit() {
     let progressValue: HTMLElement | null | any = document.getElementById(
       `progress-value-${this.id}`
     );
-    if (progressValue) {
-      progressValue.style.display = 'none';
-    }
-    this.changedValue.emit({});
+    progressValue.innerHTML = this.value;
+    let progress = this.value * 100;
+    progressValue.style.left = Math.floor(progress) - 4 + '%';
   }
 
   progress(data: any) {
