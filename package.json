@@ -10,15 +10,37 @@
     "build-prod:js": "rm -rf dist && prettier --write \"src/**/*.ts\" && ng build --configuration=production --output-hashing none --named-chunks=true --output-path=dist/production && npm run build:module production",
     "build-dev:js": "rm -rf dist && prettier --write \"src/**/*.ts\" && ng build --configuration=dev --output-hashing none --named-chunks=true --output-path=dist/dev && npm run build:module dev",
     "build-qa:js": "rm -rf dist && prettier --write \"src/**/*.ts\" && ng build --configuration=qa --output-hashing none --named-chunks=true --output-path=dist/qa && npm run build:module qa",
+
+
     "build-stgin:js": "rm -rf dist && prettier --write \"src/**/*.ts\" && ng build --configuration=stgin --output-hashing none --named-chunks=true --output-path=dist/stgin && npm run build:module stgin",
+    "build-stgir:js": "rm -rf dist && prettier --write \"src/**/*.ts\" && ng build --configuration=stgir --output-hashing none --named-chunks=true --output-path=dist/stgir && npm run build:module stgir",
+    "build-stgca:js": "rm -rf dist && prettier --write \"src/**/*.ts\" && ng build --configuration=stgca --output-hashing none --named-chunks=true --output-path=dist/stgca && npm run build:module stgca",
+    "build-stgus:js": "rm -rf dist && prettier --write \"src/**/*.ts\" && ng build --configuration=stgus --output-hashing none --named-chunks=true --output-path=dist/stgus && npm run build:module stgus",
     
-    "build-produs:js": "rm -rf dist && prettier --write \"src/**/*.ts\" && ng build --configuration=produs --output-hashing none --named-chunks=true --output-path=dist/produs && npm run build:module produs",
+
+    "build-produs:js": "prettier --write \"src/**/*.ts\" && ng build --configuration=produs --output-hashing none --named-chunks=true --output-path=dist/produs && npm run build:module produs",
+    "build-prodin:js": "prettier --write \"src/**/*.ts\" && ng build --configuration=prodin --output-hashing none --named-chunks=true --output-path=dist/prodin && npm run build:module prodin",
+    "build-prodir:js": "prettier --write \"src/**/*.ts\" && ng build --configuration=prodir --output-hashing none --named-chunks=true --output-path=dist/prodir && npm run build:module prodir",
+    "build-prodca:js": "prettier --write \"src/**/*.ts\" && ng build --configuration=prodca --output-hashing none --named-chunks=true --output-path=dist/prodca && npm run build:module prodca",
+    "build-prodcr:js": "prettier --write \"src/**/*.ts\" && ng build --configuration=prodcr --output-hashing none --named-chunks=true --output-path=dist/prodcr && npm run build:module prodcr",
+
     "build:module": "rm -rf elements.bundle.js && node moduleScript.js",
  
     "push-dev:aws":"aws s3 cp elements.bundle.js  s3://chatbot-qa/dev/dashboard/dev/micro-frontends/configurations/configurations.js",
     "push-qa:aws":"aws s3 cp elements.bundle.js  s3://chatbot-qa/dev/dashboard/qa/micro-frontends/configurations/configurations.js",
     "push-stgin:aws":"aws s3 cp elements.bundle.js  s3://chatbot-qa/dev/dashboard/stgin/micro-frontends/configurations/configurations.js",
+    "push-stgca:aws":"aws s3 cp elements.bundle.js  s3://chatbot-qa/dev/dashboard/stgca/micro-frontends/configurations/configurations.js",
+    "push-stgus:aws":"aws s3 cp elements.bundle.js  s3://chatbot-qa/dev/dashboard/stgus/micro-frontends/configurations/configurations.js",
+    "push-stgir:aws":"aws s3 cp elements.bundle.js  s3://chatbot-qa/dev/dashboard/stgir/micro-frontends/configurations/configurations.js",
+
+    
     "push-produs:aws":"aws s3 cp elements.bundle.js  s3://chatbot-qa/dev/dashboard/produs/micro-frontends/configurations/configurations.js",
+    "push-prodin:aws":"aws s3 cp elements.bundle.js  s3://chatbot-qa/dev/dashboard/prodin/micro-frontends/configurations/configurations.js",
+    "push-prodir:aws":"aws s3 cp elements.bundle.js  s3://chatbot-qa/dev/dashboard/prodir/micro-frontends/configurations/configurations.js",
+    "push-prodca:aws":"aws s3 cp elements.bundle.js  s3://chatbot-qa/dev/dashboard/prodca/micro-frontends/configurations/configurations.js",
+    "push-prodcr:aws":"aws s3 cp elements.bundle.js  s3://chatbot-qa/dev/dashboard/prodcr/micro-frontends/configurations/configurations.js",
+
+
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "test-coverage": "ng test --no-watch --code-coverage",

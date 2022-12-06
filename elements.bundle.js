@@ -589,7 +589,7 @@
                   id: this.id,
                   data: {
                     type: 'range',
-                    isActive: D.target.value,
+                    isActive: parseFloat(D.target.value),
                     configurationKey: this.configurationKey,
                   },
                 })
@@ -2063,7 +2063,11 @@
               this.broadcastService
                 .on(y.T.HIDE_NOTIFICATION_EVENT)
                 .subscribe(() => {
-                  this.vcr.clear();
+                  this.vcr.indexOf(this.ref.hostView),
+                    setTimeout(() => {
+                      const Le = this.vcr.indexOf(this.ref.hostView);
+                      -1 != Le && this.vcr.remove(Le);
+                    }, 3e3);
                 }),
               this.broadcastService.on(y.T.ACCORDION_EVENT).subscribe(D => {
                 D.payload.page &&
@@ -3854,10 +3858,10 @@
     2340: (qe, he, v) => {
       v.d(he, { N: () => s });
       const s = {
-        production: !0,
+        production: !1,
         authenticationProxy:
-          'https://chatbot-authentication-in.phenompro.com/bot_auth',
-        dashboardSchema: 'https://cdn-bot.phenompeople.com/dashboard/stgin',
+          'https://qa-chatbot-authentication.phenompro.com/bot_auth',
+        dashboardSchema: 'https://cdn-bot.phenompeople.com/dashboard/qa',
       };
     },
     2987: (qe, he, v) => {

@@ -33,7 +33,7 @@ export class ProgressbarComponent implements OnInit {
         id: this.id,
         data: {
           type: 'range',
-          isActive: data.target.value,
+          isActive: parseFloat(data.target.value),
           configurationKey: this.configurationKey,
         },
       })
