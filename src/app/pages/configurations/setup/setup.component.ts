@@ -78,8 +78,5 @@ export class SetupComponent implements OnInit {
   }
 
   // here we will be caliing api
-  submitForm() {
-    console.log(this.provisioningForm.value);
-    console.log(this.provisioningForm?.status);
-  }
+  submitForm() {}
 }

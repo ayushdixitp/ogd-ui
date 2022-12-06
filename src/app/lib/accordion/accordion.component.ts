@@ -36,8 +36,6 @@ export class AccordionComponent implements OnInit, OnChanges {
     router: Router,
     route: ActivatedRoute
   ) {
-    console.log('accordion comp loaded');
-    console.log(this.defaultPageId);
     this.currentOpenAccordion = router?.url?.split('/')[1];
   }
 

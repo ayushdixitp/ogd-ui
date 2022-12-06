@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  AfterViewInit,
+} from '@angular/core';
 import { AppEventType } from 'src/app/shared/enums/event.enum';
 import { AppEvent } from 'src/app/shared/services/broadcast.event.class';
 import { BroadcastService } from 'src/app/shared/services/broadcast.service';
@@ -20,18 +27,38 @@ export class ProgressbarComponent implements OnInit {
   ngOnInit(): void {}
 
   changeValue(data: any) {
-    console.log(data.target.value);
     this.isActive = data.target.checked;
     this.broadcastService.dispatch(
       new AppEvent(AppEventType.RANGE_EMITTER, {
         id: this.id,
         data: {
           type: 'range',
-          isActive: data.target.value,
+          isActive: parseFloat(data.target.value),
           configurationKey: this.configurationKey,
         },
       })
     );
     this.changedValue.emit({});
+  }
+
+  ngAfterViewInit() {
+    let progressValue: HTMLElement | null | any = document.getElementById(
+      `progress-value-${this.id}`
+    );
+    progressValue.innerHTML = this.value;
+    let progress = this.value * 100;
+    progressValue.style.left = Math.floor(progress) - 4 + '%';
+  }
+
+  progress(data: any) {
+    let progressValue: HTMLElement | null | any = document.getElementById(
+      `progress-value-${this.id}`
+    );
+    if (progressValue) {
+      progressValue.style.display = 'flex';
+      progressValue.innerHTML = data.target.value;
+      let progress = parseFloat(data.target.value) * 100;
+      progressValue.style.left = Math.floor(progress) - 4 + '%';
+    }
   }
 }

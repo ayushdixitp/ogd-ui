@@ -7,9 +7,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./locale-list.component.scss'],
 })
 export class LocaleListComponent implements OnInit {
-  constructor(private router: Router) {
-    console.log(this.router.config);
-  }
+  constructor(private router: Router) {}
 
   ngOnInit(): void {}
 }

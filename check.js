@@ -1,5 +1,4 @@
 (() => {
-  console.log('hii');
   let bundleName = 'elements.bundle.js';
   let chatScript = document.createElement('script');
   chatScript.type = 'text/javascript';
@@ -7,7 +6,6 @@
   location.pathname;
   if (location.pathname.includes('chatbot-configurations')) {
     if (customElements.get('dash-mfe')) {
-      console.log('its there');
     } else {
       let chatScript = document.createElement('script');
       chatScript.type = 'text/javascript';
@@ -15,7 +13,7 @@
       chatScript.src = bundleName;
       document.body.appendChild(chatScript);
     }
-    document.body.appendChild(chatScript);
+    // document.body.appendChild(chatScript);
   }
 })();
 

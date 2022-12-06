@@ -13,10 +13,15 @@ export class NotificationCardComponent implements OnInit {
   notificationText!: string;
   notificationType: string = 'success';
   eNotificationType = NotificationType;
+  timer: any;
 
   constructor(private broadcastService: BroadcastService) {}
 
   ngOnInit(): void {
+    clearTimeout(this.timer);
+    this.timer = setTimeout(() => {
+      this.closeNotification();
+    }, 3000);
     this.broadcastService
       .on(AppEventType.SHOW_NOTIFICATION_EVENT)
       .subscribe((event: any) => {

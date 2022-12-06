@@ -48,6 +48,10 @@ input:checked+.slide {
   background-color: $color-pp-dark-light-blue3;
 }
 
+input:checked:disabled+.slide {
+  background-color: $color-light-grey58;
+}
+
 input:checked+.slide:before {
   transform: translatex(22px);
 }

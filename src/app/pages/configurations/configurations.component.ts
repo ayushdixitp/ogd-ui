@@ -19,13 +19,15 @@ import { UtilsService } from 'src/app/shared/services/utils.service';
 import { AppEvent } from 'src/app/shared/services/broadcast.event.class';
 import { NotificationCardComponent } from 'src/app/lib/notification-card/notification-card.component';
 import { CommonConstant } from 'src/app/shared/constants/common-constants';
+import { ModalComponent } from 'src/app/lib/modal/modal.component';
+import { Configurations } from './configurations';
 
 @Component({
   selector: 'configurations',
   templateUrl: './configurations.component.html',
   styleUrls: ['./configurations.component.scss'],
 })
-export class ConfigurationsComponent implements OnInit {
+export class ConfigurationsComponent implements OnInit, OnDestroy {
   @Input() roleAccess!: string | null;
 
   currentRoute: string | undefined;
@@ -36,16 +38,21 @@ export class ConfigurationsComponent implements OnInit {
   isDataLoaded: boolean = false;
   disableAllChannels: boolean = false;
   routeSubscription!: Subscription;
+  localesLoadedSubscription!: Subscription;
+  i18n: any;
+
   pageId!: string | null;
   refNum!: string | null;
   locale!: string | null;
   experienceType!: string | null;
   isCustomerIsProvisioned!: boolean;
   configurationPageId!: string | undefined;
+  listOfCOnfigurations: string[] = [];
 
   @ViewChild('viewContainerRef', { read: ViewContainerRef })
   vcr!: ViewContainerRef;
   ref!: ComponentRef<NotificationCardComponent>;
+  modalRef!: ComponentRef<ModalComponent>;
 
   constructor(
     private broadcastService: BroadcastService,
@@ -60,8 +67,6 @@ export class ConfigurationsComponent implements OnInit {
         const len = event.url.split('?')[0].split('/').length;
         const paramsList = event.url.split('?')[0].split('/');
         this.pageId = `/${paramsList[len - 1]}`;
-        this.experienceType = paramsList[len - 2];
-        localStorage.setItem('experienceType', this.experienceType);
       }
     });
   }
@@ -80,7 +85,7 @@ export class ConfigurationsComponent implements OnInit {
   }
 
   setupAllEventListener() {
-    this.broadcastService
+    this.localesLoadedSubscription = this.broadcastService
       .on(AppEventType.LOCALES_LOADED_EVENT)
       .subscribe(() => {
         this.isDataLoaded = false;
@@ -135,8 +140,12 @@ export class ConfigurationsComponent implements OnInit {
     this.broadcastService
       .on(AppEventType.HIDE_NOTIFICATION_EVENT)
       .subscribe(() => {
+        let timer = 3000;
         const index = this.vcr.indexOf(this.ref.hostView);
-        if (index != -1) this.vcr.remove(index);
+        setTimeout(() => {
+          const index = this.vcr.indexOf(this.ref.hostView);
+          if (index != -1) this.vcr.remove(index);
+        }, timer);
       });
 
     this.broadcastService
@@ -151,8 +160,23 @@ export class ConfigurationsComponent implements OnInit {
     this.broadcastService
       .on(AppEventType.RESET_TO_DEFAULT_CONFIGURATIONS)
       .subscribe(() => {
-        this.resetToDefault();
+        this.modalRef = this.vcr.createComponent(ModalComponent);
+        this.modalRef.instance.positiveButton = 'CMP_YES_RESET';
+        this.modalRef.instance.negativeButton = 'CMP_CANCEL';
+        this.modalRef.instance.headerText =
+          'CMP_ARE_YOU_SURE_YOU_WANT_TO_RESET';
+        this.modalRef.instance.bodyText =
+          'CMP_ON_RESET_ALL_CUSTOM_CONFIGURATIONS_WILL_BE_LOST_AND_RESET_TO_DEFAULT';
+        this.sharedService.removeScroll();
       });
+
+    this.broadcastService.on(AppEventType.CLOSE_MODAL_EVENT).subscribe(data => {
+      this.sharedService.addSCroll();
+      this.vcr.clear();
+      if (data?.payload?.close == true) {
+        this.resetToDefault();
+      }
+    });
   }
 
   getChatbotConfigurations() {
@@ -170,6 +194,11 @@ export class ConfigurationsComponent implements OnInit {
         if (result.statusCode == 404) {
           this.isCustomerIsProvisioned = false;
           this.isDataLoaded = true;
+          this.broadcastService.dispatch(
+            new AppEvent(AppEventType.CONFIGURATIONS_AVAILABLE_EVENT, {
+              isCustomerIsProvisioned: this.isCustomerIsProvisioned,
+            })
+          );
           if (this.pageId) {
             this.sharedService
               .getDashboardSchemaFromLocale(`${this.pageId}`)
@@ -186,13 +215,17 @@ export class ConfigurationsComponent implements OnInit {
           }
         } else {
           this.isCustomerIsProvisioned = true;
+          this.broadcastService.dispatch(
+            new AppEvent(AppEventType.CONFIGURATIONS_AVAILABLE_EVENT, {
+              isCustomerIsProvisioned: this.isCustomerIsProvisioned,
+            })
+          );
           this.configurations = result;
           if (this.pageId) {
             this.sharedService
               .getDashboardSchemaFromLocale(`${this.pageId}`)
               .subscribe((data: any) => {
                 this.skeleton = data;
-                console.log(this.skeleton);
                 this.createFinalStructure(this.skeleton);
               });
           } else {
@@ -238,15 +271,6 @@ export class ConfigurationsComponent implements OnInit {
               this.skeleton.configurations[index].features[featureIndex][
                 data.configurationKey
               ] = data.isActive;
-              console.log(
-                this.skeleton.configurations[index].features[featureIndex]
-                  .attributes
-              );
-              console.log(
-                this.skeleton.configurations[index].features[featureIndex][
-                  data.configurationKey
-                ]
-              );
             }
           });
         }
@@ -299,30 +323,35 @@ export class ConfigurationsComponent implements OnInit {
       };
     }
     // TODO: this can be moved to some service (notification service.)
-    if (this.ref) {
-      const index = this.vcr.indexOf(this.ref.hostView);
-      if (index != -1) this.vcr.remove(index);
-    }
-
+    this.vcr.clear();
     this.ref = this.vcr.createComponent(NotificationCardComponent);
     this.httpService
       .httpPatch(url, 'chatbot_configurations_api', reqObj)
       .subscribe(result => {
+        let notificationText = new Configurations(
+          'updateConfigurations'
+        ).getNotificationText();
         this.broadcastService.dispatch(
           new AppEvent(AppEventType.SHOW_NOTIFICATION_EVENT, {
             type: 'success',
-            msg: 'Configuration Updated Successfully.',
+            msg: this.i18n[notificationText.msg]
+              ? this.i18n[notificationText.msg]
+              : notificationText.msg,
           })
         );
+        let timer = 3000;
+        const index = this.vcr.indexOf(this.ref.hostView);
         setTimeout(() => {
           const index = this.vcr.indexOf(this.ref.hostView);
           if (index != -1) this.vcr.remove(index);
-        }, 3000);
+        }, timer);
       });
   }
 
   createFinalStructure(skeleton: any) {
+    this.listOfCOnfigurations = [];
     this.sharedService.getI18nValues().subscribe((data: any) => {
+      this.i18n = data;
       // data = data.record;
       let finalstructure = skeleton.configurations.map((configuration: any) => {
         if (configuration.features?.length) {
@@ -352,6 +381,7 @@ export class ConfigurationsComponent implements OnInit {
                     attribute.infoText = data[attribute.infoText]
                       ? data[attribute.infoText]
                       : attribute.infoText;
+                    this.listOfCOnfigurations.push(attribute.configurationKey);
                     return attribute;
                   }
                 });
@@ -370,12 +400,14 @@ export class ConfigurationsComponent implements OnInit {
                     this.configurations[flow.configurationKey] == flow.version
                   )
                     flow['isEnabled'] = true;
+                  this.listOfCOnfigurations.push(flow.configurationKey);
                   return flow;
                 });
               }
 
               feature[feature.configurationKey] =
                 this.configurations[feature.configurationKey];
+              this.listOfCOnfigurations.push(feature.configurationKey);
               feature.infoText = data[feature.infoText]
                 ? data[feature.infoText]
                 : feature.infoText;
@@ -398,13 +430,13 @@ export class ConfigurationsComponent implements OnInit {
         if (configuration.configurationKey) {
           configuration[configuration.configurationKey] =
             this.configurations[configuration.configurationKey];
+          this.listOfCOnfigurations.push(configuration.configurationKey);
         }
         return configuration;
       });
       skeleton.configurations = finalstructure;
       this.isDataLoaded = true;
     });
-    console.log(skeleton);
   }
 
   refreshLocalStorageValue() {
@@ -426,14 +458,12 @@ export class ConfigurationsComponent implements OnInit {
     this.utilsService
       .checkIfCustomerIsProvisioned(url, this.pageId)
       .then(data => {
-        if (data.status !== 404) {
-          console.log('Provisioned');
+        if (data.status == 200) {
           this.isCustomerIsProvisioned = true;
         } else {
           this.sharedService.getDashboardSchema(this.pageId).subscribe(data => {
             this.configurationPageId = data?.configurationPageId;
           });
-          console.log('Not Provisioned', this.configurationPageId);
           this.isCustomerIsProvisioned = false;
         }
       });
@@ -442,22 +472,19 @@ export class ConfigurationsComponent implements OnInit {
   provision(data: any) {
     this.ref = this.vcr.createComponent(NotificationCardComponent);
     if (data.isProvisioned) {
-      const index = this.vcr.indexOf(this.ref.hostView);
-      this.ref.instance.notificationText = 'Customer has been provisioned.';
+      this.ref.instance.notificationText =
+        this.i18n['CMP_CUSTOMER_HAS_BEEN_PROVISIONED'];
       this.ref.instance.notificationType = 'success';
-      setTimeout(() => {
-        const index = this.vcr.indexOf(this.ref.hostView);
-        if (index != -1) this.vcr.remove(index);
-      }, 3000);
       this.getChatbotConfigurations();
     } else {
-      this.ref.instance.notificationText = 'Something went wrong.';
+      this.ref.instance.notificationText =
+        this.i18n['CMP_SOMETHING_WENT_WRONG'];
       this.ref.instance.notificationType = 'failed';
-      setTimeout(() => {
-        const index = this.vcr.indexOf(this.ref.hostView);
-        if (index != -1) this.vcr.remove(index);
-      }, 3000);
     }
+    setTimeout(() => {
+      const index = this.vcr.indexOf(this.ref.hostView);
+      if (index != -1) this.vcr.remove(index);
+    }, 3000);
   }
 
   // this function will be responsible for rending blocks based on internal or external role
@@ -469,15 +496,24 @@ export class ConfigurationsComponent implements OnInit {
     }
   }
 
+  isInternal() {
+    return this.roleAccess == CommonConstant.INTERNAL;
+  }
+
   resetToDefault() {
     let url = this.utilsService.getResetChatbotConfigurationsPath();
+    const reqObj = {
+      configurations: this.listOfCOnfigurations,
+    };
     this.httpService
-      .httpDelete(url, 'chatbot_configurations_api')
+      .httpPatch(url, 'chatbot_configurations_api', reqObj)
       .subscribe(res => {
+        let notificationText = new Configurations(
+          'reset'
+        ).getNotificationText();
         this.ref = this.vcr.createComponent(NotificationCardComponent);
-        this.ref.instance.notificationText =
-          'Career Site Bot configs reset to default.';
-        this.ref.instance.notificationType = 'success';
+        (this.ref.instance.notificationText = this.i18n[notificationText.msg]),
+          (this.ref.instance.notificationType = 'success');
 
         const index = this.vcr.indexOf(this.ref.hostView);
         setTimeout(() => {
@@ -490,5 +526,6 @@ export class ConfigurationsComponent implements OnInit {
 
   ngOnDestroy(): void {
     this.routeSubscription.unsubscribe();
+    this.localesLoadedSubscription.unsubscribe();
   }
 }

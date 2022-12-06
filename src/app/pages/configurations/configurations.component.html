@@ -6,7 +6,7 @@
         </ng-container>
         <ng-template #elseBlock>
             <main *ngIf="true" class="configurations-container">
-                <ng-container *ngIf="!isCustomerIsProvisioned; else configureBlock">
+                <ng-container *ngIf="(!isCustomerIsProvisioned); else configureBlock">
                     <provision [skeleton]="skeleton?.provisioning" (provisioned)="provision($event)" ></provision>
                 </ng-container>
                 <ng-template #configureBlock>
@@ -58,7 +58,9 @@
                                                         <div class="features-types-section" *ngFor="let flow of feature.flows">
                                                             <div>
                                                                 <ng-container *ngIf="flow?.type == 'toggle'; else radio">
-                                                                    <app-toggle [id]="flow.configurationKey" [isActive]="feature[flow.configurationKey]"></app-toggle>
+                                                                    <app-toggle [id]="flow.configurationKey"  
+                                                                    [isDisabled]="!feature[feature.configurationKey]"
+                                                                    [isActive]="feature[flow.configurationKey]"></app-toggle>
                                                                 </ng-container>
                                                                 <ng-template #radio>
                                                                     <radio [isDisabled]="!feature[feature.configurationKey]" [data]="flow"></radio>

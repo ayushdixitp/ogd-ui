@@ -12,6 +12,35 @@
 
 .progress-container {
   position: relative;
+  &:hover, &:focus {
+    .progress-value {
+      display: flex;    
+    }
+  }
+
+  &:not(:hover) {
+    .progress-value {
+      display: none !important;
+    }
+  }
+
+  .progress-value {
+    z-index: 1;
+    display: none;
+    position: absolute;
+    color: #4B6479;
+    top: 30px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 22px;
+    background: #FFFFFF;
+    border-radius: 2px;
+    box-shadow: 0px 0px 8px rgb(0 0 0 / 15%);
+    width: 45px;
+    height: 34px;
+    justify-content: center;
+    align-items: center;
+  }
 
   .range, .range-disabled {
     width: -webkit-fill-available;
@@ -29,6 +58,7 @@
     font-size: 20px;
     line-height: 16px;
   }
+
 
   .max-value {
     left: 98%;

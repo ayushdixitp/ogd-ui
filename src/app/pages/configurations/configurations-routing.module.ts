@@ -77,8 +77,6 @@ export class ConfigurationsRoutingModule {
     private router: Router,
     private broadcastService: BroadcastService
   ) {
-    console.log(this.router.config);
-    console.log('in config routing module');
     // this.broadcastService
     //   .on(AppEventType.SELECTED_LOCALE_EVENT)
     //   .subscribe((event: any) => {
@@ -91,7 +89,6 @@ export class ConfigurationsRoutingModule {
     //       component: ConfigurationsComponent,
     //     });
     //     console.log(this.router.url);
-
     //     this.router.navigate([
     //       `${add}/configuration/${this.data[0].experienceType}/${this.data[0].channels[0].pageId}`,
     //     ]);
