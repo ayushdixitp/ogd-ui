@@ -48,6 +48,7 @@ export class ConfigurationsComponent implements OnInit, OnDestroy {
   isCustomerIsProvisioned!: boolean;
   configurationPageId!: string | undefined;
   listOfCOnfigurations: string[] = [];
+  timer: any;
 
   @ViewChild('viewContainerRef', { read: ViewContainerRef })
   vcr!: ViewContainerRef;
@@ -140,9 +141,9 @@ export class ConfigurationsComponent implements OnInit, OnDestroy {
     this.broadcastService
       .on(AppEventType.HIDE_NOTIFICATION_EVENT)
       .subscribe(() => {
-        let timer = 3000;
+        let timer = 0;
         const index = this.vcr.indexOf(this.ref.hostView);
-        setTimeout(() => {
+        this.timer = setTimeout(() => {
           const index = this.vcr.indexOf(this.ref.hostView);
           if (index != -1) this.vcr.remove(index);
         }, timer);
@@ -284,6 +285,8 @@ export class ConfigurationsComponent implements OnInit, OnDestroy {
     );
   }
 
+  isNotificationVisible: boolean = false;
+
   // TODO: this function needs refactoring
   updateChatbotConfigurations({
     attributeConfigurationKey,
@@ -322,29 +325,34 @@ export class ConfigurationsComponent implements OnInit, OnDestroy {
         },
       };
     }
-    // TODO: this can be moved to some service (notification service.)
-    this.vcr.clear();
-    this.ref = this.vcr.createComponent(NotificationCardComponent);
+
+    clearTimeout(this.timer);
+    window.clearTimeout(this.timer);
+    if (this.ref && this.ref.hostView) {
+      const index = this.vcr.indexOf(this.ref.hostView);
+      if (index != -1) {
+        // clearTimeout(this.timer);
+        // window.clearTimeout(this.timer);
+      } else {
+        this.ref = this.vcr.createComponent(NotificationCardComponent);
+      }
+    } else {
+      // first notification
+      this.ref = this.vcr.createComponent(NotificationCardComponent);
+    }
+    this.ref.instance.resetTimer();
+
     this.httpService
       .httpPatch(url, 'chatbot_configurations_api', reqObj)
       .subscribe(result => {
+        this.ref.instance.resetTimer();
         let notificationText = new Configurations(
           'updateConfigurations'
         ).getNotificationText();
-        this.broadcastService.dispatch(
-          new AppEvent(AppEventType.SHOW_NOTIFICATION_EVENT, {
-            type: 'success',
-            msg: this.i18n[notificationText.msg]
-              ? this.i18n[notificationText.msg]
-              : notificationText.msg,
-          })
-        );
-        let timer = 3000;
-        const index = this.vcr.indexOf(this.ref.hostView);
-        setTimeout(() => {
-          const index = this.vcr.indexOf(this.ref.hostView);
-          if (index != -1) this.vcr.remove(index);
-        }, timer);
+        this.ref.instance.notificationText = this.i18n[notificationText.msg]
+          ? this.i18n[notificationText.msg]
+          : notificationText.msg;
+        this.ref.instance.notificationType = 'success';
       });
   }
 

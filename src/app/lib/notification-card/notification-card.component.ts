@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { Subject, Subscription, takeUntil } from 'rxjs';
 import { AppEventType } from 'src/app/shared/enums/event.enum';
 import { NotificationType } from 'src/app/shared/enums/notificationType.enum';
 import { AppEvent } from 'src/app/shared/services/broadcast.event.class';
@@ -14,21 +15,30 @@ export class NotificationCardComponent implements OnInit {
   notificationType: string = 'success';
   eNotificationType = NotificationType;
   timer: any;
+  notificationSubscription!: Subscription;
 
   constructor(private broadcastService: BroadcastService) {}
 
   ngOnInit(): void {
+    window.clearTimeout(this.timer);
     clearTimeout(this.timer);
-    this.timer = setTimeout(() => {
+    this.timer = window.setTimeout(() => {
       this.closeNotification();
     }, 3000);
-    this.broadcastService
+    this.notificationSubscription = this.broadcastService
       .on(AppEventType.SHOW_NOTIFICATION_EVENT)
       .subscribe((event: any) => {
         let data = event.payload;
         this.notificationText = data.msg;
         this.notificationType = data.type;
       });
+  }
+
+  resetTimer() {
+    window.clearTimeout(this.timer);
+    this.timer = window.setTimeout(() => {
+      this.closeNotification();
+    }, 3000);
   }
 
   closeNotification() {
@@ -40,5 +50,6 @@ export class NotificationCardComponent implements OnInit {
         },
       })
     );
+    this.notificationSubscription.unsubscribe();
   }
 }

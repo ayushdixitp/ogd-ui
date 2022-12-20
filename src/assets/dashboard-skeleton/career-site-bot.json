@@ -88,6 +88,15 @@
                     "configurationKey": "isJobAlertsEnabled"
                 },
                 {
+                    "id": "is-sms-optin-enabled",
+                    "literal": "CMP_JOB_ALERTS",
+                    "actions": {
+                        "type": "toggle"
+                    },
+                    "infoText": "CMP_ENABLING_THIS_FEATURE_LET_CANDIDATES_SET_JOB_ALERTS",
+                    "configurationKey": "isSmsOptInEnabled"
+                },
+                {
                     "id": "is-covid-menu-enabled",
                     "svg": "cdn.com/x.svg",
                     "literal": "CMP_COVID_MENU",

@@ -4,12 +4,12 @@
   ['main'],
   {
     963: (qe, he, v) => {
-      v.d(he, { H: () => K });
+      v.d(he, { H: () => q });
       var s = v(542),
         y = v(5289),
         j = v(4650),
-        q = v(9590);
-      let K = (() => {
+        K = v(9590);
+      let q = (() => {
         class N {
           constructor(Y, ee) {
             (this.router = Y),
@@ -36,7 +36,7 @@
         }
         return (
           (N.ɵfac = function (Y) {
-            return new (Y || N)(j.Y36(s.F0), j.Y36(q.M));
+            return new (Y || N)(j.Y36(s.F0), j.Y36(K.M));
           }),
           (N.ɵcmp = j.Xpm({
             type: N,
@@ -73,8 +73,8 @@
       var s = v(4650),
         y = v(5289),
         j = v(542),
-        q = v(4004),
-        K = v(319),
+        K = v(4004),
+        q = v(319),
         N = (() => {
           return (
             ((S = N || (N = {})).SUCCESS = 'success'),
@@ -174,25 +174,33 @@
               (this.eNotificationType = N);
           }
           ngOnInit() {
-            clearTimeout(this.timer),
-              (this.timer = setTimeout(() => {
+            window.clearTimeout(this.timer),
+              clearTimeout(this.timer),
+              (this.timer = window.setTimeout(() => {
                 this.closeNotification();
               }, 3e3)),
-              this.broadcastService
+              (this.notificationSubscription = this.broadcastService
                 .on(y.T.SHOW_NOTIFICATION_EVENT)
                 .subscribe(D => {
                   let R = D.payload;
                   (this.notificationText = R.msg),
                     (this.notificationType = R.type);
-                });
+                }));
+          }
+          resetTimer() {
+            window.clearTimeout(this.timer),
+              (this.timer = window.setTimeout(() => {
+                this.closeNotification();
+              }, 3e3));
           }
           closeNotification() {
             this.broadcastService.dispatch(
-              new K.q(y.T.HIDE_NOTIFICATION_EVENT, {
+              new q.q(y.T.HIDE_NOTIFICATION_EVENT, {
                 id: 'notification',
                 data: { type: 'notification' },
               })
-            );
+            ),
+              this.notificationSubscription.unsubscribe();
           }
         }
         return (
@@ -458,7 +466,7 @@
           }
           closeModal(D) {
             this.broadcastService.dispatch(
-              new K.q(y.T.CLOSE_MODAL_EVENT, { close: D })
+              new q.q(y.T.CLOSE_MODAL_EVENT, { close: D })
             );
           }
         }
@@ -585,7 +593,7 @@
           changeValue(D) {
             (this.isActive = D.target.checked),
               this.broadcastService.dispatch(
-                new K.q(y.T.RANGE_EMITTER, {
+                new q.q(y.T.RANGE_EMITTER, {
                   id: this.id,
                   data: {
                     type: 'range',
@@ -697,7 +705,7 @@
           onChange(D) {
             (this.isActive = D.target.checked),
               this.broadcastService.dispatch(
-                new K.q(y.T.TOGGLE_EVENT, {
+                new q.q(y.T.TOGGLE_EVENT, {
                   data: {
                     configurationKey: this.id,
                     type: 'toggle',
@@ -785,7 +793,7 @@
           onChange(D) {
             (this.isActive = D.target.checked),
               this.broadcastService.dispatch(
-                new K.q(y.T.CHECKBOX_EVENT, {
+                new q.q(y.T.CHECKBOX_EVENT, {
                   id: this.id,
                   data: {
                     type: 'checkbox',
@@ -1024,7 +1032,7 @@
             }
             resetToDefault() {
               this.broadcastService.dispatch(
-                new K.q(y.T.RESET_TO_DEFAULT_CONFIGURATIONS)
+                new q.q(y.T.RESET_TO_DEFAULT_CONFIGURATIONS)
               );
             }
             addTranslation() {
@@ -1139,7 +1147,7 @@
             onChange(D) {
               (this.isActive = D.target.checked),
                 this.broadcastService.dispatch(
-                  new K.q(y.T.RADIO_EMITTER, {
+                  new q.q(y.T.RADIO_EMITTER, {
                     id: this.data.id,
                     data: {
                       type: 'radio',
@@ -1427,7 +1435,7 @@
           addTranslation() {
             this.sharedService
               .getI18nValues()
-              .pipe((0, q.U)(D => D))
+              .pipe((0, K.U)(D => D))
               .subscribe(D => {
                 (this.skeleton.heading = D[this.skeleton.heading]),
                   (this.skeleton.configurations.submitButton.label = D[
@@ -2010,6 +2018,7 @@
               (this.isDataLoaded = !1),
               (this.disableAllChannels = !1),
               (this.listOfCOnfigurations = []),
+              (this.isNotificationVisible = !1),
               (this.routeSubscription = this.router.events.subscribe(Ne => {
                 if (Ne instanceof j.m2) {
                   const ot = Ne.url.split('?')[0].split('/').length,
@@ -2035,7 +2044,7 @@
               })),
               this.broadcastService
                 .on(y.T.SELECTED_LOCALE_EVENT)
-                .pipe((0, q.U)(D => D.payload))
+                .pipe((0, K.U)(D => D.payload))
                 .subscribe(({ locale: D }) => {
                   this.locale = D;
                 }),
@@ -2064,10 +2073,10 @@
                 .on(y.T.HIDE_NOTIFICATION_EVENT)
                 .subscribe(() => {
                   this.vcr.indexOf(this.ref.hostView),
-                    setTimeout(() => {
+                    (this.timer = setTimeout(() => {
                       const Le = this.vcr.indexOf(this.ref.hostView);
                       -1 != Le && this.vcr.remove(Le);
-                    }, 3e3);
+                    }, 0));
                 }),
               this.broadcastService.on(y.T.ACCORDION_EVENT).subscribe(D => {
                 D.payload.page &&
@@ -2107,7 +2116,7 @@
                   ? ((this.isCustomerIsProvisioned = !1),
                     (this.isDataLoaded = !0),
                     this.broadcastService.dispatch(
-                      new K.q(y.T.CONFIGURATIONS_AVAILABLE_EVENT, {
+                      new q.q(y.T.CONFIGURATIONS_AVAILABLE_EVENT, {
                         isCustomerIsProvisioned: this.isCustomerIsProvisioned,
                       })
                     ),
@@ -2125,7 +2134,7 @@
                           }))
                   : ((this.isCustomerIsProvisioned = !0),
                     this.broadcastService.dispatch(
-                      new K.q(y.T.CONFIGURATIONS_AVAILABLE_EVENT, {
+                      new q.q(y.T.CONFIGURATIONS_AVAILABLE_EVENT, {
                         isCustomerIsProvisioned: this.isCustomerIsProvisioned,
                       })
                     ),
@@ -2191,23 +2200,22 @@
                 : ((Ue = Ue.filter(Ne => Ne != R)),
                   (rt = { update: { [D]: Ue } }))
               : (rt = { update: { [R]: Le } }),
-              this.vcr.clear(),
-              (this.ref = this.vcr.createComponent(Pe)),
+              clearTimeout(this.timer),
+              window.clearTimeout(this.timer),
+              (this.ref &&
+                this.ref.hostView &&
+                -1 != this.vcr.indexOf(this.ref.hostView)) ||
+                (this.ref = this.vcr.createComponent(Pe)),
+              this.ref.instance.resetTimer(),
               this.httpService
                 .httpPatch(Je, 'chatbot_configurations_api', rt)
                 .subscribe(Ne => {
+                  this.ref.instance.resetTimer();
                   let ot = new we('updateConfigurations').getNotificationText();
-                  this.broadcastService.dispatch(
-                    new K.q(y.T.SHOW_NOTIFICATION_EVENT, {
-                      type: 'success',
-                      msg: this.i18n[ot.msg] ? this.i18n[ot.msg] : ot.msg,
-                    })
-                  ),
-                    this.vcr.indexOf(this.ref.hostView),
-                    setTimeout(() => {
-                      const T = this.vcr.indexOf(this.ref.hostView);
-                      -1 != T && this.vcr.remove(T);
-                    }, 3e3);
+                  (this.ref.instance.notificationText = this.i18n[ot.msg]
+                    ? this.i18n[ot.msg]
+                    : ot.msg),
+                    (this.ref.instance.notificationType = 'success');
                 });
           }
           createFinalStructure(D) {
@@ -2468,12 +2476,12 @@
       })();
     },
     9960: (qe, he, v) => {
-      v.d(he, { g: () => K });
+      v.d(he, { g: () => q });
       var s = v(4650),
         y = v(542),
         j = v(2691),
-        q = v(3485);
-      let K = (() => {
+        K = v(3485);
+      let q = (() => {
         class N {
           constructor(Y) {
             this.router = Y;
@@ -2504,7 +2512,7 @@
                 s.qZA()()),
                 2 & Y && (s.xp6(2), s.Q6J('isLocaleListPage', !0));
             },
-            dependencies: [j.k, q.K],
+            dependencies: [j.k, K.K],
             styles: [
               '.mfe-main-container[_ngcontent-%COMP%]{display:flex;justify-content:space-between;background-color:#fff}.mfe-main-container[_ngcontent-%COMP%]   aside[_ngcontent-%COMP%]{position:fixed;height:100vh;width:15%}.mfe-main-container[_ngcontent-%COMP%]   .mfe-base-container[_ngcontent-%COMP%]{width:85%;margin-left:15%}',
             ],
@@ -2518,8 +2526,8 @@
       var s = v(5289),
         y = v(319),
         j = v(4650),
-        q = v(1094),
-        K = v(9590),
+        K = v(1094),
+        q = v(9590),
         N = v(542),
         Z = v(7420),
         Y = v(6895);
@@ -2722,8 +2730,8 @@
         return (
           (de.ɵfac = function (X) {
             return new (X || de)(
-              j.Y36(q.F),
-              j.Y36(K.M),
+              j.Y36(K.F),
+              j.Y36(q.M),
               j.Y36(N.F0),
               j.Y36(Z.F)
             );
@@ -2858,25 +2866,25 @@
             ]),
             (this.finalArray = []),
             (this.finalArray = j
-              .map(q => {
-                let K = this.headers.filter(
-                  N => N.experienceType == q.experienceType
+              .map(K => {
+                let q = this.headers.filter(
+                  N => N.experienceType == K.experienceType
                 )[0];
                 return (
-                  (K.channels = q.channels.map(N => {
-                    let Z = this.channels[q.experienceType]?.filter(
+                  (q.channels = K.channels.map(N => {
+                    let Z = this.channels[K.experienceType]?.filter(
                       Y => N.channel == Y.channel
                     );
                     if (Z && Z.length) return Z[0];
                   })),
-                  (K.svg = this.headerSvgs.filter(
-                    N => N.experienceType == q.experienceType
+                  (q.svg = this.headerSvgs.filter(
+                    N => N.experienceType == K.experienceType
                   )[0]?.svg),
-                  (K.channels = K.channels.filter(N => void 0 !== N)),
-                  K
+                  (q.channels = q.channels.filter(N => void 0 !== N)),
+                  q
                 );
               })
-              .filter(q => q.channels.length));
+              .filter(K => K.channels.length));
         }
       }
     },
@@ -2895,8 +2903,8 @@
           var ne;
         })(),
         j = v(542),
-        q = v(4004),
-        K = v(963),
+        K = v(4004),
+        q = v(963),
         N = v(319),
         Z = v(7266),
         Y = v(6212),
@@ -3042,7 +3050,7 @@
                       (we = we.slice(1)),
                       this.router.config.push({
                         path: `${we}configuration/:exp/:pageId`,
-                        component: K.H,
+                        component: q.H,
                         loadChildren: () =>
                           v
                             .e('common')
@@ -3085,7 +3093,7 @@
                               ]))
                         : (this.router.config.push({
                             path: `${we}`,
-                            component: K.H,
+                            component: q.H,
                             loadChildren: () =>
                               v
                                 .e('common')
@@ -3111,7 +3119,7 @@
           addTranslation() {
             this.sharedService
               .getI18nValues()
-              .pipe((0, q.U)(_e => _e))
+              .pipe((0, K.U)(_e => _e))
               .subscribe(_e => {
                 this.data = this.data.map(
                   se => (
@@ -3222,7 +3230,7 @@
       var s = v(4650),
         y = v(1481);
       let j = (() => {
-        class q {
+        class K {
           constructor(N) {
             this.sanitizer = N;
           }
@@ -3244,19 +3252,19 @@
           }
         }
         return (
-          (q.ɵfac = function (N) {
-            return new (N || q)(s.Y36(y.H7, 16));
+          (K.ɵfac = function (N) {
+            return new (N || K)(s.Y36(y.H7, 16));
           }),
-          (q.ɵpipe = s.Yjl({ name: 'safe', type: q, pure: !0 })),
-          q
+          (K.ɵpipe = s.Yjl({ name: 'safe', type: K, pure: !0 })),
+          K
         );
       })();
     },
     319: (qe, he, v) => {
       v.d(he, { q: () => s });
       class s {
-        constructor(j, q) {
-          (this.type = j), (this.payload = q);
+        constructor(j, K) {
+          (this.type = j), (this.payload = K);
         }
       }
     },
@@ -3265,8 +3273,8 @@
       var s = v(7579),
         y = v(8306),
         j = v(3099),
-        q = v(9300),
-        K = v(4650);
+        K = v(9300),
+        q = v(4650);
       let N = (() => {
         class Z {
           constructor() {
@@ -3274,7 +3282,7 @@
               (this.observable = new y.y(ee => {}).pipe((0, j.B)()));
           }
           on(ee) {
-            return this.eventBroker.pipe((0, q.h)(J => J.type === ee));
+            return this.eventBroker.pipe((0, K.h)(J => J.type === ee));
           }
           dispatch(ee) {
             this.eventBroker.next(ee);
@@ -3284,7 +3292,7 @@
           (Z.ɵfac = function (ee) {
             return new (ee || Z)();
           }),
-          (Z.ɵprov = K.Yz7({ token: Z, factory: Z.ɵfac, providedIn: 'root' })),
+          (Z.ɵprov = q.Yz7({ token: Z, factory: Z.ɵfac, providedIn: 'root' })),
           Z
         );
       })();
@@ -3304,8 +3312,8 @@
           );
           var Z;
         })(),
-        q = v(2340),
-        K = v(4650);
+        K = v(2340),
+        q = v(4650);
       let N = (() => {
         class Z {
           constructor(ee) {
@@ -3331,7 +3339,7 @@
             };
             return (
               (Ge.request_type = j.HTTP_POST),
-              this.cmpHubPostAPI(q.N.authenticationProxy, Ge)
+              this.cmpHubPostAPI(K.N.authenticationProxy, Ge)
             );
           }
           httpPatch(ee, J, te) {
@@ -3354,7 +3362,7 @@
             };
             return (
               (Ge.request_type = j.HTTP_PATCH),
-              this.cmpHubPostAPI(q.N.authenticationProxy, Ge)
+              this.cmpHubPostAPI(K.N.authenticationProxy, Ge)
             );
           }
           httpGet(ee, J, te) {
@@ -3377,7 +3385,7 @@
             };
             return (
               (Ge.request_type = j.HTTP_GET),
-              this.cmpHubPostAPI(q.N.authenticationProxy, Ge)
+              this.cmpHubPostAPI(K.N.authenticationProxy, Ge)
             );
           }
           httpDelete(ee, J, te) {
@@ -3400,7 +3408,7 @@
             };
             return (
               (Ge.request_type = j.HTTP_DELETE),
-              this.cmpHubPostAPI(q.N.authenticationProxy, Ge)
+              this.cmpHubPostAPI(K.N.authenticationProxy, Ge)
             );
           }
           cmpHubPostAPI(ee, J) {
@@ -3436,9 +3444,9 @@
         }
         return (
           (Z.ɵfac = function (ee) {
-            return new (ee || Z)(K.LFG(s.eN));
+            return new (ee || Z)(q.LFG(s.eN));
           }),
-          (Z.ɵprov = K.Yz7({ token: Z, factory: Z.ɵfac, providedIn: 'root' })),
+          (Z.ɵprov = q.Yz7({ token: Z, factory: Z.ɵfac, providedIn: 'root' })),
           Z
         );
       })();
@@ -3448,7 +3456,7 @@
       var s = v(4650),
         y = v(4172);
       let j = (() => {
-        class q {
+        class K {
           constructor(N) {
             this.httpService = N;
           }
@@ -3500,11 +3508,11 @@
           }
         }
         return (
-          (q.ɵfac = function (N) {
-            return new (N || q)(s.LFG(y.O));
+          (K.ɵfac = function (N) {
+            return new (N || K)(s.LFG(y.O));
           }),
-          (q.ɵprov = s.Yz7({ token: q, factory: q.ɵfac, providedIn: 'root' })),
-          q
+          (K.ɵprov = s.Yz7({ token: K, factory: K.ɵfac, providedIn: 'root' })),
+          K
         );
       })();
     },
@@ -3513,8 +3521,8 @@
       var s = v(6895),
         y = v(433),
         j = v(529),
-        q = v(5289),
-        K = v(319),
+        K = v(5289),
+        q = v(319),
         N = v(4650),
         Z = v(9590),
         Y = v(542),
@@ -3608,7 +3616,7 @@
           ngOnChanges() {
             (this.isShowPages = this.isShowPages),
               this.broadcastService.dispatch(
-                new K.q(q.T.ACCORDION_EVENT_INIT, {
+                new q.q(K.T.ACCORDION_EVENT_INIT, {
                   accordionId: this.id,
                   isAccordionOpen: this.isShowPages,
                   experienceType: this.experienceType,
@@ -3633,7 +3641,7 @@
                 ((this.isShowPages = !0),
                 this.isShowPages &&
                   this.broadcastService.dispatch(
-                    new K.q(q.T.ACCORDION_EVENT_INIT, {
+                    new q.q(K.T.ACCORDION_EVENT_INIT, {
                       accordionId: this.id,
                       isAccordionOpen: this.isShowPages,
                       experienceType: this.experienceType,
@@ -3644,7 +3652,7 @@
                       channel: this.defaultPageId,
                     })
                   )),
-              this.broadcastService.on(q.T.ACCORDION_EVENT).subscribe(_e => {
+              this.broadcastService.on(K.T.ACCORDION_EVENT).subscribe(_e => {
                 (this.accordionData = _e.payload),
                   this.accordionData.accordionId === this.id
                     ? (this.isShowPages = !this.isShowPages)
@@ -3653,7 +3661,7 @@
           }
           onClick() {
             this.broadcastService.dispatch(
-              new K.q(q.T.ACCORDION_EVENT, {
+              new q.q(K.T.ACCORDION_EVENT, {
                 accordionId: this.id,
                 isAccordionOpen: this.isShowPages,
               })
@@ -3667,7 +3675,7 @@
               localStorage.setItem('channel', _e.channel),
               localStorage.setItem('pageId', this.selectedPageId),
               this.broadcastService.dispatch(
-                new K.q(q.T.ACCORDION_EVENT, {
+                new q.q(K.T.ACCORDION_EVENT, {
                   selectedPageId: this.selectedPageId,
                   accordionId: this.id,
                   isAccordionOpen: this.isShowPages,
@@ -3787,8 +3795,8 @@
       var s = v(2340),
         y = v(7266),
         j = v(6212),
-        q = v(4650),
-        K = v(529),
+        K = v(4650),
+        q = v(529),
         N = v(4172);
       let Z = (() => {
         class Y {
@@ -3848,9 +3856,9 @@
         }
         return (
           (Y.ɵfac = function (J) {
-            return new (J || Y)(q.LFG(K.eN), q.LFG(N.O));
+            return new (J || Y)(K.LFG(q.eN), K.LFG(N.O));
           }),
-          (Y.ɵprov = q.Yz7({ token: Y, factory: Y.ɵfac, providedIn: 'root' })),
+          (Y.ɵprov = K.Yz7({ token: Y, factory: Y.ɵfac, providedIn: 'root' })),
           Y
         );
       })();
@@ -3860,18 +3868,18 @@
       const s = {
         production: !1,
         authenticationProxy:
-          'https://qa-chatbot-authentication.phenompro.com/bot_auth',
-        dashboardSchema: 'https://cdn-bot.phenompeople.com/dashboard/qa',
+          'https://dev-chatbot-authentication.phenompro.com/bot_auth',
+        dashboardSchema: 'https://cdn-bot.phenompeople.com/dashboard/dev',
       };
     },
     2987: (qe, he, v) => {
       var s = v(1481),
         y = v(4650),
         j = v(6895),
-        q = v(529),
-        K = v(7579);
+        K = v(529),
+        q = v(7579);
       const N = { now: () => (N.delegate || Date).now(), delegate: void 0 };
-      class Z extends K.x {
+      class Z extends q.x {
         constructor(pe = 1 / 0, De = 1 / 0, it = N) {
           super(),
             (this._bufferSize = pe),
@@ -4475,7 +4483,7 @@
           }),
           (Ce.ɵmod = y.oAB({ type: Ce })),
           (Ce.ɵinj = y.cJS({
-            imports: [s.b2, sn, j.ez, Dt.m, q.JF, G.Bz, oe.u5, oe.UX],
+            imports: [s.b2, sn, j.ez, Dt.m, K.JF, G.Bz, oe.u5, oe.UX],
           })),
           Ce
         );
@@ -4492,7 +4500,7 @@
       var s = v(2961),
         y = v(727),
         j = v(8822),
-        q = v(4671);
+        K = v(4671);
       var Z = v(2416),
         Y = v(576),
         ee = v(2806);
@@ -4571,7 +4579,7 @@
           pipe(...Oe) {
             return (function N(Pe) {
               return 0 === Pe.length
-                ? q.y
+                ? K.y
                 : 1 === Pe.length
                 ? Pe[0]
                 : function (Oe) {
@@ -4603,7 +4611,7 @@
       v.d(he, { x: () => Z });
       var s = v(8306),
         y = v(727);
-      const q = (0, v(3888).d)(
+      const K = (0, v(3888).d)(
         ee =>
           function () {
             ee(this),
@@ -4611,7 +4619,7 @@
               (this.message = 'object unsubscribed');
           }
       );
-      var K = v(8737),
+      var q = v(8737),
         N = v(2806);
       let Z = (() => {
         class ee extends s.y {
@@ -4629,7 +4637,7 @@
             return (ie.operator = te), ie;
           }
           _throwIfClosed() {
-            if (this.closed) throw new q();
+            if (this.closed) throw new K();
           }
           next(te) {
             (0, N.x)(() => {
@@ -4687,7 +4695,7 @@
               : ((this.currentObservers = null),
                 Pe.push(te),
                 new y.w0(() => {
-                  (this.currentObservers = null), (0, K.P)(Pe, te);
+                  (this.currentObservers = null), (0, q.P)(Pe, te);
                 }));
           }
           _checkFinalizedStatuses(te) {
@@ -4752,8 +4760,8 @@
       var s = v(576),
         y = v(727),
         j = v(2416),
-        q = v(7849);
-      function K() {}
+        K = v(7849);
+      function q() {}
       const N = ee('C', void 0, void 0);
       function ee(se, fe, we) {
         return { kind: se, value: fe, error: we };
@@ -4884,7 +4892,7 @@
       function X(se) {
         j.v.useDeprecatedSynchronousErrorHandling
           ? (0, te.O)(se)
-          : (0, q.h)(se);
+          : (0, K.h)(se);
       }
       function Be(se, fe) {
         const { onStoppedNotification: we } = j.v;
@@ -4892,15 +4900,15 @@
       }
       const _e = {
         closed: !0,
-        next: K,
+        next: q,
         error: function ne(se) {
           throw se;
         },
-        complete: K,
+        complete: q,
       };
     },
     727: (qe, he, v) => {
-      v.d(he, { Lc: () => N, w0: () => K, Nn: () => Z });
+      v.d(he, { Lc: () => N, w0: () => q, Nn: () => Z });
       var s = v(576);
       const j = (0, v(3888).d)(
         ee =>
@@ -4915,8 +4923,8 @@
               (this.errors = te);
           }
       );
-      var q = v(8737);
-      class K {
+      var K = v(8737);
+      class q {
         constructor(J) {
           (this.initialTeardown = J),
             (this.closed = !1),
@@ -4958,7 +4966,7 @@
           if (J && J !== this)
             if (this.closed) Y(J);
             else {
-              if (J instanceof K) {
+              if (J instanceof q) {
                 if (J.closed || J._hasParent(this)) return;
                 J._addParent(this);
               }
@@ -4984,21 +4992,21 @@
           const { _parentage: te } = this;
           te === J
             ? (this._parentage = null)
-            : Array.isArray(te) && (0, q.P)(te, J);
+            : Array.isArray(te) && (0, K.P)(te, J);
         }
         remove(J) {
           const { _finalizers: te } = this;
-          te && (0, q.P)(te, J), J instanceof K && J._removeParent(this);
+          te && (0, K.P)(te, J), J instanceof q && J._removeParent(this);
         }
       }
-      K.EMPTY = (() => {
-        const ee = new K();
+      q.EMPTY = (() => {
+        const ee = new q();
         return (ee.closed = !0), ee;
       })();
-      const N = K.EMPTY;
+      const N = q.EMPTY;
       function Z(ee) {
         return (
-          ee instanceof K ||
+          ee instanceof q ||
           (ee &&
             'closed' in ee &&
             (0, s.m)(ee.remove) &&
@@ -5022,18 +5030,18 @@
     },
     515: (qe, he, v) => {
       v.d(he, { E: () => y });
-      const y = new (v(8306).y)(K => K.complete());
+      const y = new (v(8306).y)(q => q.complete());
     },
     2076: (qe, he, v) => {
       v.d(he, { D: () => Ze });
       var s = v(8421),
         y = v(9672),
         j = v(4482),
-        q = v(5403);
-      function K(Re, Se = 0) {
+        K = v(5403);
+      function q(Re, Se = 0) {
         return (0, j.e)(($e, $) => {
           $e.subscribe(
-            (0, q.x)(
+            (0, K.x)(
               $,
               oe => (0, y.f)($, Re, () => $.next(oe), Se),
               () => (0, y.f)($, Re, () => $.complete(), Se),
@@ -5082,7 +5090,7 @@
               if (null != Re) {
                 if ((0, de.c)(Re))
                   return (function Z(Re, Se) {
-                    return (0, s.Xf)(Re).pipe(N(Se), K(Se));
+                    return (0, s.Xf)(Re).pipe(N(Se), q(Se));
                   })(Re, Se);
                 if ((0, X.z)(Re))
                   return (function J(Re, Se) {
@@ -5097,7 +5105,7 @@
                   })(Re, Se);
                 if ((0, Oe.t)(Re))
                   return (function Y(Re, Se) {
-                    return (0, s.Xf)(Re).pipe(N(Se), K(Se));
+                    return (0, s.Xf)(Re).pipe(N(Se), q(Se));
                   })(Re, Se);
                 if ((0, Be.D)(Re)) return Pe(Re, Se);
                 if ((0, ne.T)(Re))
@@ -5142,8 +5150,8 @@
       var s = v(655),
         y = v(1144),
         j = v(8239),
-        q = v(8306),
-        K = v(3670),
+        K = v(8306),
+        q = v(3670),
         N = v(2206),
         Z = v(4532),
         Y = v(6495),
@@ -5152,11 +5160,11 @@
         te = v(7849),
         ie = v(8822);
       function Ge(se) {
-        if (se instanceof q.y) return se;
+        if (se instanceof K.y) return se;
         if (null != se) {
-          if ((0, K.c)(se))
+          if ((0, q.c)(se))
             return (function Pe(se) {
-              return new q.y(fe => {
+              return new K.y(fe => {
                 const we = se[ie.L]();
                 if ((0, J.m)(we.subscribe)) return we.subscribe(fe);
                 throw new TypeError(
@@ -5166,7 +5174,7 @@
             })(se);
           if ((0, y.z)(se))
             return (function de(se) {
-              return new q.y(fe => {
+              return new K.y(fe => {
                 for (let we = 0; we < se.length && !fe.closed; we++)
                   fe.next(se[we]);
                 fe.complete();
@@ -5174,7 +5182,7 @@
             })(se);
           if ((0, j.t)(se))
             return (function Oe(se) {
-              return new q.y(fe => {
+              return new K.y(fe => {
                 se.then(
                   we => {
                     fe.closed || (fe.next(we), fe.complete());
@@ -5186,7 +5194,7 @@
           if ((0, N.D)(se)) return ne(se);
           if ((0, Y.T)(se))
             return (function X(se) {
-              return new q.y(fe => {
+              return new K.y(fe => {
                 for (const we of se) if ((fe.next(we), fe.closed)) return;
                 fe.complete();
               });
@@ -5199,7 +5207,7 @@
         throw (0, Z.z)(se);
       }
       function ne(se) {
-        return new q.y(fe => {
+        return new K.y(fe => {
           (function _e(se, fe) {
             var we, Ze, Re, Se;
             return (0, s.mG)(this, void 0, void 0, function* () {
@@ -5226,16 +5234,16 @@
       var s = v(8189),
         y = v(8421),
         j = v(515),
-        q = v(7669),
-        K = v(2076);
+        K = v(7669),
+        q = v(2076);
       function N(...Z) {
-        const Y = (0, q.yG)(Z),
-          ee = (0, q._6)(Z, 1 / 0),
+        const Y = (0, K.yG)(Z),
+          ee = (0, K._6)(Z, 1 / 0),
           J = Z;
         return J.length
           ? 1 === J.length
             ? (0, y.Xf)(J[0])
-            : (0, s.J)(ee)((0, K.D)(J, Y))
+            : (0, s.J)(ee)((0, q.D)(J, Y))
           : j.E;
       }
     },
@@ -5243,20 +5251,20 @@
       v.d(he, { of: () => j });
       var s = v(7669),
         y = v(2076);
-      function j(...q) {
-        const K = (0, s.yG)(q);
-        return (0, y.D)(q, K);
+      function j(...K) {
+        const q = (0, s.yG)(K);
+        return (0, y.D)(K, q);
       }
     },
     5403: (qe, he, v) => {
       v.d(he, { x: () => y });
       var s = v(2961);
-      function y(q, K, N, Z, Y) {
-        return new j(q, K, N, Z, Y);
+      function y(K, q, N, Z, Y) {
+        return new j(K, q, N, Z, Y);
       }
       class j extends s.Lv {
-        constructor(K, N, Z, Y, ee, J) {
-          super(K),
+        constructor(q, N, Z, Y, ee, J) {
+          super(q),
             (this.onFinalize = ee),
             (this.shouldUnsubscribe = J),
             (this._next = N
@@ -5264,7 +5272,7 @@
                   try {
                     N(te);
                   } catch (ie) {
-                    K.error(ie);
+                    q.error(ie);
                   }
                 }
               : super._next),
@@ -5273,7 +5281,7 @@
                   try {
                     Y(te);
                   } catch (ie) {
-                    K.error(ie);
+                    q.error(ie);
                   } finally {
                     this.unsubscribe();
                   }
@@ -5284,7 +5292,7 @@
                   try {
                     Z();
                   } catch (te) {
-                    K.error(te);
+                    q.error(te);
                   } finally {
                     this.unsubscribe();
                   }
@@ -5292,14 +5300,14 @@
               : super._complete);
         }
         unsubscribe() {
-          var K;
+          var q;
           if (!this.shouldUnsubscribe || this.shouldUnsubscribe()) {
             const { closed: N } = this;
             super.unsubscribe(),
               !N &&
-                (null === (K = this.onFinalize) ||
-                  void 0 === K ||
-                  K.call(this));
+                (null === (q = this.onFinalize) ||
+                  void 0 === q ||
+                  q.call(this));
           }
         }
       }
@@ -5308,18 +5316,18 @@
       v.d(he, { b: () => j });
       var s = v(5577),
         y = v(576);
-      function j(q, K) {
-        return (0, y.m)(K) ? (0, s.z)(q, K, 1) : (0, s.z)(q, 1);
+      function j(K, q) {
+        return (0, y.m)(q) ? (0, s.z)(K, q, 1) : (0, s.z)(K, 1);
       }
     },
     9300: (qe, he, v) => {
       v.d(he, { h: () => j });
       var s = v(4482),
         y = v(5403);
-      function j(q, K) {
+      function j(K, q) {
         return (0, s.e)((N, Z) => {
           let Y = 0;
-          N.subscribe((0, y.x)(Z, ee => q.call(K, ee, Y++) && Z.next(ee)));
+          N.subscribe((0, y.x)(Z, ee => K.call(q, ee, Y++) && Z.next(ee)));
         });
       }
     },
@@ -5327,12 +5335,12 @@
       v.d(he, { U: () => j });
       var s = v(4482),
         y = v(5403);
-      function j(q, K) {
+      function j(K, q) {
         return (0, s.e)((N, Z) => {
           let Y = 0;
           N.subscribe(
             (0, y.x)(Z, ee => {
-              Z.next(q.call(K, ee, Y++));
+              Z.next(K.call(q, ee, Y++));
             })
           );
         });
@@ -5342,8 +5350,8 @@
       v.d(he, { J: () => j });
       var s = v(5577),
         y = v(4671);
-      function j(q = 1 / 0) {
-        return (0, s.z)(y.y, q);
+      function j(K = 1 / 0) {
+        return (0, s.z)(y.y, K);
       }
     },
     5577: (qe, he, v) => {
@@ -5351,8 +5359,8 @@
       var s = v(4004),
         y = v(8421),
         j = v(4482),
-        q = v(9672),
-        K = v(5403),
+        K = v(9672),
+        q = v(5403),
         Z = v(576);
       function Y(ee, J, te = 1 / 0) {
         return (0, Z.m)(J)
@@ -5376,7 +5384,7 @@
                     Pe && J.next(Ze), ne++;
                     let Re = !1;
                     (0, y.Xf)(te(Ze, Be++)).subscribe(
-                      (0, K.x)(
+                      (0, q.x)(
                         J,
                         Se => {
                           Ge?.(Se), Pe ? fe(Se) : J.next(Se);
@@ -5390,7 +5398,7 @@
                             try {
                               for (ne--; X.length && ne < ie; ) {
                                 const Se = X.shift();
-                                de ? (0, q.f)(J, de, () => we(Se)) : we(Se);
+                                de ? (0, K.f)(J, de, () => we(Se)) : we(Se);
                               }
                               se();
                             } catch (Se) {
@@ -5402,7 +5410,7 @@
                   };
                 return (
                   ee.subscribe(
-                    (0, K.x)(J, fe, () => {
+                    (0, q.x)(J, fe, () => {
                       (_e = !0), se();
                     })
                   ),
@@ -5419,8 +5427,8 @@
       var s = v(2076),
         y = v(5698),
         j = v(7579),
-        q = v(2961),
-        K = v(4482);
+        K = v(2961),
+        q = v(4482);
       function N(Y = {}) {
         const {
           connector: ee = () => new j.x(),
@@ -5445,7 +5453,7 @@
               const we = Pe;
               se(), we?.unsubscribe();
             };
-          return (0, K.e)((we, Ze) => {
+          return (0, q.e)((we, Ze) => {
             X++, !Be && !ne && _e();
             const Re = (Oe = Oe ?? ee());
             Ze.add(() => {
@@ -5453,7 +5461,7 @@
             }),
               Re.subscribe(Ze),
               Pe ||
-                ((Pe = new q.Hp({
+                ((Pe = new K.Hp({
                   next: Se => Re.next(Se),
                   error: Se => {
                     (Be = !0), _e(), (de = Z(se, J, Se)), Re.error(Se);
@@ -5477,11 +5485,11 @@
       }
     },
     3900: (qe, he, v) => {
-      v.d(he, { w: () => q });
+      v.d(he, { w: () => K });
       var s = v(8421),
         y = v(4482),
         j = v(5403);
-      function q(K, N) {
+      function K(q, N) {
         return (0, y.e)((Z, Y) => {
           let ee = null,
             J = 0,
@@ -5494,7 +5502,7 @@
                 ee?.unsubscribe();
                 let Pe = 0;
                 const de = J++;
-                (0, s.Xf)(K(Ge, de)).subscribe(
+                (0, s.Xf)(q(Ge, de)).subscribe(
                   (ee = (0, j.x)(
                     Y,
                     Oe => Y.next(N ? N(Ge, Oe, de, Pe++) : Oe),
@@ -5513,18 +5521,18 @@
       }
     },
     5698: (qe, he, v) => {
-      v.d(he, { q: () => q });
+      v.d(he, { q: () => K });
       var s = v(515),
         y = v(4482),
         j = v(5403);
-      function q(K) {
-        return K <= 0
+      function K(q) {
+        return q <= 0
           ? () => s.E
           : (0, y.e)((N, Z) => {
               let Y = 0;
               N.subscribe(
                 (0, j.x)(Z, ee => {
-                  ++Y <= K && (Z.next(ee), K <= Y && Z.complete());
+                  ++Y <= q && (Z.next(ee), q <= Y && Z.complete());
                 })
               );
             });
@@ -5533,11 +5541,11 @@
     3410: (qe, he, v) => {
       v.d(he, { z: () => s });
       const s = {
-        setTimeout(y, j, ...q) {
-          const { delegate: K } = s;
-          return K?.setTimeout
-            ? K.setTimeout(y, j, ...q)
-            : setTimeout(y, j, ...q);
+        setTimeout(y, j, ...K) {
+          const { delegate: q } = s;
+          return q?.setTimeout
+            ? q.setTimeout(y, j, ...K)
+            : setTimeout(y, j, ...K);
         },
         clearTimeout(y) {
           const { delegate: j } = s;
@@ -5560,15 +5568,15 @@
         ('function' == typeof Symbol && Symbol.observable) || '@@observable';
     },
     7669: (qe, he, v) => {
-      v.d(he, { _6: () => N, jO: () => q, yG: () => K });
+      v.d(he, { _6: () => N, jO: () => K, yG: () => q });
       var s = v(576);
       function j(Z) {
         return Z[Z.length - 1];
       }
-      function q(Z) {
+      function K(Z) {
         return (0, s.m)(j(Z)) ? Z.pop() : void 0;
       }
-      function K(Z) {
+      function q(Z) {
         return (function y(Z) {
           return Z && (0, s.m)(Z.schedule);
         })(j(Z))
@@ -5580,10 +5588,10 @@
       }
     },
     4742: (qe, he, v) => {
-      v.d(he, { D: () => K });
+      v.d(he, { D: () => q });
       const { isArray: s } = Array,
-        { getPrototypeOf: y, prototype: j, keys: q } = Object;
-      function K(Z) {
+        { getPrototypeOf: y, prototype: j, keys: K } = Object;
+      function q(Z) {
         if (1 === Z.length) {
           const Y = Z[0];
           if (s(Y)) return { args: Y, keys: null };
@@ -5592,7 +5600,7 @@
               return Z && 'object' == typeof Z && y(Z) === j;
             })(Y)
           ) {
-            const ee = q(Y);
+            const ee = K(Y);
             return { args: ee.map(J => Y[J]), keys: ee };
           }
         }
@@ -5602,55 +5610,55 @@
     8737: (qe, he, v) => {
       function s(y, j) {
         if (y) {
-          const q = y.indexOf(j);
-          0 <= q && y.splice(q, 1);
+          const K = y.indexOf(j);
+          0 <= K && y.splice(K, 1);
         }
       }
       v.d(he, { P: () => s });
     },
     3888: (qe, he, v) => {
       function s(y) {
-        const q = y(K => {
-          Error.call(K), (K.stack = new Error().stack);
+        const K = y(q => {
+          Error.call(q), (q.stack = new Error().stack);
         });
         return (
-          (q.prototype = Object.create(Error.prototype)),
-          (q.prototype.constructor = q),
-          q
+          (K.prototype = Object.create(Error.prototype)),
+          (K.prototype.constructor = K),
+          K
         );
       }
       v.d(he, { d: () => s });
     },
     1810: (qe, he, v) => {
       function s(y, j) {
-        return y.reduce((q, K, N) => ((q[K] = j[N]), q), {});
+        return y.reduce((K, q, N) => ((K[q] = j[N]), K), {});
       }
       v.d(he, { n: () => s });
     },
     2806: (qe, he, v) => {
-      v.d(he, { O: () => q, x: () => j });
+      v.d(he, { O: () => K, x: () => j });
       var s = v(2416);
       let y = null;
-      function j(K) {
+      function j(q) {
         if (s.v.useDeprecatedSynchronousErrorHandling) {
           const N = !y;
-          if ((N && (y = { errorThrown: !1, error: null }), K(), N)) {
+          if ((N && (y = { errorThrown: !1, error: null }), q(), N)) {
             const { errorThrown: Z, error: Y } = y;
             if (((y = null), Z)) throw Y;
           }
-        } else K();
+        } else q();
       }
-      function q(K) {
+      function K(q) {
         s.v.useDeprecatedSynchronousErrorHandling &&
           y &&
-          ((y.errorThrown = !0), (y.error = K));
+          ((y.errorThrown = !0), (y.error = q));
       }
     },
     9672: (qe, he, v) => {
-      function s(y, j, q, K = 0, N = !1) {
+      function s(y, j, K, q = 0, N = !1) {
         const Z = j.schedule(function () {
-          q(), N ? y.add(this.schedule(null, K)) : this.unsubscribe();
-        }, K);
+          K(), N ? y.add(this.schedule(null, q)) : this.unsubscribe();
+        }, q);
         if ((y.add(Z), !N)) return Z;
       }
       v.d(he, { f: () => s });
@@ -5682,16 +5690,16 @@
       v.d(he, { c: () => j });
       var s = v(8822),
         y = v(576);
-      function j(q) {
-        return (0, y.m)(q[s.L]);
+      function j(K) {
+        return (0, y.m)(K[s.L]);
       }
     },
     6495: (qe, he, v) => {
       v.d(he, { T: () => j });
       var s = v(2202),
         y = v(576);
-      function j(q) {
-        return (0, y.m)(q?.[s.h]);
+      function j(K) {
+        return (0, y.m)(K?.[s.h]);
       }
     },
     8239: (qe, he, v) => {
@@ -5702,12 +5710,12 @@
       }
     },
     3260: (qe, he, v) => {
-      v.d(he, { L: () => q, Q: () => j });
+      v.d(he, { L: () => K, Q: () => j });
       var s = v(655),
         y = v(576);
-      function j(K) {
+      function j(q) {
         return (0, s.FC)(this, arguments, function* () {
-          const Z = K.getReader();
+          const Z = q.getReader();
           try {
             for (;;) {
               const { value: Y, done: ee } = yield (0, s.qq)(Z.read());
@@ -5719,22 +5727,22 @@
           }
         });
       }
-      function q(K) {
-        return (0, y.m)(K?.getReader);
+      function K(q) {
+        return (0, y.m)(q?.getReader);
       }
     },
     4482: (qe, he, v) => {
       v.d(he, { A: () => y, e: () => j });
       var s = v(576);
-      function y(q) {
-        return (0, s.m)(q?.lift);
+      function y(K) {
+        return (0, s.m)(K?.lift);
       }
-      function j(q) {
-        return K => {
-          if (y(K))
-            return K.lift(function (N) {
+      function j(K) {
+        return q => {
+          if (y(q))
+            return q.lift(function (N) {
               try {
-                return q(N, this);
+                return K(N, this);
               } catch (Z) {
                 this.error(Z);
               }
@@ -5744,14 +5752,14 @@
       }
     },
     3268: (qe, he, v) => {
-      v.d(he, { Z: () => q });
+      v.d(he, { Z: () => K });
       var s = v(4004);
       const { isArray: y } = Array;
-      function q(K) {
+      function K(q) {
         return (0, s.U)(N =>
-          (function j(K, N) {
-            return y(N) ? K(...N) : K(N);
-          })(K, N)
+          (function j(q, N) {
+            return y(N) ? q(...N) : q(N);
+          })(q, N)
         );
       }
     },
@@ -5759,11 +5767,11 @@
       v.d(he, { h: () => j });
       var s = v(2416),
         y = v(3410);
-      function j(q) {
+      function j(K) {
         y.z.setTimeout(() => {
-          const { onUnhandledError: K } = s.v;
-          if (!K) throw q;
-          K(q);
+          const { onUnhandledError: q } = s.v;
+          if (!q) throw K;
+          q(K);
         });
       }
     },
@@ -5911,7 +5919,7 @@
       v.d(he, {
         Do: () => se,
         EM: () => hr,
-        HT: () => K,
+        HT: () => q,
         JF: () => Gt,
         K0: () => Z,
         Mx: () => Zr,
@@ -5937,7 +5945,7 @@
       function j() {
         return y;
       }
-      function K(m) {
+      function q(m) {
         y || (y = m);
       }
       class N {}
@@ -6880,8 +6888,8 @@
       var s = v(6895),
         y = v(4650),
         j = v(9646),
-        q = v(8306),
-        K = v(4351),
+        K = v(8306),
+        q = v(4351),
         N = v(9300),
         Z = v(4004);
       class Y {}
@@ -7423,7 +7431,7 @@
                 }));
             }
             const It = (0, j.of)(Ae).pipe(
-              (0, K.b)(ke => this.handler.handle(ke))
+              (0, q.b)(ke => this.handler.handle(ke))
             );
             if (z instanceof Re || 'events' === W.observe) return It;
             const wt = It.pipe((0, N.h)(ke => ke instanceof oe));
@@ -7539,7 +7547,7 @@
               throw new Error(
                 'Attempted to construct Jsonp request without HttpClientJsonpModule installed.'
               );
-            return new q.y(xe => {
+            return new K.y(xe => {
               const W = this.xhrFactory.build();
               if (
                 (W.open(z.method, z.urlWithParams),
@@ -7971,8 +7979,8 @@
       var s = v(7579),
         y = v(727),
         j = v(8306),
-        q = v(6451),
-        K = v(3099);
+        K = v(6451),
+        q = v(3099);
       function N(e) {
         for (let t in e) if (e[t] === N) return t;
         throw Error('Could not find renamed property on target object.');
@@ -14036,7 +14044,7 @@
                   _.unsubscribe(), M.unsubscribe();
                 };
               });
-            this.isStable = (0, q.T)(c, d.pipe((0, K.B)()));
+            this.isStable = (0, K.T)(c, d.pipe((0, q.B)()));
           }
           get destroyed() {
             return this._destroyed;
@@ -14822,8 +14830,8 @@
       var s = v(4650),
         y = v(6895),
         j = v(8306),
-        q = v(4742),
-        K = v(8421),
+        K = v(4742),
+        q = v(8421),
         N = v(7669),
         Z = v(5403),
         Y = v(3268),
@@ -15096,7 +15104,7 @@
           : function (h) {
               return (function J(...b) {
                 const g = (0, N.jO)(b),
-                  { args: h, keys: P } = (0, q.D)(b),
+                  { args: h, keys: P } = (0, K.D)(b),
                   le = new j.y(tt => {
                     const { length: Wt } = h;
                     if (!Wt) return void tt.complete();
@@ -15105,7 +15113,7 @@
                       Mn = Wt;
                     for (let Ko = 0; Ko < Wt; Ko++) {
                       let Vn = !1;
-                      (0, K.Xf)(h[Ko]).subscribe(
+                      (0, q.Xf)(h[Ko]).subscribe(
                         (0, Z.x)(
                           tt,
                           En => {
@@ -16414,9 +16422,9 @@
           super(...arguments), (this.supportsDOMEvents = !0);
         }
       }
-      class q extends j {
+      class K extends j {
         static makeCurrent() {
-          (0, s.HT)(new q());
+          (0, s.HT)(new K());
         }
         onAndCancel(k, T, L) {
           return (
@@ -16459,8 +16467,8 @@
         getBaseHref(k) {
           const T = (function N() {
             return (
-              (K = K || document.querySelector('base')),
-              K ? K.getAttribute('href') : null
+              (q = q || document.querySelector('base')),
+              q ? q.getAttribute('href') : null
             );
           })();
           return null == T
@@ -16473,7 +16481,7 @@
               })(T);
         }
         resetBaseElement() {
-          K = null;
+          q = null;
         }
         getUserAgent() {
           return window.navigator.userAgent;
@@ -16483,7 +16491,7 @@
         }
       }
       let Z,
-        K = null;
+        q = null;
       const ee = new y.OlP('TRANSITION_ID'),
         te = [
           {
@@ -16986,7 +16994,7 @@
           {
             provide: y.g9A,
             useValue: function ht() {
-              q.makeCurrent();
+              K.makeCurrent();
             },
             multi: !0,
           },
@@ -17226,7 +17234,7 @@
       var s = v(6895),
         y = v(4650),
         j = v(7579);
-      class q extends j.x {
+      class K extends j.x {
         constructor(l) {
           super(), (this._value = l);
         }
@@ -17246,7 +17254,7 @@
           super.next((this._value = l));
         }
       }
-      var K = v(8306),
+      var q = v(8306),
         N = v(4742),
         Z = v(2076),
         Y = v(4671),
@@ -17260,7 +17268,7 @@
           a = (0, J.jO)(u),
           { args: f, keys: C } = (0, N.D)(u);
         if (0 === f.length) return (0, Z.D)([], l);
-        const E = new K.y(
+        const E = new q.y(
           (function de(u, l, a = Y.y) {
             return f => {
               Oe(
@@ -17307,7 +17315,7 @@
       function ne(u, l) {
         const a = (0, X.m)(u) ? u : () => u,
           f = C => C.error(a());
-        return new K.y(l ? C => l.schedule(f, 0, C) : f);
+        return new q.y(l ? C => l.schedule(f, 0, C) : f);
       }
       const _e = (0, v(3888).d)(
         u =>
@@ -17325,7 +17333,7 @@
       }
       var Ze = v(8421);
       function Re(u) {
-        return new K.y(l => {
+        return new q.y(l => {
           (0, Ze.Xf)(u()).subscribe(l);
         });
       }
@@ -17347,7 +17355,7 @@
           u.subscribe(f), f.closed || (a = u.connect());
         });
       }
-      class oe extends K.y {
+      class oe extends q.y {
         constructor(l, a) {
           super(),
             (this.source = l),
@@ -18227,11 +18235,11 @@
             const A = new cr([], {}, {}, '', {}, et, l, null, u.root, -1, {});
             return new Dn('', new qt(A, []));
           })(u, l),
-          f = new q([new be('', {})]),
-          C = new q({}),
-          E = new q({}),
-          A = new q({}),
-          F = new q(''),
+          f = new K([new be('', {})]),
+          C = new K({}),
+          E = new K({}),
+          A = new K({}),
+          F = new K(''),
           re = new ro(f, C, A, F, E, et, l, a.root);
         return (re.snapshot = a.root), new vn(new qt(re, []), a);
       }
@@ -18440,11 +18448,11 @@
           }
           const f = (function zi(u) {
               return new ro(
-                new q(u.url),
-                new q(u.params),
-                new q(u.queryParams),
-                new q(u.fragment),
-                new q(u.data),
+                new K(u.url),
+                new K(u.params),
+                new K(u.queryParams),
+                new K(u.fragment),
+                new K(u.data),
                 u.outlet,
                 u.component,
                 u
@@ -19565,7 +19573,7 @@
       }
       class Us {}
       function Yi(u) {
-        return new K.y(l => l.error(u));
+        return new q.y(l => l.error(u));
       }
       class oi {
         constructor(l, a, f, C, E, A) {
@@ -19922,7 +19930,7 @@
                 this.currentUrlTree,
                 this.rootComponentType
               )),
-              (this.transitions = new q({
+              (this.transitions = new K({
                 id: 0,
                 targetPageId: 0,
                 currentUrlTree: this.currentUrlTree,
