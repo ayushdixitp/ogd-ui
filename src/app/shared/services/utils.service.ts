@@ -1,3 +1,4 @@
+import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HttpService } from './http.service';
 
@@ -28,21 +29,12 @@ export class UtilsService {
 
   getRequiredSkeleton() {}
 
-  getDistinctLocalesPath(
-    refNum: string | null,
-    experienceType: string | null
-  ): string {
-    return `v1/customers/${refNum}/${experienceType}/locales`;
+  getDistinctLocalesPath(): string {
+    return `v2/customers/locales`;
   }
 
-  getChatbotConfigurationsPath(
-    refNum: string | null,
-    locale: string | null,
-    experienceType: string | null,
-    channel: string | null
-  ): string {
-    return `v1/configurations/${refNum}/${locale}/${experienceType}/${channel}`;
-    // return `v1/customers/${refNum}/${locale}/${experienceType}/${channel}/configurations`;
+  getChatbotConfigurationsPath(): string {
+    return `v1/configurations`;
   }
 
   getResetChatbotConfigurationsPath() {
@@ -62,7 +54,11 @@ export class UtilsService {
   }
 
   getDistinctLocale(refNum: string | null, experienceType: string) {
-    let methodName = this.getDistinctLocalesPath(refNum, experienceType);
+    let methodName = this.getDistinctLocalesPath();
+    const headers = new HttpHeaders()
+      .set('content-type', 'application/json')
+      .set('x-ph-refNum', `${refNum}`)
+      .set('experience-type', `${experienceType}`);
     return new Promise((resolve, reject) => {
       this.httpService
         .httpGet(methodName, 'chatbot_configurations_api')
