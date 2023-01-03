@@ -63,14 +63,14 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit(): void {
     this.sharedService.getSidebarData().subscribe(data => {
-      // this.checking = new SidebarBase(data.customerPipeline).finalArray;
+      // this.checking = new SidebarBase(data.customer).finalArray;
       if (
         (localStorage.getItem('roleAccess') as string) ==
         CommonConstant.INTERNAL
       ) {
-        this.checking = new SidebarBase(data.masterPipeline).finalArray;
+        this.checking = new SidebarBase(data.master).finalArray;
       } else {
-        this.checking = new SidebarBase(data?.customerPipeline).finalArray;
+        this.checking = new SidebarBase(data?.customer).finalArray;
       }
       this.data = this.checking;
       this.currentExperienceType = this.data[0].experienceType;

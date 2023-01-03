@@ -33,7 +33,7 @@ export class SharedService {
   }
 
   getSidebarData(): Observable<any> {
-    let url: string = 'v1/customers/experiences';
+    let url: string = 'v2/customers/experiences';
     // change service name
     return this.httpService.httpGet(url, 'chatbot_configurations_api');
   }
@@ -51,11 +51,9 @@ export class SharedService {
         (localStorage.getItem('roleAccess') as string) ==
         CommonConstant.INTERNAL
       ) {
-        this.sidebarConfigs = new SidebarBase(data.masterPipeline).finalArray;
+        this.sidebarConfigs = new SidebarBase(data.master).finalArray;
       } else {
-        this.sidebarConfigs = new SidebarBase(
-          data?.customerPipeline
-        ).finalArray;
+        this.sidebarConfigs = new SidebarBase(data?.customer).finalArray;
       }
 
       localStorage.setItem(
