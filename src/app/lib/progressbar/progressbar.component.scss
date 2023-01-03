@@ -44,6 +44,7 @@
 
   .range, .range-disabled {
     width: -webkit-fill-available;
+    width: -moz-available;;
     appearance: none;
     // width: 30%;
     overflow: hidden;
@@ -94,6 +95,43 @@
 
 
 .range-disabled::-webkit-slider-thumb {
+  position: relative;
+  appearance: none;
+  height: 13px;
+  width: 13px;
+  background: #93A1AB;
+  border-radius: 50%;
+  top: 50%;
+  margin-top: calc(-13px/2);
+  box-shadow: webkit-slider-thumb-shadow();
+}
+
+// for supporting in mozilla
+
+.range::-moz-range-track {
+  height: 30px;
+  background: linear-gradient(to bottom, #01B2C0, #01B2C0) 100% 50% / 100% 3px no-repeat transparent;
+}
+
+.range-disabled::-moz-range-track {
+  height: 30px;
+  background: linear-gradient(to bottom, #93A1AB, #93A1AB) 100% 50% / 100% 3px no-repeat transparent;
+}
+
+.range::-moz-range-thumb {
+  position: relative;
+  appearance: none;
+  height: 13px;
+  width: 13px;
+  background: #01B2C0;
+  border-radius: 50%;
+  top: 50%;
+  margin-top: calc(-13px/2);
+  box-shadow: webkit-slider-thumb-shadow();
+}
+
+
+.range-disabled::-moz-range-thumb {
   position: relative;
   appearance: none;
   height: 13px;

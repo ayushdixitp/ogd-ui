@@ -44,7 +44,7 @@ export class ProvisionComponent implements OnInit {
     };
 
     this.httpService
-      .httpPost('v1/provision/webhook', 'chatbot_configurations_api', reqObj)
+      .httpPost('v2/provision', 'chatbot_configurations_api', reqObj)
       .subscribe({
         next: (data: any) => {
           if (data.statusCode == 404) {

@@ -183,12 +183,7 @@ export class ConfigurationsComponent implements OnInit, OnDestroy {
   getChatbotConfigurations() {
     this.isDataLoaded = false;
     this.refreshLocalStorageValue();
-    const url = this.utilsService.getChatbotConfigurationsPath(
-      this.refNum,
-      this.locale,
-      this.experienceType,
-      this.channel
-    );
+    const url = this.utilsService.getChatbotConfigurationsPath();
     this.httpService
       .httpGet(url, 'chatbot_configurations_api')
       .subscribe(result => {
@@ -294,12 +289,7 @@ export class ConfigurationsComponent implements OnInit, OnDestroy {
     isActive,
   }: any) {
     this.refreshLocalStorageValue();
-    const url = this.utilsService.getChatbotConfigurationsPath(
-      this.refNum,
-      this.locale,
-      this.experienceType,
-      this.channel
-    );
+    const url = this.utilsService.getChatbotConfigurationsPath();
     let reqObj;
     let slots: string[] = this.configurations[attributeConfigurationKey];
     if (attributeConfigurationKey) {
@@ -457,12 +447,7 @@ export class ConfigurationsComponent implements OnInit, OnDestroy {
 
   checkIfCustomerisProvisioned() {
     this.refreshLocalStorageValue();
-    const url = this.utilsService.getChatbotConfigurationsPath(
-      this.refNum,
-      this.locale,
-      this.experienceType,
-      this.channel
-    );
+    const url = this.utilsService.getChatbotConfigurationsPath();
     this.utilsService
       .checkIfCustomerIsProvisioned(url, this.pageId)
       .then(data => {
