@@ -3821,9 +3821,13 @@
           }
           getI18nValues() {
             let J = localStorage.getItem('LOCALE')?.split('_')[0];
-            return this.httpClient.get(
-              `https://cdn-bot.phenompeople.com/translations/cmp-translations-${J}.json?v=${Date.now()}`
-            );
+            return ['en', 'fr', 'es', 'nl', 'de'].includes(J)
+              ? this.httpClient.get(
+                  `https://cdn-bot.phenompeople.com/translations/cmp-translations-${J}.json?v=${Date.now()}`
+                )
+              : this.httpClient.get(
+                  `https://cdn-bot.phenompeople.com/translations/cmp-translations-en.json?v=${Date.now()}`
+                );
           }
           setDefaultValues() {
             this.getSidebarData().subscribe(J => {
@@ -3866,10 +3870,10 @@
     2340: (qe, he, v) => {
       v.d(he, { N: () => s });
       const s = {
-        production: !1,
+        production: !0,
         authenticationProxy:
-          'https://dev-chatbot-authentication.phenompro.com/bot_auth',
-        dashboardSchema: 'https://cdn-bot.phenompeople.com/dashboard/dev',
+          'https://chatbot-authentication-cr.phenompeople.com/bot_auth',
+        dashboardSchema: 'https://cdn-bot.phenompeople.com/dashboard/prodcr',
       };
     },
     2987: (qe, he, v) => {
