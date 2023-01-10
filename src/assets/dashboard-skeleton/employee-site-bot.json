@@ -41,7 +41,7 @@
                     "id": "faq",
                     "isInternal": true,
                     "literal": "CMP_FAQ",
-                    "infoText": "CMP_FAQ_ENABLING_THIS_FEATURE_LET_CANDIDATES_ASK_QUESTION_TO_BOT",
+                    "infoText": "CMP_FAQ_ENABLING_THIS_FEATURE_LET_EMPLOYEE_ASK_QUESTION_TO_BOT",
                     "actions": {
                         "type": "toggle"
                     },
