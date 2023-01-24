@@ -38,7 +38,7 @@
                                     <ng-container *ngIf="section.features">
                                         <ng-container *ngFor="let feature of section.features">
                                         <div class="card"
-                                            [ngClass]="{'disabled-state': (feature[feature.configurationKey] && !feature[feature.configurationKey])}">
+                                            [ngClass]="{'disabled-state': (feature.configurationKey)?  !feature[feature.configurationKey] : false}">
                                                 <header class="card-one-item">
                                                     <div class="card-one-item-heading">
                                                         <span class="section-toggle" *ngIf="feature?.actions?.type == 'toggle'">
@@ -59,7 +59,7 @@
                                                             <div>
                                                                 <ng-container *ngIf="flow?.type == 'toggle'; else radio">
                                                                     <app-toggle [id]="flow.configurationKey"  
-                                                                    [isDisabled]="feature[feature.configurationKey] && !feature[feature.configurationKey]"
+                                                                    [isDisabled]="(feature.configurationKey)?  !feature[feature.configurationKey] : false"
                                                                     [isActive]="feature[flow.configurationKey]"></app-toggle>
                                                                 </ng-container>
                                                                 <ng-template #radio>

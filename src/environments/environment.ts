@@ -5,8 +5,8 @@
 export const environment = {
   production: true,
   authenticationProxy:
-    'https://dev-chatbot-authentication.phenompro.com/bot_auth',
-  dashboardSchema: 'https://cdn-bot.phenompeople.com/dashboard/dev',
+    'https://qa-chatbot-authentication.phenompro.com/bot_auth',
+  dashboardSchema: 'https://cdn-bot.phenompeople.com/dashboard/qa',
 };
 
 /*
