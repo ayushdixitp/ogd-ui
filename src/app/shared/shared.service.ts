@@ -39,13 +39,20 @@ export class SharedService {
   }
 
   getI18nValues() {
-    let locale = localStorage.getItem('LOCALE')?.split('_')[0];
+    // let locale = localStorage.getItem('LOCALE')?.split('_')[0];
+    let locale = localStorage.getItem('translationLocale')?.split('_')[0];
     // add list of available locales.
-    const supportedLocales = ['en', 'fr', 'es', 'nl', 'de'];
-    if (supportedLocales.includes(locale as string)) {
-      return this.httpClient.get(
-        `https://cdn-bot.phenompeople.com/translations/cmp-translations-${locale}.json?v=${Date.now()}`
-      );
+    if (localStorage.getItem('host') && localStorage.getItem('host') == 'cmp') {
+      const supportedLocales = ['en', 'fr', 'es', 'nl', 'de'];
+      if (supportedLocales.includes(locale as string)) {
+        return this.httpClient.get(
+          `https://cdn-bot.phenompeople.com/translations/cmp-translations-${locale}.json?v=${Date.now()}`
+        );
+      } else {
+        return this.httpClient.get(
+          `https://cdn-bot.phenompeople.com/translations/cmp-translations-en.json?v=${Date.now()}`
+        );
+      }
     } else {
       return this.httpClient.get(
         `https://cdn-bot.phenompeople.com/translations/cmp-translations-en.json?v=${Date.now()}`
