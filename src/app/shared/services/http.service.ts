@@ -152,6 +152,11 @@ export class HttpService {
       .set('experience-type', `${experienceType}`);
 
     let paramsObj: any = params ? params : {};
+    if (paramsObj.request_object) {
+      paramsObj = { ...paramsObj, ...{ refNum } };
+    } else {
+      paramsObj['request_object'] = { refNum };
+    }
     let url = methodName;
     paramsObj['token'] = 'local';
     return this.httpClient.post<Response>(url, paramsObj, { headers }).pipe(
