@@ -122,6 +122,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
     if (this.input.authConfig) {
       localStorage.setItem('authConfig', JSON.stringify(this.input.authConfig));
     }
+    if (this.input.host) {
+      localStorage.setItem('host', this.input.host);
+    }
+
+    if (this.input.translationLocale) {
+      localStorage.setItem('translationLocale', this.input.translationLocale);
+    }
+
     this.isDataLoaded = true;
   }
 
