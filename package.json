@@ -9,8 +9,9 @@
     "build:js": "rm -rf dist && prettier --write \"src/**/*.ts\" && ng build --output-hashing none --named-chunks=true && npm run build:module",
     "build-prod:js": "rm -rf dist && prettier --write \"src/**/*.ts\" && ng build --configuration=production --output-hashing none --named-chunks=true --output-path=dist/production && npm run build:module production",
     "build-dev:js": "rm -rf dist && prettier --write \"src/**/*.ts\" && ng build --configuration=dev --output-hashing none --named-chunks=true --output-path=dist/dev && npm run build:module dev",
+    "build-devaz:js": "rm -rf dist && prettier --write \"src/**/*.ts\" && ng build --configuration=devaz --output-hashing none --named-chunks=true --output-path=dist/devaz && npm run build:module devaz",
     "build-qa:js": "rm -rf dist && prettier --write \"src/**/*.ts\" && ng build --configuration=qa --output-hashing none --named-chunks=true --output-path=dist/qa && npm run build:module qa",
-
+    "build-qaaz:js": "rm -rf dist && prettier --write \"src/**/*.ts\" && ng build --configuration=qaaz --output-hashing none --named-chunks=true --output-path=dist/qaaz && npm run build:module qaaz",
 
     "build-stgin:js": "rm -rf dist && prettier --write \"src/**/*.ts\" && ng build --configuration=stgin --output-hashing none --named-chunks=true --output-path=dist/stgin && npm run build:module stgin",
     "build-stgir:js": "rm -rf dist && prettier --write \"src/**/*.ts\" && ng build --configuration=stgir --output-hashing none --named-chunks=true --output-path=dist/stgir && npm run build:module stgir",

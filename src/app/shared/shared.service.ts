@@ -46,16 +46,18 @@ export class SharedService {
       const supportedLocales = ['en', 'fr', 'es', 'nl', 'de'];
       if (supportedLocales.includes(locale as string)) {
         return this.httpClient.get(
-          `https://cdn-bot.phenompeople.com/translations/cmp-translations-${locale}.json?v=${Date.now()}`
+          `${
+            environment.translations
+          }cmp-translations-${locale}.json?v=${Date.now()}`
         );
       } else {
         return this.httpClient.get(
-          `https://cdn-bot.phenompeople.com/translations/cmp-translations-en.json?v=${Date.now()}`
+          `${environment.translations}cmp-translations-en.json?v=${Date.now()}`
         );
       }
     } else {
       return this.httpClient.get(
-        `https://cdn-bot.phenompeople.com/translations/cmp-translations-en.json?v=${Date.now()}`
+        `${environment.translations}cmp-translations-en.json?v=${Date.now()}`
       );
     }
   }

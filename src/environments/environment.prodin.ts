@@ -3,6 +3,7 @@ export const environment = {
   authenticationProxy:
     'https://chatbot-authentication-in.phenompeople.net/bot_auth',
   dashboardSchema: 'https://cdn-bot.phenompeople.com/dashboard/prodin',
+  translations: 'https://cdn-bot.phenompeople.com/translations/',
 };
 
 // dashboard

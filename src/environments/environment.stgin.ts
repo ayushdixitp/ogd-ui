@@ -3,4 +3,5 @@ export const environment = {
   authenticationProxy:
     'https://chatbot-authentication-in.phenompro.com/bot_auth',
   dashboardSchema: 'https://cdn-bot.phenompeople.com/dashboard/stgin',
+  translations: 'https://cdn-bot.phenompeople.com/translations/',
 };
