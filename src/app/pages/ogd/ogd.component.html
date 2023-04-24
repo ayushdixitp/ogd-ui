@@ -1,0 +1,14 @@
+<div class="ogd-dashboard-container">
+    <h1>OGD Dashboard</h1>
+    <div class="tabs">
+        <div class="tab-button" [ngClass]="{'active-tab-button': activeTab ==  CommonConstant.ENVIRONEMENT}"
+        (click)="setActiveTab(CommonConstant.ENVIRONEMENT)">Environment</div>
+        <div class="tab-button" [ngClass]="{'active-tab-button': activeTab ==  CommonConstant.LOCALE}" (click)="setActiveTab(CommonConstant.LOCALE)">Locale</div>
+    </div>
+    <ng-container *ngIf="activeTab ==  CommonConstant.ENVIRONEMENT; else localeogd">
+        <environment-ogd></environment-ogd>
+    </ng-container>
+    <ng-template #localeogd>
+        <locale-ogd></locale-ogd>
+    </ng-template>
+</div>

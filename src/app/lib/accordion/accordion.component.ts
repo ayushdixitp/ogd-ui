@@ -47,8 +47,9 @@ export class AccordionComponent implements OnInit, OnChanges {
         isAccordionOpen: this.isShowPages,
         experienceType: this.experienceType,
         page: this.defaultPageId,
-        heading: this.pages.filter(page => page.pageId == this.defaultPageId)[0]
-          ?.heading,
+        heading: this.pages.filter(
+          (page) => page.pageId == this.defaultPageId
+        )[0]?.heading,
         channel: this.defaultPageId,
       })
     );
@@ -57,7 +58,7 @@ export class AccordionComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.currentOpenAccordion = localStorage.getItem('experienceType');
     this.selectedPageId = this.pages.some(
-      page => page.pageId === this.defaultPageId
+      (page) => page.pageId === this.defaultPageId
     )
       ? this.defaultPageId
       : '';
@@ -74,14 +75,14 @@ export class AccordionComponent implements OnInit, OnChanges {
             experienceType: this.experienceType,
             page: this.defaultPageId,
             heading: this.pages.filter(
-              page => page.pageId == this.defaultPageId
+              (page) => page.pageId == this.defaultPageId
             )[0]?.heading,
             channel: this.defaultPageId,
           })
         );
       }
     }
-    this.broadcastService.on(AppEventType.ACCORDION_EVENT).subscribe(data => {
+    this.broadcastService.on(AppEventType.ACCORDION_EVENT).subscribe((data) => {
       this.accordionData = data.payload;
       if (this.accordionData.accordionId === this.id) {
         this.isShowPages = !this.isShowPages;

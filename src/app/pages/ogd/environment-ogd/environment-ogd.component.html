@@ -1,0 +1,24 @@
+<div class="environment-ogd-container">
+    <h2>Environment OGD</h2>
+    <div class="environment-options">
+        <div>
+            <strong>Source Environment</strong>
+            <div class="environment-options-item">
+                <app-dropdown [listOfItems]="listOfEnvironments"></app-dropdown>
+            </div>
+        </div>
+        <div>
+            <strong>
+                Target Environment
+            </strong>
+            <div class="environment-options-item">
+                <app-dropdown [listOfItems]="listOfEnvironments"></app-dropdown>
+            </div>
+        </div>
+    </div>
+    <div class="entity-options">
+        <div class="entity-options-item"><phenom-checkbox [id]="CommonConstant.FAQS"></phenom-checkbox>Faqs</div>
+        <div class="entity-options-item"><phenom-checkbox [id]="CommonConstant.SMALL_TALK"></phenom-checkbox>Small Talk</div>
+        <div class="entity-options-item"><phenom-checkbox [id]="CommonConstant.FALLBACK_RESPONSE"></phenom-checkbox>Fallback response</div>
+    </div>
+</div>

@@ -143,7 +143,7 @@ export class SidebarBase<T> {
     this.finalArray = list
       .map((exp: any) => {
         let headingAdded = this.headers.filter(
-          heading => heading.experienceType == exp.experienceType
+          (heading) => heading.experienceType == exp.experienceType
         )[0];
         headingAdded.channels = exp.channels.map(
           (ichannel: { channel: string }) => {
@@ -156,7 +156,7 @@ export class SidebarBase<T> {
           }
         );
         headingAdded['svg'] = this.headerSvgs.filter(
-          header => header.experienceType == exp.experienceType
+          (header) => header.experienceType == exp.experienceType
         )[0]?.svg;
 
         // for removing undefined values from array
@@ -165,7 +165,7 @@ export class SidebarBase<T> {
         });
         return headingAdded;
       })
-      .filter(experience => experience.channels.length);
+      .filter((experience) => experience.channels.length);
   }
 }
 

@@ -3,6 +3,7 @@
 .mfe-dropdown {
     cursor: pointer;
     font-family: 'Proxima Nova';
+    position: relative;
     .mfe-dropdown-title {
         margin: 0px;
         border: 1px solid $color-white;
@@ -20,13 +21,13 @@
     .mfe-dropdown-menu {
         position: absolute;
         z-index: 1;
-        left: 10px;
+        // left: 10px;
         z-index: 1;
         width: 92%;
         // overflow-y: scroll;
         // max-height: 224px;
         padding: 4px;
-        margin: -15px auto;
+        margin: -10px auto;
         background: $color-white;
         /* Depth 1 */        
         box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.15);

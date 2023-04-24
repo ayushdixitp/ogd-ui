@@ -63,7 +63,7 @@ export class SharedService {
   }
 
   setDefaultValues() {
-    this.getSidebarData().subscribe(data => {
+    this.getSidebarData().subscribe((data) => {
       if (
         (localStorage.getItem('roleAccess') as string) ==
         CommonConstant.INTERNAL

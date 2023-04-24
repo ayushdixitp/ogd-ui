@@ -1,0 +1,26 @@
+.environment-ogd-container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    .environment-options {
+        display: flex;
+        gap: 80px;
+        .environment-options-item {
+            border: 1px solid lightgray;
+            border-radius: 8px;
+            padding: 0px 10px;
+            width: 100px;
+        }
+    }
+    .entity-options {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        .entity-options-item {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+    }
+}

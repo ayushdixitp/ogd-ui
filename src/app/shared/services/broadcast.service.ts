@@ -20,7 +20,7 @@ export class BroadcastService {
   }
 
   on(eventType: AppEventType): Observable<AppEvent<any>> {
-    return this.eventBroker.pipe(filter(event => event.type === eventType));
+    return this.eventBroker.pipe(filter((event) => event.type === eventType));
   }
 
   dispatch<T>(event: AppEvent<T>): void {

@@ -10,8 +10,8 @@
                     </span>
            </p>
             <section *ngIf="isDropdownListVisible" class="mfe-dropdown-menu">
-                <ul *ngIf="listOfLocales.length">
-                    <li *ngFor="let listItem of listOfLocales" [id]="listItem.locale" (click)="selectOption(listItem)" [ngClass]="{'selected-item': listItem.item == title}">
+                <ul *ngIf="listOfItems.length">
+                    <li *ngFor="let listItem of listOfItems" [id]="listItem.locale" (click)="selectOption(listItem)" [ngClass]="{'selected-item': listItem.item == title}">
                         {{ listItem.item }}
                     </li>
                 </ul>                

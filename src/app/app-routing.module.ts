@@ -1,85 +1,17 @@
 import { NgModule } from '@angular/core';
-import {
-  LoadChildrenCallback,
-  Route,
-  Router,
-  RouterModule,
-  Routes,
-} from '@angular/router';
+import { Router, RouterModule, Routes } from '@angular/router';
 import { BaseComponent } from './layouts/base/base.component';
-import { ConfigurationsComponent } from './pages/configurations/configurations.component';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { LocaleListComponent } from './pages/locale-list/locale-list.component';
-import { LocalesModule } from './pages/locales/locales.module';
-import { SharedModule } from './shared/shared.module';
 
 const routes: Routes = [
-  // {
-  //   path: '',
-  //   redirectTo: '/locales',
-  //   pathMatch: 'full',
-  // },
   {
-    path: 'locales',
-    component: LocaleListComponent,
-    children: [
-      {
-        path: '',
-        loadChildren: () =>
-          import('./pages/locale-list/locale-list.module').then(
-            m => m.LocaleListModule
-          ),
-      },
-    ],
-  },
-  {
-    path: ':mfe/configuration/:experience/:channel',
+    path: 'ogd',
     component: BaseComponent,
     children: [
       {
         path: '',
         loadChildren: () =>
-          import('./pages/configurations/configurations.module').then(m => {
-            return m.ConfigurationsModule;
-          }),
-      },
-    ],
-  },
-  {
-    path: 'configuration/:experience/:channel',
-    component: BaseComponent,
-    children: [
-      {
-        path: '',
-        loadChildren: () =>
-          import('./pages/configurations/configurations.module').then(m => {
-            return m.ConfigurationsModule;
-          }),
-      },
-    ],
-  },
-  {
-    path: 'configuration/:experience/:channel',
-    component: BaseComponent,
-    children: [
-      {
-        path: '',
-        loadChildren: () =>
-          import('./pages/locale-list/locale-list.module').then(m => {
-            return m.LocaleListModule;
-          }),
-      },
-    ],
-  },
-  {
-    path: 'mfe-config/:experience/:channel',
-    component: DashboardComponent,
-    children: [
-      {
-        path: '',
-        loadChildren: () =>
-          import('./pages/dashboard/dashboard.module').then(m => {
-            return m.DashboardModule;
+          import('./pages/ogd/ogd.module').then((m) => {
+            return m.OgdModule;
           }),
       },
     ],

@@ -62,7 +62,7 @@ export class SidebarComponent implements OnInit {
   data: any = [];
 
   ngOnInit(): void {
-    this.sharedService.getSidebarData().subscribe(data => {
+    this.sharedService.getSidebarData().subscribe((data) => {
       // this.checking = new SidebarBase(data.customer).finalArray;
       if (
         (localStorage.getItem('roleAccess') as string) ==
@@ -138,7 +138,7 @@ export class SidebarComponent implements OnInit {
             loadChildren: () =>
               import(
                 '../../../pages/configurations/configurations.module'
-              ).then(m => {
+              ).then((m) => {
                 return m.ConfigurationsModule;
               }),
           });
@@ -196,7 +196,7 @@ export class SidebarComponent implements OnInit {
                 loadChildren: () =>
                   import(
                     '../../../pages/configurations/configurations.module'
-                  ).then(m => {
+                  ).then((m) => {
                     return m.ConfigurationsModule;
                   }),
               });

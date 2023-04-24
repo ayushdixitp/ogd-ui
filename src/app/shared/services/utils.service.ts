@@ -20,7 +20,7 @@ export class UtilsService {
       if (url && pageId) {
         this.httpService
           .httpGet(url, 'chatbot_configurations_api')
-          .subscribe(response => {
+          .subscribe((response) => {
             resolve(response);
           });
       }
